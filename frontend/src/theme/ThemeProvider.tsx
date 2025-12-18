@@ -10,7 +10,7 @@ export function ThemeProvider({ children }: PropsWithChildren) {
   const scheme = useColorScheme();
 
   const theme = useMemo<AppTheme>(() => {
-    return scheme === "dark" ? darkTheme : lightTheme;
+    return scheme === "dark" ? lightTheme : lightTheme;
   }, [scheme]);
 
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;

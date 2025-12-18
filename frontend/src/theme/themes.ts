@@ -72,7 +72,7 @@ export const lightTheme: AppTheme = {
   mode: "light",
   colors: {
     background: {
-      gradient: ["#c7d2fe", "#e9d5ff", "#fecdd3"]
+      gradient: ["#e0e7ff", "#f8fafc", "#ffd1e6"]
     },
     text: {
       primary: palette.slate[900],
