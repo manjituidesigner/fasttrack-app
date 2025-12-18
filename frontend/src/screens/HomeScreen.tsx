@@ -5,6 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/useTheme";
+import { useI18n } from "../i18n/I18nProvider";
 import { ThemedText } from "../components/ThemedText";
 import { ThemedCard } from "../components/ThemedCard";
 import { ThemedButton } from "../components/ThemedButton";
@@ -17,46 +18,48 @@ type Props = {
 
 export function HomeScreen({ onLoginPress }: Props) {
   const theme = useTheme();
+  const { language, setLanguage, t } = useI18n();
+  const [showLangMenu, setShowLangMenu] = useState(false);
 
   const features = useMemo(
     () => [
       {
         icon: "rocket-launch",
         iconSet: "mci" as const,
-        title: "Instant Filing",
-        desc: "Unified application for all clearances.",
+        title: t("home.feature.instantFiling.title"),
+        desc: t("home.feature.instantFiling.desc"),
         color: theme.colors.brand.primary
       },
       {
         icon: "radar",
         iconSet: "mci" as const,
-        title: "Live Tracking",
-        desc: "Monitor application status in real-time.",
+        title: t("home.feature.liveTracking.title"),
+        desc: t("home.feature.liveTracking.desc"),
         color: "#059669"
       },
       {
         icon: "verified-user",
         iconSet: "mi" as const,
-        title: "E-Certificates",
-        desc: "Download approved certificates instantly.",
+        title: t("home.feature.eCertificates.title"),
+        desc: t("home.feature.eCertificates.desc"),
         color: "#7c3aed"
       },
       {
         icon: "domain-verification",
         iconSet: "mci" as const,
-        title: "Single Window",
-        desc: "One portal, multiple departments.",
+        title: t("home.feature.singleWindow.title"),
+        desc: t("home.feature.singleWindow.desc"),
         color: "#0ea5e9"
       },
       {
         icon: "shield-check",
         iconSet: "mci" as const,
-        title: "Secure & Trusted",
-        desc: "Govt-grade security for your data.",
+        title: t("home.feature.secureTrusted.title"),
+        desc: t("home.feature.secureTrusted.desc"),
         color: "#f59e0b"
       }
     ],
-    [theme.colors.brand.primary]
+    [theme.colors.brand.primary, t]
   );
 
   const CARD_WIDTH = Math.min(260, Math.max(220, SCREEN_WIDTH * 0.72));
@@ -85,9 +88,12 @@ export function HomeScreen({ onLoginPress }: Props) {
       <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ paddingTop: 24 }}>
+        <BlurView intensity={40} style={{ paddingTop: 24, zIndex: 20, elevation: 20 }}>
           <View
             style={{
+              position: "relative",
+              zIndex: 20,
+              elevation: 20,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
@@ -119,7 +125,7 @@ export function HomeScreen({ onLoginPress }: Props) {
                     fontWeight: theme.typography.headerTitle.weight
                   }}
                 >
-                  FastTrack Punjab
+                  {t("home.appTitle")}
                 </ThemedText>
                 <ThemedText
                   variant="muted"
@@ -129,12 +135,13 @@ export function HomeScreen({ onLoginPress }: Props) {
                     textTransform: "uppercase"
                   }}
                 >
-                  Govt. of Punjab
+                  {t("home.govt")}
                 </ThemedText>
               </View>
             </View>
 
             <Pressable
+              onPress={() => setShowLangMenu((v) => !v)}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -144,10 +151,53 @@ export function HomeScreen({ onLoginPress }: Props) {
                 backgroundColor: theme.colors.surface.glass
               }}
             >
-              <ThemedText style={{ fontSize: 12, fontWeight: "700" }}>EN</ThemedText>
+              <ThemedText style={{ fontSize: 12, fontWeight: "700" }}>
+                {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+              </ThemedText>
               <MaterialIcons name="expand-more" size={16} color={theme.colors.text.muted} />
             </Pressable>
           </View>
+
+          {showLangMenu ? (
+            <View
+              style={{
+                position: "absolute",
+                right: 20,
+                top: 66,
+                width: 170,
+                borderRadius: 14,
+                overflow: "hidden",
+                backgroundColor: "rgba(255,255,255,0.92)",
+                borderWidth: 1,
+                borderColor: theme.colors.border.hairline,
+                zIndex: 999,
+                elevation: 999
+              }}
+            >
+              {["en", "pa", "hi"].map((code) => (
+                <Pressable
+                  key={code}
+                  onPress={() => {
+                    setLanguage(code as any);
+                    setShowLangMenu(false);
+                  }}
+                  style={{
+                    paddingHorizontal: 14,
+                    paddingVertical: 12,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                  }}
+                >
+                  <ThemedText style={{ fontSize: 14, fontWeight: "600", color: "#0f172a" }}>
+                    {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
+                  </ThemedText>
+                  {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                </Pressable>
+              ))}
+            </View>
+          ) : null}
         </BlurView>
 
         <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
@@ -198,9 +248,9 @@ export function HomeScreen({ onLoginPress }: Props) {
 
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                   <View style={{ gap: 6 }}>
-                    <ThemedText style={{ fontSize: 18, fontWeight: "800" }}>Punjab Industrial Portal</ThemedText>
+                    <ThemedText style={{ fontSize: 18, fontWeight: "800" }}>{t("home.bannerTitle")}</ThemedText>
                     <ThemedText variant="muted" style={{ fontSize: 12, fontWeight: "600" }}>
-                      FastTrack approvals for businesses
+                      {t("home.bannerSubtitle")}
                     </ThemedText>
                   </View>
 
@@ -267,26 +317,26 @@ export function HomeScreen({ onLoginPress }: Props) {
           <View style={{ paddingHorizontal: theme.spacing.screenX, marginTop: 28 }}>
             <ThemedText
               style={{
-                fontSize: theme.typography.title.size,
+                fontSize: 36,
                 fontWeight: theme.typography.title.weight,
                 textAlign: "center",
-                lineHeight: theme.typography.title.lineHeight
+                lineHeight: 46
               }}
             >
-              Invest. Build. <ThemedText variant="link">Grow.</ThemedText>
+              {t("home.heroTitle")} <ThemedText variant="link">{t("home.heroTitleLink")}</ThemedText>
             </ThemedText>
 
             <ThemedText
               variant="secondary"
               style={{
-                fontSize: theme.typography.body.size,
+                fontSize: 15,
                 marginTop: 12,
                 textAlign: "center",
                 maxWidth: 320,
                 alignSelf: "center"
               }}
             >
-              Your single-window gateway for industrial approvals in Punjab.
+              {t("home.heroSubtitle")}
             </ThemedText>
           </View>
 
@@ -352,14 +402,14 @@ export function HomeScreen({ onLoginPress }: Props) {
 
           <View style={{ paddingHorizontal: theme.spacing.screenX, marginTop: 28, paddingBottom: 30 }}>
             <ThemedButton
-              title="Login to Portal"
+              title={t("home.loginToPortal")}
               variant="primary"
               onPress={onLoginPress}
               containerStyle={{ marginBottom: 14 }}
               rightIcon={<MaterialIcons name="arrow-forward" size={20} color={theme.colors.button.primaryText} style={{ marginLeft: 6 }} />}
             />
 
-            <ThemedButton title="New Investor Registration" variant="outline" />
+            <ThemedButton title={t("home.newInvestorRegistration")} variant="outline" />
           </View>
         </ScrollView>
       </LinearGradient>

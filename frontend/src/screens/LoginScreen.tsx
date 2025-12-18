@@ -5,14 +5,19 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { ThemedText } from "../components/ThemedText";
+import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
   onBack: () => void;
+  onLoginSuccess: () => void;
 };
 
-export function LoginScreen({ onBack }: Props) {
+export function LoginScreen({ onBack, onLoginSuccess }: Props) {
   const theme = useTheme();
-  const [projectType, setProjectType] = useState("Industries/Business");
+  const { t } = useI18n();
+
+  type ProjectTypeId = "industries" | "housing" | "startup";
+  const [projectType, setProjectType] = useState<ProjectTypeId>("industries");
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -73,14 +78,14 @@ export function LoginScreen({ onBack }: Props) {
                 marginBottom: 9
               }}
             >
-              Login
+              {t("login.title")}
             </ThemedText>
 
             <View style={{ marginTop: 6 }}>
               <View style={{ position: "relative" }}>
                 <MaterialIcons name="person" size={22} color="#94a3b8" style={{ position: "absolute", top: 18, left: 16 }} />
                 <TextInput
-                  placeholder="Username / Email"
+                  placeholder={t("login.usernameOrEmail")}
                   placeholderTextColor="#94a3b8"
                   style={{
                     fontFamily: "Inter_500Medium",
@@ -99,7 +104,7 @@ export function LoginScreen({ onBack }: Props) {
               <View style={{ position: "relative" }}>
                 <MaterialIcons name="lock" size={22} color="#94a3b8" style={{ position: "absolute", top: 18, left: 16 }} />
                 <TextInput
-                  placeholder="Password"
+                  placeholder={t("login.password")}
                   placeholderTextColor="#94a3b8"
                   secureTextEntry={!showPassword}
                   style={{
@@ -128,7 +133,7 @@ export function LoginScreen({ onBack }: Props) {
               <View style={{ flex: 1, position: "relative" }}>
                 <MaterialIcons name="security" size={22} color="#94a3b8" style={{ position: "absolute", top: 18, left: 16 }} />
                 <TextInput
-                  placeholder="Code"
+                  placeholder={t("login.code")}
                   placeholderTextColor="#94a3b8"
                   style={{
                     fontFamily: "Inter_500Medium",
@@ -174,31 +179,34 @@ export function LoginScreen({ onBack }: Props) {
                 textTransform: "uppercase"
               }}
             >
-              Project Type
+              {t("login.projectType")}
             </ThemedText>
 
-            {[
+            {([
               {
-                label: "Industries/Business",
+                id: "industries" as const,
+                label: t("login.projectType.industries"),
                 icon: "business-center" as const
               },
               {
-                label: "Housing & Real Estate",
+                id: "housing" as const,
+                label: t("login.projectType.housing"),
                 icon: "home-work" as const
               },
               {
-                label: "Starup",
+                id: "startup" as const,
+                label: t("login.projectType.startup"),
                 icon: "emoji-objects" as const
               }
-            ].map((item) => (
+            ] satisfies { id: ProjectTypeId; label: string; icon: any }[]).map((item) => (
               <Pressable
-                key={item.label}
-                onPress={() => setProjectType(item.label)}
+                key={item.id}
+                onPress={() => setProjectType(item.id)}
                 style={{
                   paddingVertical: 14,
                   paddingHorizontal: 16,
                   borderRadius: 18,
-                  backgroundColor: projectType === item.label ? "rgb(55, 155, 47)" : "#ffffff",
+                  backgroundColor: projectType === item.id ? "rgb(55, 155, 47)" : "#ffffff",
                   marginBottom: 10,
                   flexDirection: "row",
                   justifyContent: "space-between",
@@ -206,23 +214,24 @@ export function LoginScreen({ onBack }: Props) {
                 }}
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                  <MaterialIcons name={item.icon} size={20} color={projectType === item.label ? "#ffffff" : "#64748b"} />
+                  <MaterialIcons name={item.icon} size={20} color={projectType === item.id ? "#ffffff" : "#64748b"} />
                   <ThemedText
                     style={{
                       fontSize: 14,
                       fontWeight: "700",
-                      color: projectType === item.label ? "#ffffff" : "#0f172a"
+                      color: projectType === item.id ? "#ffffff" : "#0f172a"
                     }}
                   >
                     {item.label}
                   </ThemedText>
                 </View>
 
-                {projectType === item.label && <MaterialIcons name="check-circle" size={18} color="white" />}
+                {projectType === item.id && <MaterialIcons name="check-circle" size={18} color="white" />}
               </Pressable>
             ))}
 
             <Pressable
+              onPress={onLoginSuccess}
               style={{
                 marginTop: 22,
                 paddingVertical: 16,
@@ -238,7 +247,7 @@ export function LoginScreen({ onBack }: Props) {
                   fontWeight: "800"
                 }}
               >
-                Login
+                {t("login.login")}
               </ThemedText>
             </Pressable>
 
@@ -251,7 +260,7 @@ export function LoginScreen({ onBack }: Props) {
                 alignItems: "center"
               }}
             >
-              <ThemedText style={{ fontSize: 16, fontWeight: "700" }}>Login with Startup Inida</ThemedText>
+              <ThemedText style={{ fontSize: 16, fontWeight: "700" }}>{t("login.loginWithStartupIndia")}</ThemedText>
             </Pressable>
 
             <Pressable style={{ alignSelf: "center", marginTop: 14 }}>
@@ -262,13 +271,13 @@ export function LoginScreen({ onBack }: Props) {
                   color: "#4f46e5"
                 }}
               >
-                Forgot Password
+                {t("login.forgotPassword")}
               </ThemedText>
             </Pressable>
 
             <View style={{ marginTop: 18, alignItems: "center" }}>
               <ThemedText style={{ color: "#64748b", fontWeight: "500" }}>
-                Do not have an account? <ThemedText style={{ color: "#4f46e5", fontWeight: "800" }}>Signup</ThemedText>
+                {t("login.noAccount")} <ThemedText style={{ color: "#4f46e5", fontWeight: "800" }}>{t("login.signup")}</ThemedText>
               </ThemedText>
             </View>
 
@@ -282,7 +291,7 @@ export function LoginScreen({ onBack }: Props) {
                 textAlign: "center"
               }}
             >
-              The National Single Window System has access to over 100 Central level approvals and State Single Window Systems of 14 States/UTs with one user id and password.
+              {t("login.footerDisclaimer")}
             </ThemedText>
           </View>
         </ScrollView>
