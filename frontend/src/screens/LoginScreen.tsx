@@ -1,9 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, TextInput, Pressable, Image } from "react-native";
+import { Platform, View, ScrollView, TextInput, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
+import { ThemedText } from "../components/ThemedText";
 
 type Props = {
   onBack: () => void;
@@ -24,22 +25,6 @@ export function LoginScreen({ onBack }: Props) {
         end={{ x: 1, y: 1 }}
         style={{ flex: 1 }}
       >
-        <View style={{ paddingTop: 50, paddingHorizontal: 16 }}>
-          <Pressable
-            onPress={onBack}
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 24,
-              backgroundColor: "rgba(255,255,255,0.8)",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
-          </Pressable>
-        </View>
-
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
           <View
             style={{
@@ -49,23 +34,47 @@ export function LoginScreen({ onBack }: Props) {
               paddingHorizontal: 24
             }}
           >
-            <View style={{ paddingTop: 20, paddingBottom: 18, alignItems: "center" }}>
-              <View
+            <View style={{ paddingTop: 18, paddingBottom: 14, flexDirection: "row", alignItems: "center" }}>
+              {Platform.OS === "web" ? (
+                <Image
+                  source={require("../assets/images/govt logo.svg")}
+                  style={{ width: 62, height: 62, resizeMode: "contain", marginRight: 10 }}
+                />
+              ) : null}
+
+              <Image
+                source={require("../assets/images/ip-logo.png")}
+                style={{ width: 95, height: 62, resizeMode: "contain" }}
+              />
+
+              <View style={{ flex: 1 }} />
+
+              <Pressable
+                onPress={onBack}
                 style={{
-                  width: 64,
-                  height: 64,
-                  borderRadius: 20,
-                  backgroundColor: "rgba(255,255,255,0.9)",
+                  width: 48,
+                  height: 48,
+                  borderRadius: 24,
+                  backgroundColor: "rgba(255,255,255,0.8)",
                   alignItems: "center",
                   justifyContent: "center"
                 }}
               >
-                <Image
-                  source={require("../assets/images/ip-logo.png")}
-                  style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-                />
-              </View>
+                <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
+              </Pressable>
             </View>
+
+            <ThemedText
+              style={{
+                fontSize: 25,
+                fontWeight: "500",
+                color: "rgb(58, 52, 151)",
+                marginTop: 3,
+                marginBottom: 9
+              }}
+            >
+              Login
+            </ThemedText>
 
             <View style={{ marginTop: 6 }}>
               <View style={{ position: "relative" }}>
@@ -74,13 +83,13 @@ export function LoginScreen({ onBack }: Props) {
                   placeholder="Username / Email"
                   placeholderTextColor="#94a3b8"
                   style={{
+                    fontFamily: "Inter_500Medium",
                     paddingLeft: 52,
                     paddingRight: 16,
                     paddingVertical: 16,
                     borderRadius: 18,
                     backgroundColor: "#ffffff",
-                    fontSize: 16,
-                    fontWeight: "500"
+                    fontSize: 16
                   }}
                 />
               </View>
@@ -94,13 +103,13 @@ export function LoginScreen({ onBack }: Props) {
                   placeholderTextColor="#94a3b8"
                   secureTextEntry={!showPassword}
                   style={{
+                    fontFamily: "Inter_500Medium",
                     paddingLeft: 52,
                     paddingRight: 52,
                     paddingVertical: 16,
                     borderRadius: 18,
                     backgroundColor: "#ffffff",
-                    fontSize: 16,
-                    fontWeight: "500"
+                    fontSize: 16
                   }}
                 />
                 <Pressable onPress={() => setShowPassword(!showPassword)} style={{ position: "absolute", top: 18, right: 16 }}>
@@ -122,51 +131,51 @@ export function LoginScreen({ onBack }: Props) {
                   placeholder="Code"
                   placeholderTextColor="#94a3b8"
                   style={{
+                    fontFamily: "Inter_500Medium",
                     paddingLeft: 52,
+                    paddingRight: 16,
                     paddingVertical: 16,
                     borderRadius: 18,
                     backgroundColor: "#ffffff",
-                    fontSize: 16,
-                    fontWeight: "500"
+                    fontSize: 16
                   }}
                 />
               </View>
 
               <View
                 style={{
-                  width: 120,
+                  width: 116,
                   height: 56,
                   borderRadius: 18,
-                  backgroundColor: "#e5e7eb",
+                  backgroundColor: "rgba(15,23,42,0.06)",
                   alignItems: "center",
                   justifyContent: "center"
                 }}
               >
-                <Text
+                <ThemedText
                   style={{
                     fontSize: 20,
                     fontWeight: "900",
-                    letterSpacing: 4,
-                    fontStyle: "italic"
+                    letterSpacing: 3
                   }}
                 >
                   8X2aP
-                </Text>
+                </ThemedText>
               </View>
             </View>
 
-            <Text
+            <ThemedText
               style={{
                 fontSize: 12,
                 fontWeight: "800",
-                textTransform: "uppercase",
                 color: "#64748b",
-                marginTop: 22,
-                marginBottom: 10
+                marginTop: 18,
+                marginBottom: 10,
+                textTransform: "uppercase"
               }}
             >
               Project Type
-            </Text>
+            </ThemedText>
 
             {[
               {
@@ -189,7 +198,7 @@ export function LoginScreen({ onBack }: Props) {
                   paddingVertical: 14,
                   paddingHorizontal: 16,
                   borderRadius: 18,
-                  backgroundColor: projectType === item.label ? "#0f172a" : "#ffffff",
+                  backgroundColor: projectType === item.label ? "rgb(55, 155, 47)" : "#ffffff",
                   marginBottom: 10,
                   flexDirection: "row",
                   justifyContent: "space-between",
@@ -198,7 +207,7 @@ export function LoginScreen({ onBack }: Props) {
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                   <MaterialIcons name={item.icon} size={20} color={projectType === item.label ? "#ffffff" : "#64748b"} />
-                  <Text
+                  <ThemedText
                     style={{
                       fontSize: 14,
                       fontWeight: "700",
@@ -206,7 +215,7 @@ export function LoginScreen({ onBack }: Props) {
                     }}
                   >
                     {item.label}
-                  </Text>
+                  </ThemedText>
                 </View>
 
                 {projectType === item.label && <MaterialIcons name="check-circle" size={18} color="white" />}
@@ -222,7 +231,7 @@ export function LoginScreen({ onBack }: Props) {
                 backgroundColor: "#4f46e5"
               }}
             >
-              <Text
+              <ThemedText
                 style={{
                   color: "white",
                   fontSize: 16,
@@ -230,7 +239,7 @@ export function LoginScreen({ onBack }: Props) {
                 }}
               >
                 Login
-              </Text>
+              </ThemedText>
             </Pressable>
 
             <Pressable
@@ -242,11 +251,11 @@ export function LoginScreen({ onBack }: Props) {
                 alignItems: "center"
               }}
             >
-              <Text style={{ fontSize: 16, fontWeight: "700" }}>Login with Startup Inida</Text>
+              <ThemedText style={{ fontSize: 16, fontWeight: "700" }}>Login with Startup Inida</ThemedText>
             </Pressable>
 
             <Pressable style={{ alignSelf: "center", marginTop: 14 }}>
-              <Text
+              <ThemedText
                 style={{
                   fontSize: 14,
                   fontWeight: "700",
@@ -254,27 +263,27 @@ export function LoginScreen({ onBack }: Props) {
                 }}
               >
                 Forgot Password
-              </Text>
+              </ThemedText>
             </Pressable>
 
             <View style={{ marginTop: 18, alignItems: "center" }}>
-              <Text style={{ color: "#64748b", fontWeight: "500" }}>
-                Do not have an account? <Text style={{ color: "#4f46e5", fontWeight: "800" }}>Signup</Text>
-              </Text>
+              <ThemedText style={{ color: "#64748b", fontWeight: "500" }}>
+                Do not have an account? <ThemedText style={{ color: "#4f46e5", fontWeight: "800" }}>Signup</ThemedText>
+              </ThemedText>
             </View>
 
-            <Text
+            <ThemedText
               style={{
                 marginTop: 16,
                 fontSize: 10,
-                lineHeight: 14,
-                color: "#64748b",
                 fontWeight: "500",
+                color: "#64748b",
+                lineHeight: 15,
                 textAlign: "center"
               }}
             >
               The National Single Window System has access to over 100 Central level approvals and State Single Window Systems of 14 States/UTs with one user id and password.
-            </Text>
+            </ThemedText>
           </View>
         </ScrollView>
       </LinearGradient>

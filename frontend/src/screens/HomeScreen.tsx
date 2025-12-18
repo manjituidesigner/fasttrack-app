@@ -85,13 +85,14 @@ export function HomeScreen({ onLoginPress }: Props) {
       <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ paddingTop: 50 }}>
+        <BlurView intensity={40} style={{ paddingTop: 24 }}>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
               paddingHorizontal: 20,
+              paddingTop: 8,
               paddingBottom: 12,
               borderBottomWidth: 1,
               borderColor: theme.colors.border.hairline
@@ -149,18 +150,118 @@ export function HomeScreen({ onLoginPress }: Props) {
           </View>
         </BlurView>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-          <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-            <Image
-              source={{
-                uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuBiBR3nLAKrWJdaTWIYeX-TFVFiYOGAmoJl4CEyLbljVoDTmPChShC74rr1zfMV_zW0e3CzSKYUk96FfQ1DLg1xzjkaVens5nnNBB9roBKWFkkD1tDEVsW5-GwbuG6vnDESCQfDnODgkjSD7OZs-7qxMDD-U42z1OVe6cJTgadSbAl9MRXZJD25-xKMpLA7-8_zsB6p7aS4pRDyJbyHenNM71UhYCrEUVRnZm1nhUToHpYo8NIHnrPoRaY_Zgv0WegvZcTPwmb_1t7b"
-              }}
+        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
+          <View style={{ marginTop: 12, paddingHorizontal: 20 }}>
+            <View
               style={{
                 width: "100%",
-                aspectRatio: 4 / 3,
-                borderRadius: theme.radii.card
+                height: 190,
+                borderRadius: theme.radii.card,
+                overflow: "hidden",
+                backgroundColor: theme.colors.surface.glass,
+                borderWidth: 1,
+                borderColor: theme.colors.border.hairline
               }}
-            />
+            >
+              <LinearGradient
+                colors={[
+                  "rgba(37,99,235,0.18)",
+                  "rgba(255,255,255,0.35)",
+                  "rgba(236,72,153,0.14)"
+                ]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={{ flex: 1, padding: 18 }}
+              >
+                <View
+                  style={{
+                    position: "absolute",
+                    width: 220,
+                    height: 220,
+                    borderRadius: 110,
+                    backgroundColor: "rgba(37,99,235,0.10)",
+                    top: -110,
+                    right: -90
+                  }}
+                />
+                <View
+                  style={{
+                    position: "absolute",
+                    width: 180,
+                    height: 180,
+                    borderRadius: 90,
+                    backgroundColor: "rgba(236,72,153,0.10)",
+                    bottom: -90,
+                    left: -70
+                  }}
+                />
+
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <View style={{ gap: 6 }}>
+                    <ThemedText style={{ fontSize: 18, fontWeight: "800" }}>Punjab Industrial Portal</ThemedText>
+                    <ThemedText variant="muted" style={{ fontSize: 12, fontWeight: "600" }}>
+                      FastTrack approvals for businesses
+                    </ThemedText>
+                  </View>
+
+                  <View
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 16,
+                      backgroundColor: "rgba(255,255,255,0.8)",
+                      alignItems: "center",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <MaterialCommunityIcons name="factory" size={22} color={theme.colors.brand.primary} />
+                  </View>
+                </View>
+
+                <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                  <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
+                    <View
+                      style={{
+                        width: 76,
+                        height: 76,
+                        borderRadius: 26,
+                        backgroundColor: "rgba(255,255,255,0.75)",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <MaterialCommunityIcons name="crane" size={34} color="#0ea5e9" />
+                    </View>
+
+                    <View
+                      style={{
+                        width: 76,
+                        height: 76,
+                        borderRadius: 26,
+                        backgroundColor: "rgba(255,255,255,0.75)",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <MaterialCommunityIcons name="truck-fast" size={34} color="#7c3aed" />
+                    </View>
+
+                    <View
+                      style={{
+                        width: 76,
+                        height: 76,
+                        borderRadius: 26,
+                        backgroundColor: "rgba(255,255,255,0.75)",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <MaterialCommunityIcons name="file-document-outline" size={34} color="#059669" />
+                    </View>
+                  </View>
+                </View>
+              </LinearGradient>
+            </View>
           </View>
 
           <View style={{ paddingHorizontal: theme.spacing.screenX, marginTop: 28 }}>
