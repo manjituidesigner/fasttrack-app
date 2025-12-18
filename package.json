@@ -1,0 +1,13 @@
+{
+  "name": "fasttrack-app",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend/functions"
+  ],
+  "scripts": {
+    "frontend": "npm run start --workspace frontend",
+    "backend": "npm run serve --workspace backend/functions",
+    "dev": "npm run frontend"
+  }
+}
