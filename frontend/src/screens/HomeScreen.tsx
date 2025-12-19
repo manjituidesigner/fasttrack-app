@@ -88,7 +88,7 @@ export function HomeScreen({ onLoginPress }: Props) {
       <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ paddingTop: 24, zIndex: 20, elevation: 20 }}>
+        <BlurView intensity={40} style={{ zIndex: 20, elevation: 20 }}>
           <View
             style={{
               position: "relative",

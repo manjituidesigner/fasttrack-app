@@ -20,7 +20,7 @@ export function ChangePasswordScreen({ onBack }: Props) {
       <StatusBar style="dark" />
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ paddingTop: 48 }}>
+        <BlurView intensity={40}>
           <View
             style={{
               height: 56,

@@ -28,7 +28,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
       <StatusBar style="dark" />
 
       <LinearGradient colors={["rgb(238, 228, 255)", "rgb(214, 233, 255)", "rgb(214, 233, 255)"]} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ paddingTop: 48, zIndex: 20, elevation: 20 }}>
+        <BlurView intensity={40} style={{ zIndex: 20, elevation: 20 }}>
           <View
             style={{
               position: "relative",
@@ -210,38 +210,38 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
               {[
                 {
                   icon: "currency-rupee" as const,
-                  title: "Investment Project",
-                  desc: "Apply New Project / Expansion",
+                  titleKey: "dashboard.card.investmentProject.title" as const,
+                  descKey: "dashboard.card.investmentProject.desc" as const,
                   color: "#4f46e5"
                 },
                 {
                   icon: "settings-applications" as const,
-                  title: "Manage Applications",
-                  desc: "Clearance | Incentive | Service",
+                  titleKey: "dashboard.card.manageApplications.title" as const,
+                  descKey: "dashboard.card.manageApplications.desc" as const,
                   color: "#7c3aed"
                 },
                 {
                   icon: "assignment" as const,
-                  title: "My Applications",
-                  desc: "View & Share Documents",
+                  titleKey: "dashboard.card.myApplications.title" as const,
+                  descKey: "dashboard.card.myApplications.desc" as const,
                   color: "#2563eb"
                 },
                 {
                   icon: "verified-user" as const,
-                  title: "Know Your Approvals",
-                  desc: "View Status & Progress",
+                  titleKey: "dashboard.card.knowYourApprovals.title" as const,
+                  descKey: "dashboard.card.knowYourApprovals.desc" as const,
                   color: "#0d9488"
                 },
                 {
                   icon: "lock" as const,
-                  title: "Entity Vault",
-                  desc: "Secure Document Storage",
+                  titleKey: "dashboard.card.entityVault.title" as const,
+                  descKey: "dashboard.card.entityVault.desc" as const,
                   color: "#e11d48"
                 },
                 {
                   icon: "analytics" as const,
-                  title: "Project Dashboard",
-                  desc: "Insights & Reports",
+                  titleKey: "dashboard.card.projectDashboard.title" as const,
+                  descKey: "dashboard.card.projectDashboard.desc" as const,
                   color: "#d97706"
                 }
               ].map((item, i) => (
@@ -275,7 +275,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
                       textTransform: "uppercase"
                     }}
                   >
-                    {item.title}
+                    {t(item.titleKey)}
                   </ThemedText>
 
                   <ThemedText
@@ -286,35 +286,110 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
                       marginTop: 4
                     }}
                   >
-                    {item.desc}
+                    {t(item.descKey)}
                   </ThemedText>
                 </Pressable>
               ))}
             </View>
           </View>
 
-          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
-            <ThemedText
+          <View style={{ paddingHorizontal: 20, paddingTop: 4 }}>
+            <Pressable
+              onPress={() => {}}
               style={{
-                fontSize: 20,
-                fontWeight: "900",
-                marginBottom: 10
+                height: 160,
+                borderRadius: 22,
+                overflow: "hidden",
+                backgroundColor: "rgba(15, 23, 42, 0.8)",
+                borderWidth: 1,
+                borderColor: "rgba(255,255,255,0.35)"
               }}
             >
-              Recent Activity
-            </ThemedText>
+              <Image
+                source={{
+                  uri: "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=60"
+                }}
+                style={{ width: "100%", height: "100%" }}
+              />
+
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  backgroundColor: "rgba(2,6,23,0.25)",
+                  justifyContent: "center",
+                  alignItems: "center"
+                }}
+              >
+                <View
+                  style={{
+                    width: 64,
+                    height: 64,
+                    borderRadius: 18,
+                    backgroundColor: "rgba(239, 68, 68, 0.95)",
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <MaterialIcons name="play-arrow" size={36} color="white" />
+                </View>
+
+                <ThemedText
+                  style={{
+                    marginTop: 14,
+                    fontSize: 13,
+                    fontWeight: "900",
+                    color: "white",
+                    letterSpacing: 1,
+                    textTransform: "uppercase"
+                  }}
+                >
+                  {t("dashboard.investorsWalkthrough")}
+                </ThemedText>
+              </View>
+            </Pressable>
+          </View>
+
+          <View style={{ paddingHorizontal: 20, paddingTop: 10 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+              <ThemedText
+                style={{
+                  fontSize: 20,
+                  fontWeight: "900"
+                }}
+              >
+                {t("dashboard.recentActivity")}
+              </ThemedText>
+
+              <Pressable
+                onPress={() => {}}
+                style={{
+                  paddingHorizontal: 14,
+                  paddingVertical: 8,
+                  borderRadius: 999,
+                  backgroundColor: "rgba(255,255,255,0.75)",
+                  borderWidth: 1,
+                  borderColor: "rgba(203,213,225,0.7)"
+                }}
+              >
+                <ThemedText style={{ fontSize: 12, fontWeight: "800", color: "#4f46e5" }}>{t("dashboard.viewLogs")}</ThemedText>
+              </Pressable>
+            </View>
 
             {[
               {
                 icon: "description" as const,
-                title: "CAF Application #4922",
-                desc: "Status updated to 'Scrutiny Completed'",
+                titleKey: "dashboard.activity.caf.title" as const,
+                descKey: "dashboard.activity.caf.desc" as const,
                 color: "#2563eb"
               },
               {
                 icon: "warning" as const,
-                title: "Power Connection #2101",
-                desc: "Action required: Site Map Clarification",
+                titleKey: "dashboard.activity.power.title" as const,
+                descKey: "dashboard.activity.power.desc" as const,
                 color: "#f97316"
               }
             ].map((item, i) => (
@@ -343,7 +418,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
                 </View>
 
                 <View style={{ flex: 1 }}>
-                  <ThemedText style={{ fontSize: 14, fontWeight: "800" }}>{item.title}</ThemedText>
+                  <ThemedText style={{ fontSize: 14, fontWeight: "800" }}>{t(item.titleKey)}</ThemedText>
                   <ThemedText
                     style={{
                       fontSize: 12,
@@ -351,11 +426,44 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
                       color: "#475569"
                     }}
                   >
-                    {item.desc}
+                    {t(item.descKey)}
                   </ThemedText>
                 </View>
               </View>
             ))}
+
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 14,
+                padding: 16,
+                borderRadius: 20,
+                backgroundColor: "rgba(255,255,255,0.85)",
+                marginTop: 6
+              }}
+            >
+              <View
+                style={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: 24,
+                  backgroundColor: "rgba(15, 23, 42, 0.08)",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <MaterialIcons name="support-agent" size={24} color="#0f172a" />
+              </View>
+
+              <View style={{ flex: 1 }}>
+                <ThemedText style={{ fontSize: 12, fontWeight: "900", color: "#64748b", textTransform: "uppercase" }}>
+                  {t("dashboard.helpLine.label")}
+                </ThemedText>
+                <ThemedText style={{ fontSize: 16, fontWeight: "900", color: "#0f172a" }}>{t("dashboard.helpLine.number")}</ThemedText>
+                <ThemedText style={{ fontSize: 11, fontWeight: "700", color: "#64748b" }}>{t("dashboard.helpLine.hours")}</ThemedText>
+              </View>
+            </View>
           </View>
         </ScrollView>
 
@@ -403,7 +511,12 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
                     color: i === 0 ? "#4f46e5" : "#94a3b8"
                   }}
                 >
-                  {(["Home", "Services", "Docs", "Profile"] as const)[i]}
+                  {([
+                    t("dashboard.bottomNav.home"),
+                    t("dashboard.bottomNav.services"),
+                    t("dashboard.bottomNav.docs"),
+                    t("dashboard.bottomNav.profile")
+                  ] as const)[i]}
                 </ThemedText>
               </View>
             ))}

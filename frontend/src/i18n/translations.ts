@@ -38,6 +38,67 @@ export type TranslationKey =
   | "login.signup"
   | "login.footerDisclaimer"
   | "dashboard.title"
+  | "dashboard.card.investmentProject.title"
+  | "dashboard.card.investmentProject.desc"
+  | "dashboard.card.manageApplications.title"
+  | "dashboard.card.manageApplications.desc"
+  | "dashboard.card.myApplications.title"
+  | "dashboard.card.myApplications.desc"
+  | "dashboard.card.knowYourApprovals.title"
+  | "dashboard.card.knowYourApprovals.desc"
+  | "dashboard.card.entityVault.title"
+  | "dashboard.card.entityVault.desc"
+  | "dashboard.card.projectDashboard.title"
+  | "dashboard.card.projectDashboard.desc"
+  | "dashboard.investorsWalkthrough"
+  | "dashboard.recentActivity"
+  | "dashboard.viewLogs"
+  | "dashboard.activity.caf.title"
+  | "dashboard.activity.caf.desc"
+  | "dashboard.activity.power.title"
+  | "dashboard.activity.power.desc"
+  | "dashboard.helpLine.label"
+  | "dashboard.helpLine.number"
+  | "dashboard.helpLine.hours"
+  | "dashboard.bottomNav.home"
+  | "dashboard.bottomNav.services"
+  | "dashboard.bottomNav.docs"
+  | "dashboard.bottomNav.profile"
+  | "drawer.home"
+  | "drawer.myProjects"
+  | "drawer.myApplications"
+  | "drawer.fiscalIncentives"
+  | "drawer.fiscalRegistrations"
+  | "drawer.eVault"
+  | "drawer.knowYourApprovals"
+  | "drawer.settings"
+  | "drawer.logout"
+  | "drawer.profile.name"
+  | "drawer.profile.company"
+  | "chatbot.title"
+  | "chatbot.greeting"
+  | "chatbot.placeholder"
+  | "myProjects.title"
+  | "myProjects.quickAction.addProjectWithCaf"
+  | "myProjects.quickAction.applyNewServices"
+  | "myProjects.quickAction.knowYourApproval"
+  | "myProjects.section.rtbaCaf"
+  | "myProjects.section.caf"
+  | "myProjects.section.scaf"
+  | "myProjects.status.pendingVerification"
+  | "myProjects.status.filingInProcess"
+  | "myProjects.status.accepted"
+  | "myProjects.pin"
+  | "myProjects.applicant"
+  | "myProjects.action"
+  | "myProjects.field.applicant"
+  | "myProjects.field.date"
+  | "myProjects.field.sector"
+  | "myProjects.field.district"
+  | "myProjects.bottomNav.projects"
+  | "myProjects.bottomNav.services"
+  | "myProjects.bottomNav.payments"
+  | "myProjects.bottomNav.profile"
   | "menu.language"
   | "menu.changePassword"
   | "menu.logout"
@@ -92,6 +153,68 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "login.footerDisclaimer": "The National Single Window System has access to over 100 Central level approvals and State Single Window Systems of 14 States/UTs with one user id and password.",
 
     "dashboard.title": "Dashboard",
+    "dashboard.card.investmentProject.title": "Investment Project",
+    "dashboard.card.investmentProject.desc": "Apply New Project / Expansion",
+    "dashboard.card.manageApplications.title": "Manage Applications",
+    "dashboard.card.manageApplications.desc": "Clearance | Incentive | Service",
+    "dashboard.card.myApplications.title": "My Applications",
+    "dashboard.card.myApplications.desc": "View & Share Documents",
+    "dashboard.card.knowYourApprovals.title": "Know Your Approvals",
+    "dashboard.card.knowYourApprovals.desc": "View Status & Progress",
+    "dashboard.card.entityVault.title": "Entity Vault",
+    "dashboard.card.entityVault.desc": "Secure Document Storage",
+    "dashboard.card.projectDashboard.title": "Project Dashboard",
+    "dashboard.card.projectDashboard.desc": "Insights & Reports",
+    "dashboard.investorsWalkthrough": "Investors Walkthrough",
+    "dashboard.recentActivity": "Recent Activity",
+    "dashboard.viewLogs": "View Logs",
+    "dashboard.activity.caf.title": "CAF Application #4922",
+    "dashboard.activity.caf.desc": "Status updated to 'Scrutiny Completed'",
+    "dashboard.activity.power.title": "Power Connection #2101",
+    "dashboard.activity.power.desc": "Action required: Site Map Clarification",
+    "dashboard.helpLine.label": "Help Line:",
+    "dashboard.helpLine.number": "0172-4866999",
+    "dashboard.helpLine.hours": "9:00 AM TO 5:00 PM",
+    "dashboard.bottomNav.home": "Home",
+    "dashboard.bottomNav.services": "Services",
+    "dashboard.bottomNav.docs": "Docs",
+    "dashboard.bottomNav.profile": "Profile",
+    "drawer.home": "Home",
+    "drawer.myProjects": "My Projects",
+    "drawer.myApplications": "My Applications",
+    "drawer.fiscalIncentives": "Fiscal Incentives",
+    "drawer.fiscalRegistrations": "Fiscal Registrations",
+    "drawer.eVault": "E-Vault",
+    "drawer.knowYourApprovals": "Know Your Approvals",
+    "drawer.settings": "Settings",
+    "drawer.logout": "Logout",
+    "drawer.profile.name": "Vikram Singh",
+    "drawer.profile.company": "Tech Solutions Pvt Ltd",
+    "chatbot.title": "Chat Support",
+    "chatbot.greeting": "Hi! How can I help you today?",
+    "chatbot.placeholder": "Type a message…",
+
+    "myProjects.title": "My Projects",
+    "myProjects.quickAction.addProjectWithCaf": "Add Project\nwith CAF",
+    "myProjects.quickAction.applyNewServices": "Apply New\nServices",
+    "myProjects.quickAction.knowYourApproval": "Know Your\nApproval",
+    "myProjects.section.rtbaCaf": "Right To Business Act (RTBA-CAF)",
+    "myProjects.section.caf": "Common Application Form (CAF)",
+    "myProjects.section.scaf": "Service - Common Application Form (S-CAF)",
+    "myProjects.status.pendingVerification": "Pending Verification",
+    "myProjects.status.filingInProcess": "Filing in Process",
+    "myProjects.status.accepted": "Accepted",
+    "myProjects.pin": "PIN",
+    "myProjects.applicant": "Applicant",
+    "myProjects.action": "Action",
+    "myProjects.field.applicant": "APPLICANT",
+    "myProjects.field.date": "DATE",
+    "myProjects.field.sector": "SECTOR",
+    "myProjects.field.district": "DISTRICT",
+    "myProjects.bottomNav.projects": "Projects",
+    "myProjects.bottomNav.services": "Services",
+    "myProjects.bottomNav.payments": "Payments",
+    "myProjects.bottomNav.profile": "Profile",
     "menu.language": "Change Language",
     "menu.changePassword": "Change Password",
     "menu.logout": "Logout",
@@ -144,6 +267,68 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "login.footerDisclaimer": "नेशनल सिंगल विंडो सिस्टम के पास 100 से अधिक केंद्रीय स्तर की मंज़ूरियों और 14 राज्यों/केंद्र शासित प्रदेशों की स्टेट सिंगल विंडो सिस्टम तक एक ही यूज़र आईडी और पासवर्ड से पहुंच है।",
 
     "dashboard.title": "डैशबोर्ड",
+    "dashboard.card.investmentProject.title": "निवेश परियोजना",
+    "dashboard.card.investmentProject.desc": "नई परियोजना / विस्तार के लिए आवेदन",
+    "dashboard.card.manageApplications.title": "आवेदन प्रबंधित करें",
+    "dashboard.card.manageApplications.desc": "क्लीयरेंस | इंसेंटिव | सेवा",
+    "dashboard.card.myApplications.title": "मेरे आवेदन",
+    "dashboard.card.myApplications.desc": "दस्तावेज़ देखें और साझा करें",
+    "dashboard.card.knowYourApprovals.title": "अपने अनुमोदन जानें",
+    "dashboard.card.knowYourApprovals.desc": "स्थिति और प्रगति देखें",
+    "dashboard.card.entityVault.title": "एंटिटी वॉल्ट",
+    "dashboard.card.entityVault.desc": "सुरक्षित दस्तावेज़ भंडारण",
+    "dashboard.card.projectDashboard.title": "परियोजना डैशबोर्ड",
+    "dashboard.card.projectDashboard.desc": "इनसाइट्स और रिपोर्ट",
+    "dashboard.investorsWalkthrough": "निवेशक वॉकथ्रू",
+    "dashboard.recentActivity": "हाल की गतिविधि",
+    "dashboard.viewLogs": "लॉग देखें",
+    "dashboard.activity.caf.title": "CAF आवेदन #4922",
+    "dashboard.activity.caf.desc": "स्थिति अपडेट: 'स्क्रूटनी पूर्ण'",
+    "dashboard.activity.power.title": "पावर कनेक्शन #2101",
+    "dashboard.activity.power.desc": "कार्रवाई आवश्यक: साइट मैप स्पष्टीकरण",
+    "dashboard.helpLine.label": "हेल्प लाइन:",
+    "dashboard.helpLine.number": "0172-4866999",
+    "dashboard.helpLine.hours": "9:00 AM से 5:00 PM",
+    "dashboard.bottomNav.home": "होम",
+    "dashboard.bottomNav.services": "सेवाएं",
+    "dashboard.bottomNav.docs": "दस्तावेज़",
+    "dashboard.bottomNav.profile": "प्रोफ़ाइल",
+    "drawer.home": "होम",
+    "drawer.myProjects": "मेरे प्रोजेक्ट",
+    "drawer.myApplications": "मेरे आवेदन",
+    "drawer.fiscalIncentives": "वित्तीय प्रोत्साहन",
+    "drawer.fiscalRegistrations": "वित्तीय पंजीकरण",
+    "drawer.eVault": "ई-वॉल्ट",
+    "drawer.knowYourApprovals": "अपने अनुमोदन जानें",
+    "drawer.settings": "सेटिंग्स",
+    "drawer.logout": "लॉगआउट",
+    "drawer.profile.name": "विक्रम सिंह",
+    "drawer.profile.company": "टेक सॉल्यूशंस प्रा. लि.",
+    "chatbot.title": "चैट सहायता",
+    "chatbot.greeting": "नमस्ते! मैं आज आपकी कैसे मदद कर सकता हूँ?",
+    "chatbot.placeholder": "संदेश लिखें…",
+
+    "myProjects.title": "मेरे प्रोजेक्ट",
+    "myProjects.quickAction.addProjectWithCaf": "CAF के साथ\nप्रोजेक्ट जोड़ें",
+    "myProjects.quickAction.applyNewServices": "नई\nसेवाओं के लिए आवेदन",
+    "myProjects.quickAction.knowYourApproval": "अपने\nअनुमोदन जानें",
+    "myProjects.section.rtbaCaf": "राइट टू बिज़नेस एक्ट (RTBA-CAF)",
+    "myProjects.section.caf": "कॉमन एप्लिकेशन फॉर्म (CAF)",
+    "myProjects.section.scaf": "सेवा - कॉमन एप्लिकेशन फॉर्म (S-CAF)",
+    "myProjects.status.pendingVerification": "सत्यापन लंबित",
+    "myProjects.status.filingInProcess": "फाइलिंग प्रक्रिया में",
+    "myProjects.status.accepted": "स्वीकृत",
+    "myProjects.pin": "पिन",
+    "myProjects.applicant": "आवेदक",
+    "myProjects.action": "एक्शन",
+    "myProjects.field.applicant": "आवेदक",
+    "myProjects.field.date": "तारीख",
+    "myProjects.field.sector": "क्षेत्र",
+    "myProjects.field.district": "जिला",
+    "myProjects.bottomNav.projects": "प्रोजेक्ट",
+    "myProjects.bottomNav.services": "सेवाएं",
+    "myProjects.bottomNav.payments": "भुगतान",
+    "myProjects.bottomNav.profile": "प्रोफ़ाइल",
     "menu.language": "भाषा बदलें",
     "menu.changePassword": "पासवर्ड बदलें",
     "menu.logout": "लॉगआउट",
@@ -196,6 +381,68 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "login.footerDisclaimer": "ਨੈਸ਼ਨਲ ਸਿੰਗਲ ਵਿੰਡੋ ਸਿਸਟਮ ਨੂੰ 100 ਤੋਂ ਵੱਧ ਕੇਂਦਰੀ ਪੱਧਰ ਦੀਆਂ ਮਨਜ਼ੂਰੀਆਂ ਅਤੇ 14 ਰਾਜਾਂ/ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼ਾਂ ਦੇ ਸਟੇਟ ਸਿੰਗਲ ਵਿੰਡੋ ਸਿਸਟਮਾਂ ਤੱਕ ਇੱਕੋ ਯੂਜ਼ਰ ਆਈਡੀ ਅਤੇ ਪਾਸਵਰਡ ਨਾਲ ਪਹੁੰਚ ਹੈ।",
 
     "dashboard.title": "ਡੈਸ਼ਬੋਰਡ",
+    "dashboard.card.investmentProject.title": "ਨਿਵੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
+    "dashboard.card.investmentProject.desc": "ਨਵਾਂ ਪ੍ਰੋਜੈਕਟ / ਵਿਸਥਾਰ ਲਈ ਅਰਜ਼ੀ",
+    "dashboard.card.manageApplications.title": "ਅਰਜ਼ੀਆਂ ਸੰਭਾਲੋ",
+    "dashboard.card.manageApplications.desc": "ਕਲੀਅਰੈਂਸ | ਇੰਸੈਂਟਿਵ | ਸੇਵਾ",
+    "dashboard.card.myApplications.title": "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
+    "dashboard.card.myApplications.desc": "ਦਸਤਾਵੇਜ਼ ਵੇਖੋ ਅਤੇ ਸਾਂਝੇ ਕਰੋ",
+    "dashboard.card.knowYourApprovals.title": "ਆਪਣੀਆਂ ਮਨਜ਼ੂਰੀਆਂ ਜਾਣੋ",
+    "dashboard.card.knowYourApprovals.desc": "ਸਥਿਤੀ ਅਤੇ ਪ੍ਰਗਤੀ ਵੇਖੋ",
+    "dashboard.card.entityVault.title": "ਐਂਟਿਟੀ ਵਾਲਟ",
+    "dashboard.card.entityVault.desc": "ਸੁਰੱਖਿਅਤ ਦਸਤਾਵੇਜ਼ ਸਟੋਰੇਜ",
+    "dashboard.card.projectDashboard.title": "ਪ੍ਰੋਜੈਕਟ ਡੈਸ਼ਬੋਡ",
+    "dashboard.card.projectDashboard.desc": "ਇਨਸਾਈਟਸ ਅਤੇ ਰਿਪੋਰਟਾਂ",
+    "dashboard.investorsWalkthrough": "ਨਿਵੇਸ਼ਕ ਵਾਕਥਰੂ",
+    "dashboard.recentActivity": "ਹਾਲੀਆ ਗਤੀਵਿਧੀ",
+    "dashboard.viewLogs": "ਲੌਗ ਵੇਖੋ",
+    "dashboard.activity.caf.title": "CAF ਅਰਜ਼ੀ #4922",
+    "dashboard.activity.caf.desc": "ਸਥਿਤੀ ਅਪਡੇਟ: 'ਸਕ੍ਰੂਟੀਨੀ ਪੂਰੀ'",
+    "dashboard.activity.power.title": "ਪਾਵਰ ਕਨੈਕਸ਼ਨ #2101",
+    "dashboard.activity.power.desc": "ਕਾਰਵਾਈ ਲੋੜੀਂਦੀ: ਸਾਈਟ ਮੈਪ ਸਪਸ਼ਟੀਕਰਣ",
+    "dashboard.helpLine.label": "ਹੈਲਪ ਲਾਈਨ:",
+    "dashboard.helpLine.number": "0172-4866999",
+    "dashboard.helpLine.hours": "9:00 AM ਤੋਂ 5:00 PM",
+    "dashboard.bottomNav.home": "ਹੋਮ",
+    "dashboard.bottomNav.services": "ਸੇਵਾਵਾਂ",
+    "dashboard.bottomNav.docs": "ਦਸਤਾਵੇਜ਼",
+    "dashboard.bottomNav.profile": "ਪ੍ਰੋਫਾਈਲ",
+    "drawer.home": "ਹੋਮ",
+    "drawer.myProjects": "ਮੇਰੇ ਪ੍ਰੋਜੈਕਟ",
+    "drawer.myApplications": "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
+    "drawer.fiscalIncentives": "ਵਿੱਤੀ ਪ੍ਰੋਤਸਾਹਨ",
+    "drawer.fiscalRegistrations": "ਵਿੱਤੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
+    "drawer.eVault": "ਈ-ਵਾਲਟ",
+    "drawer.knowYourApprovals": "ਆਪਣੀਆਂ ਮਨਜ਼ੂਰੀਆਂ ਜਾਣੋ",
+    "drawer.settings": "ਸੈਟਿੰਗਜ਼",
+    "drawer.logout": "ਲੌਗਆਉਟ",
+    "drawer.profile.name": "ਵਿਕਰਮ ਸਿੰਘ",
+    "drawer.profile.company": "ਟੈਕ ਸੋਲੂਸ਼ਨਜ਼ ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟੇਡ",
+    "chatbot.title": "ਚੈਟ ਸਹਾਇਤਾ",
+    "chatbot.greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਅੱਜ ਤੁਹਾਡੀ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?",
+    "chatbot.placeholder": "ਸੁਨੇਹਾ ਲਿਖੋ…",
+
+    "myProjects.title": "ਮੇਰੇ ਪ੍ਰੋਜੈਕਟ",
+    "myProjects.quickAction.addProjectWithCaf": "CAF ਨਾਲ\nਪ੍ਰੋਜੈਕਟ ਜੋੜੋ",
+    "myProjects.quickAction.applyNewServices": "ਨਵੀਆਂ\nਸੇਵਾਵਾਂ ਲਈ ਅਰਜ਼ੀ",
+    "myProjects.quickAction.knowYourApproval": "ਆਪਣੀਆਂ\nਮਨਜ਼ੂਰੀਆਂ ਜਾਣੋ",
+    "myProjects.section.rtbaCaf": "ਰਾਈਟ ਟੂ ਬਿਜ਼ਨਸ ਐਕਟ (RTBA-CAF)",
+    "myProjects.section.caf": "ਕਾਮਨ ਐਪਲੀਕੇਸ਼ਨ ਫਾਰਮ (CAF)",
+    "myProjects.section.scaf": "ਸੇਵਾ - ਕਾਮਨ ਐਪਲੀਕੇਸ਼ਨ ਫਾਰਮ (S-CAF)",
+    "myProjects.status.pendingVerification": "ਤਸਦੀਕ ਬਾਕੀ",
+    "myProjects.status.filingInProcess": "ਫਾਈਲਿੰਗ ਪ੍ਰਕਿਰਿਆ ਵਿੱਚ",
+    "myProjects.status.accepted": "ਮਨਜ਼ੂਰ",
+    "myProjects.pin": "ਪਿਨ",
+    "myProjects.applicant": "ਆਵੇਦਕ",
+    "myProjects.action": "ਐਕਸ਼ਨ",
+    "myProjects.field.applicant": "ਆਵੇਦਕ",
+    "myProjects.field.date": "ਤਾਰੀਖ",
+    "myProjects.field.sector": "ਸੈਕਟਰ",
+    "myProjects.field.district": "ਜ਼ਿਲ੍ਹਾ",
+    "myProjects.bottomNav.projects": "ਪ੍ਰੋਜੈਕਟ",
+    "myProjects.bottomNav.services": "ਸੇਵਾਵਾਂ",
+    "myProjects.bottomNav.payments": "ਭੁਗਤਾਨ",
+    "myProjects.bottomNav.profile": "ਪ੍ਰੋਫਾਈਲ",
     "menu.language": "ਭਾਸ਼ਾ ਬਦਲੋ",
     "menu.changePassword": "ਪਾਸਵਰਡ ਬਦਲੋ",
     "menu.logout": "ਲੌਗਆਉਟ",
