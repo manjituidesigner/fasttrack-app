@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dimensions, Image, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
@@ -11,6 +11,22 @@ import {
   Inter_800ExtraBold,
   Inter_900Black
 } from "@expo-google-fonts/inter";
+import {
+  NotoSansDevanagari_400Regular,
+  NotoSansDevanagari_500Medium,
+  NotoSansDevanagari_600SemiBold,
+  NotoSansDevanagari_700Bold,
+  NotoSansDevanagari_800ExtraBold,
+  NotoSansDevanagari_900Black
+} from "@expo-google-fonts/noto-sans-devanagari";
+import {
+  NotoSansGurmukhi_400Regular,
+  NotoSansGurmukhi_500Medium,
+  NotoSansGurmukhi_600SemiBold,
+  NotoSansGurmukhi_700Bold,
+  NotoSansGurmukhi_800ExtraBold,
+  NotoSansGurmukhi_900Black
+} from "@expo-google-fonts/noto-sans-gurmukhi";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { I18nProvider } from "./i18n/I18nProvider";
 import { useI18n } from "./i18n/I18nProvider";
@@ -19,10 +35,12 @@ import { LoginScreen } from "./screens/LoginScreen";
 import { DashboardScreen } from "./screens/DashboardScreen";
 import { ChangePasswordScreen } from "./screens/ChangePasswordScreen";
 import { MyProjectsScreen } from "./screens/MyProjectsScreen";
+import { MyApplicationsScreen } from "./screens/MyApplicationsScreen";
+import { CafFormScreen } from "./screens/CafFormScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
-type RouteName = "home" | "login" | "dashboard" | "myProjects" | "changePassword";
+type RouteName = "home" | "login" | "dashboard" | "myProjects" | "myApplications" | "cafForm" | "changePassword";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -83,7 +101,19 @@ export function AppRoot() {
     Inter_600SemiBold,
     Inter_700Bold,
     Inter_800ExtraBold,
-    Inter_900Black
+    Inter_900Black,
+    NotoSansDevanagari_400Regular,
+    NotoSansDevanagari_500Medium,
+    NotoSansDevanagari_600SemiBold,
+    NotoSansDevanagari_700Bold,
+    NotoSansDevanagari_800ExtraBold,
+    NotoSansDevanagari_900Black,
+    NotoSansGurmukhi_400Regular,
+    NotoSansGurmukhi_500Medium,
+    NotoSansGurmukhi_600SemiBold,
+    NotoSansGurmukhi_700Bold,
+    NotoSansGurmukhi_800ExtraBold,
+    NotoSansGurmukhi_900Black
   });
 
   if (!fontsLoaded) return null;
@@ -106,11 +136,25 @@ export function AppRoot() {
 }
 
 function AppShell() {
-  const { t } = useI18n();
+  const { t, language } = useI18n();
   const [route, setRoute] = useState<RouteName>("home");
   const [showChat, setShowChat] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
   const [showDrawer, setShowDrawer] = useState(false);
+
+  useEffect(() => {
+    const baseFontFamily =
+      language === "hi"
+        ? "NotoSansDevanagari_400Regular"
+        : language === "pa"
+          ? "NotoSansGurmukhi_400Regular"
+          : "Inter_400Regular";
+
+    const TextAny = Text as any;
+    TextAny.defaultProps = TextAny.defaultProps ?? {};
+    const existingStyle = TextAny.defaultProps.style;
+    TextAny.defaultProps.style = [existingStyle, { fontFamily: baseFontFamily }];
+  }, [language]);
 
   const screen =
     route === "home" ? (
@@ -125,16 +169,21 @@ function AppShell() {
         onChatPress={() => setShowChat(true)}
         onAddPress={() => {}}
       />
+    ) : route === "cafForm" ? (
+      <CafFormScreen onBack={() => setRoute("myApplications")} />
+    ) : route === "myApplications" ? (
+      <MyApplicationsScreen onMenuPress={() => setShowDrawer(true)} onFillCaf={() => setRoute("cafForm")} />
     ) : (
       <DashboardScreen
         onMenuPress={() => setShowDrawer(true)}
+        onMyApplications={() => setRoute("myApplications")}
         onChangePassword={() => setRoute("changePassword")}
         onLogout={() => setRoute("home")}
       />
     );
 
-  const shouldRenderChatModal = route === "dashboard" || route === "myProjects";
-  const shouldRenderChatFab = route === "dashboard";
+  const shouldRenderChatModal = route === "dashboard" || route === "myProjects" || route === "myApplications";
+  const shouldRenderChatFab = route === "dashboard" || route === "myApplications";
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const DRAWER_WIDTH = Math.min(windowWidth * 0.85, 360);
@@ -264,7 +313,7 @@ function AppShell() {
       ) : null}
 
       <Modal
-        visible={showDrawer && (route === "dashboard" || route === "myProjects")}
+        visible={showDrawer && (route === "dashboard" || route === "myProjects" || route === "myApplications")}
         transparent
         animationType="fade"
         onRequestClose={() => setShowDrawer(false)}
@@ -381,7 +430,16 @@ function AppShell() {
                     setRoute("myProjects");
                   }}
                 />
-                <MenuItem icon="description" label={t("drawer.myApplications")} badge="3" onPress={() => setShowDrawer(false)} />
+                <MenuItem
+                  icon="description"
+                  label={t("drawer.myApplications")}
+                  badge="3"
+                  active={route === "myApplications"}
+                  onPress={() => {
+                    setShowDrawer(false);
+                    setRoute("myApplications");
+                  }}
+                />
                 <MenuItem icon="monetization-on" label={t("drawer.fiscalIncentives")} onPress={() => setShowDrawer(false)} />
                 <MenuItem icon="assignment" label={t("drawer.fiscalRegistrations")} onPress={() => setShowDrawer(false)} />
                 <MenuItem icon="lock" label={t("drawer.eVault")} onPress={() => setShowDrawer(false)} />

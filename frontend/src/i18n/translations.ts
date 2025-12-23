@@ -95,6 +95,9 @@ export type TranslationKey =
   | "myProjects.field.date"
   | "myProjects.field.sector"
   | "myProjects.field.district"
+  | "myProjects.sector.manufacturing"
+  | "myProjects.sector.otherService"
+  | "myProjects.empty"
   | "myProjects.bottomNav.projects"
   | "myProjects.bottomNav.services"
   | "myProjects.bottomNav.payments"
@@ -106,7 +109,59 @@ export type TranslationKey =
   | "changePassword.current"
   | "changePassword.new"
   | "changePassword.confirm"
-  | "changePassword.save";
+  | "changePassword.save"
+  | "myApplications.title"
+  | "myApplications.tab.applyNew"
+  | "myApplications.tab.applied"
+  | "myApplications.tab.pending"
+  | "myApplications.tab.issued"
+  | "myApplications.tab.rejected"
+  | "myApplications.tab.withdrawn"
+  | "myApplications.info.line1"
+  | "myApplications.info.serviceCaf"
+  | "myApplications.info.line1b"
+  | "myApplications.info.clickApply"
+  | "myApplications.info.line2"
+  | "myApplications.info.clickHere"
+  | "myApplications.section.rtba"
+  | "myApplications.section.caf"
+  | "myApplications.section.scaf"
+  | "myApplications.field.district"
+  | "myApplications.field.sector"
+  | "myApplications.field.pin"
+  | "myApplications.menu.profile"
+  | "myApplications.fab.fillCaf"
+  | "cafForm.title"
+  | "cafForm.progress.step"
+  | "cafForm.progress.completed"
+  | "cafForm.section.applicantDetails"
+  | "cafForm.badge.verified"
+  | "cafForm.field.name"
+  | "cafForm.field.role"
+  | "cafForm.field.aadhaar"
+  | "cafForm.field.pan"
+  | "cafForm.field.mobile"
+  | "cafForm.field.phone"
+  | "cafForm.value.na"
+  | "cafForm.field.email"
+  | "cafForm.section.addressDetails"
+  | "cafForm.field.country"
+  | "cafForm.value.india"
+  | "cafForm.field.state"
+  | "cafForm.value.punjab"
+  | "cafForm.field.district"
+  | "cafForm.field.tehsil"
+  | "cafForm.field.villageTown"
+  | "cafForm.field.address"
+  | "cafForm.field.pinCode"
+  | "cafForm.file.authorizationLetter"
+  | "cafForm.file.meta"
+  | "cafForm.section.businessEntityInfo"
+  | "cafForm.section.businessEntityInfo.sub"
+  | "cafForm.signature.authorizedSignatory"
+  | "cafForm.action.cancel"
+  | "cafForm.action.nextStep"
+  | "cafForm.action.viewAttachment";
 
 type Dictionary = Record<TranslationKey, string>;
 
@@ -211,6 +266,9 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "DATE",
     "myProjects.field.sector": "SECTOR",
     "myProjects.field.district": "DISTRICT",
+    "myProjects.sector.manufacturing": "Manufacturing",
+    "myProjects.sector.otherService": "Other Service",
+    "myProjects.empty": "No applications found.",
     "myProjects.bottomNav.projects": "Projects",
     "myProjects.bottomNav.services": "Services",
     "myProjects.bottomNav.payments": "Payments",
@@ -222,7 +280,60 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "changePassword.current": "Current Password",
     "changePassword.new": "New Password",
     "changePassword.confirm": "Confirm Password",
-    "changePassword.save": "Save"
+    "changePassword.save": "Save",
+    "myApplications.title": "My Applications",
+    "myApplications.tab.applyNew": "Apply New",
+    "myApplications.tab.applied": "Applied",
+    "myApplications.tab.pending": "Pending",
+    "myApplications.tab.issued": "Issued",
+    "myApplications.tab.rejected": "Rejected",
+    "myApplications.tab.withdrawn": "Withdrawn",
+    "myApplications.info.line1": "To avail Services, filing of",
+    "myApplications.info.serviceCaf": "Service-CAF",
+    "myApplications.info.line1b": "is mandatory for existing projects.",
+    "myApplications.info.clickApply": "Click here to Apply",
+    "myApplications.info.line2": "To view list of Services",
+    "myApplications.info.clickHere": "Click here",
+    "myApplications.section.rtba": "Right To Business Act (RTBA-CAF)",
+    "myApplications.section.caf": "Common Application Form (CAF)",
+    "myApplications.section.scaf": "Service - Common Application (S-CAF)",
+    "myApplications.field.district": "District",
+    "myApplications.field.sector": "Sector",
+    "myApplications.field.pin": "PIN",
+    "myApplications.menu.profile": "Profile",
+    "myApplications.fab.fillCaf": "Fill CAF",
+
+    "cafForm.title": "CAF Form",
+    "cafForm.progress.step": "Step 1 of 5",
+    "cafForm.progress.completed": "20% Completed",
+    "cafForm.section.applicantDetails": "1. Applicant Details",
+    "cafForm.badge.verified": "Verified",
+    "cafForm.field.name": "Name",
+    "cafForm.field.role": "Chief Executive Officer",
+    "cafForm.field.aadhaar": "Aadhaar Card No",
+    "cafForm.field.pan": "Pan Card No",
+    "cafForm.field.mobile": "Mobile No.",
+    "cafForm.field.phone": "Phone Number",
+    "cafForm.value.na": "N/A",
+    "cafForm.field.email": "Email ID",
+    "cafForm.section.addressDetails": "Address Details",
+    "cafForm.field.country": "Country",
+    "cafForm.value.india": "India",
+    "cafForm.field.state": "State",
+    "cafForm.value.punjab": "Punjab",
+    "cafForm.field.district": "District",
+    "cafForm.field.tehsil": "Tehsil",
+    "cafForm.field.villageTown": "Village/Town",
+    "cafForm.field.address": "Address",
+    "cafForm.field.pinCode": "Pin Code",
+    "cafForm.file.authorizationLetter": "Authorization Letter",
+    "cafForm.file.meta": "PDF • 2.4 MB",
+    "cafForm.section.businessEntityInfo": "2. Business Entity Info",
+    "cafForm.section.businessEntityInfo.sub": "ASD Company 1 • Private Limited",
+    "cafForm.signature.authorizedSignatory": "Authorized Signatory",
+    "cafForm.action.cancel": "Cancel",
+    "cafForm.action.nextStep": "Next Step",
+    "cafForm.action.viewAttachment": "View Attachment",
   },
 
   hi: {
@@ -325,6 +436,9 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "तारीख",
     "myProjects.field.sector": "क्षेत्र",
     "myProjects.field.district": "जिला",
+    "myProjects.sector.manufacturing": "विनिर्माण",
+    "myProjects.sector.otherService": "अन्य सेवा",
+    "myProjects.empty": "कोई आवेदन नहीं मिला।",
     "myProjects.bottomNav.projects": "प्रोजेक्ट",
     "myProjects.bottomNav.services": "सेवाएं",
     "myProjects.bottomNav.payments": "भुगतान",
@@ -336,7 +450,60 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "changePassword.current": "वर्तमान पासवर्ड",
     "changePassword.new": "नया पासवर्ड",
     "changePassword.confirm": "पासवर्ड की पुष्टि करें",
-    "changePassword.save": "सेव करें"
+    "changePassword.save": "सेव करें",
+    "myApplications.title": "मेरे आवेदन",
+    "myApplications.tab.applyNew": "नया आवेदन",
+    "myApplications.tab.applied": "आवेदित",
+    "myApplications.tab.pending": "लंबित",
+    "myApplications.tab.issued": "जारी",
+    "myApplications.tab.rejected": "अस्वीकृत",
+    "myApplications.tab.withdrawn": "वापस लिया",
+    "myApplications.info.line1": "सेवाओं का लाभ उठाने हेतु",
+    "myApplications.info.serviceCaf": "Service-CAF",
+    "myApplications.info.line1b": "दाखिल करना मौजूदा परियोजनाओं के लिए अनिवार्य है।",
+    "myApplications.info.clickApply": "आवेदन करने के लिए यहाँ क्लिक करें",
+    "myApplications.info.line2": "सेवाओं की सूची देखने के लिए",
+    "myApplications.info.clickHere": "यहाँ क्लिक करें",
+    "myApplications.section.rtba": "राइट टू बिज़नेस एक्ट (RTBA-CAF)",
+    "myApplications.section.caf": "कॉमन एप्लिकेशन फॉर्म (CAF)",
+    "myApplications.section.scaf": "सेवा - कॉमन एप्लिकेशन (S-CAF)",
+    "myApplications.field.district": "जिला",
+    "myApplications.field.sector": "क्षेत्र",
+    "myApplications.field.pin": "पिन",
+    "myApplications.menu.profile": "प्रोफ़ाइल",
+    "myApplications.fab.fillCaf": "CAF भरें",
+
+    "cafForm.title": "CAF फ़ॉर्म",
+    "cafForm.progress.step": "चरण 1 / 5",
+    "cafForm.progress.completed": "20% पूर्ण",
+    "cafForm.section.applicantDetails": "1. आवेदक विवरण",
+    "cafForm.badge.verified": "सत्यापित",
+    "cafForm.field.name": "नाम",
+    "cafForm.field.role": "मुख्य कार्यकारी अधिकारी",
+    "cafForm.field.aadhaar": "आधार कार्ड नं.",
+    "cafForm.field.pan": "पैन कार्ड नं.",
+    "cafForm.field.mobile": "मोबाइल नं.",
+    "cafForm.field.phone": "फ़ोन नंबर",
+    "cafForm.value.na": "उपलब्ध नहीं",
+    "cafForm.field.email": "ईमेल आईडी",
+    "cafForm.section.addressDetails": "पता विवरण",
+    "cafForm.field.country": "देश",
+    "cafForm.value.india": "भारत",
+    "cafForm.field.state": "राज्य",
+    "cafForm.value.punjab": "पंजाब",
+    "cafForm.field.district": "जिला",
+    "cafForm.field.tehsil": "तहसील",
+    "cafForm.field.villageTown": "गांव/शहर",
+    "cafForm.field.address": "पता",
+    "cafForm.field.pinCode": "पिन कोड",
+    "cafForm.file.authorizationLetter": "प्राधिकरण पत्र",
+    "cafForm.file.meta": "PDF • 2.4 MB",
+    "cafForm.section.businessEntityInfo": "2. व्यवसाय इकाई जानकारी",
+    "cafForm.section.businessEntityInfo.sub": "ASD Company 1 • प्राइवेट लिमिटेड",
+    "cafForm.signature.authorizedSignatory": "अधिकृत हस्ताक्षरकर्ता",
+    "cafForm.action.cancel": "रद्द करें",
+    "cafForm.action.nextStep": "अगला चरण",
+    "cafForm.action.viewAttachment": "संलग्नक देखें",
   },
 
   pa: {
@@ -439,6 +606,9 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "ਤਾਰੀਖ",
     "myProjects.field.sector": "ਸੈਕਟਰ",
     "myProjects.field.district": "ਜ਼ਿਲ੍ਹਾ",
+    "myProjects.sector.manufacturing": "ਮੈਨੂਫੈਕਚਰਿੰਗ",
+    "myProjects.sector.otherService": "ਹੋਰ ਸੇਵਾ",
+    "myProjects.empty": "ਕੋਈ ਅਰਜ਼ੀ ਨਹੀਂ ਮਿਲੀ।",
     "myProjects.bottomNav.projects": "ਪ੍ਰੋਜੈਕਟ",
     "myProjects.bottomNav.services": "ਸੇਵਾਵਾਂ",
     "myProjects.bottomNav.payments": "ਭੁਗਤਾਨ",
@@ -450,6 +620,59 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "changePassword.current": "ਮੌਜੂਦਾ ਪਾਸਵਰਡ",
     "changePassword.new": "ਨਵਾਂ ਪਾਸਵਰਡ",
     "changePassword.confirm": "ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ",
-    "changePassword.save": "ਸੇਵ ਕਰੋ"
-  }
+    "changePassword.save": "ਸੇਵ ਕਰੋ",
+    "myApplications.title": "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
+    "myApplications.tab.applyNew": "ਨਵੀਂ ਅਰਜ਼ੀ",
+    "myApplications.tab.applied": "ਅਰਜ਼ੀ ਕੀਤੀ",
+    "myApplications.tab.pending": "ਬਾਕੀ",
+    "myApplications.tab.issued": "ਜਾਰੀ",
+    "myApplications.tab.rejected": "ਰੱਦ",
+    "myApplications.tab.withdrawn": "ਵਾਪਸ ਲਈ",
+    "myApplications.info.line1": "ਸੇਵਾਵਾਂ ਲਈ",
+    "myApplications.info.serviceCaf": "Service-CAF",
+    "myApplications.info.line1b": "ਦਾ ਫਾਇਲ ਕਰਨਾ ਮੌਜੂਦਾ ਪ੍ਰੋਜੈਕਟਾਂ ਲਈ ਲਾਜ਼ਮੀ ਹੈ।",
+    "myApplications.info.clickApply": "ਅਰਜ਼ੀ ਦੇਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ",
+    "myApplications.info.line2": "ਸੇਵਾਵਾਂ ਦੀ ਸੂਚੀ ਵੇਖਣ ਲਈ",
+    "myApplications.info.clickHere": "ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ",
+    "myApplications.section.rtba": "ਰਾਈਟ ਟੂ ਬਿਜ਼ਨਸ ਐਕਟ (RTBA-CAF)",
+    "myApplications.section.caf": "ਕਾਮਨ ਐਪਲੀਕੇਸ਼ਨ ਫਾਰਮ (CAF)",
+    "myApplications.section.scaf": "ਸੇਵਾ - ਕਾਮਨ ਐਪਲੀਕੇਸ਼ਨ (S-CAF)",
+    "myApplications.field.district": "ਜ਼ਿਲ੍ਹਾ",
+    "myApplications.field.sector": "ਸੈਕਟਰ",
+    "myApplications.field.pin": "ਪਿਨ",
+    "myApplications.menu.profile": "ਪ੍ਰੋਫਾਈਲ",
+    "myApplications.fab.fillCaf": "CAF ਭਰੋ",
+
+    "cafForm.title": "CAF ਫਾਰਮ",
+    "cafForm.progress.step": "ਕਦਮ 1 / 5",
+    "cafForm.progress.completed": "20% ਪੂਰਾ",
+    "cafForm.section.applicantDetails": "1. ਅਰਜ਼ੀਕਰਤਾ ਵੇਰਵੇ",
+    "cafForm.badge.verified": "ਤਸਦੀਕ ਹੋਇਆ",
+    "cafForm.field.name": "ਨਾਂ",
+    "cafForm.field.role": "ਚੀਫ਼ ਏਗਜ਼ੈਕਟਿਵ ਅਫ਼ਸਰ",
+    "cafForm.field.aadhaar": "ਆਧਾਰ ਕਾਰਡ ਨੰ.",
+    "cafForm.field.pan": "ਪੈਨ ਕਾਰਡ ਨੰ.",
+    "cafForm.field.mobile": "ਮੋਬਾਈਲ ਨੰ.",
+    "cafForm.field.phone": "ਫ਼ੋਨ ਨੰਬਰ",
+    "cafForm.value.na": "ਲਾਗੂ ਨਹੀਂ",
+    "cafForm.field.email": "ਈਮੇਲ ਆਈਡੀ",
+    "cafForm.section.addressDetails": "ਪਤਾ ਵੇਰਵੇ",
+    "cafForm.field.country": "ਦੇਸ਼",
+    "cafForm.value.india": "ਭਾਰਤ",
+    "cafForm.field.state": "ਰਾਜ",
+    "cafForm.value.punjab": "ਪੰਜਾਬ",
+    "cafForm.field.district": "ਜ਼ਿਲ੍ਹਾ",
+    "cafForm.field.tehsil": "ਤਹਿਸੀਲ",
+    "cafForm.field.villageTown": "ਪਿੰਡ/ਸ਼ਹਿਰ",
+    "cafForm.field.address": "ਪਤਾ",
+    "cafForm.field.pinCode": "ਪਿਨ ਕੋਡ",
+    "cafForm.file.authorizationLetter": "ਅਧਿਕਾਰ ਪੱਤਰ",
+    "cafForm.file.meta": "PDF • 2.4 MB",
+    "cafForm.section.businessEntityInfo": "2. ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਜਾਣਕਾਰੀ",
+    "cafForm.section.businessEntityInfo.sub": "ASD Company 1 • ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟੇਡ",
+    "cafForm.signature.authorizedSignatory": "ਅਧਿਕਾਰਤ ਦਸਤਖ਼ਤਕਾਰ",
+    "cafForm.action.cancel": "ਰੱਦ ਕਰੋ",
+    "cafForm.action.nextStep": "ਅਗਲਾ ਕਦਮ",
+    "cafForm.action.viewAttachment": "ਅਟੈਚਮੈਂਟ ਵੇਖੋ",
+  },
 };

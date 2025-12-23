@@ -6,14 +6,17 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { ThemedText } from "../components/ThemedText";
 import { useI18n } from "../i18n/I18nProvider";
+import { useTheme } from "../theme/useTheme";
 
 type Props = {
   onMenuPress?: () => void;
   onChangePassword?: () => void;
   onLogout?: () => void;
+  onMyApplications?: () => void;
 };
 
-export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Props) {
+export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyApplications }: Props) {
+  const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
   const [showMenu, setShowMenu] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
@@ -27,7 +30,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
     <>
       <StatusBar style="dark" />
 
-      <LinearGradient colors={["rgb(238, 228, 255)", "rgb(214, 233, 255)", "rgb(214, 233, 255)"]} style={{ flex: 1 }}>
+      <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         <BlurView intensity={40} style={{ zIndex: 20, elevation: 20 }}>
           <View
             style={{
@@ -247,6 +250,11 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout }: Pro
               ].map((item, i) => (
                 <Pressable
                   key={i}
+                  onPress={() => {
+                    if (item.titleKey === "dashboard.card.myApplications.title") {
+                      onMyApplications?.();
+                    }
+                  }}
                   style={{
                     width: "47%",
                     backgroundColor: "rgba(255,255,255,0.95)",

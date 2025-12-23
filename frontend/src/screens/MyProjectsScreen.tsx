@@ -1,9 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, Pressable, Image } from "react-native";
+import { View, Text, ScrollView, Pressable, Image, StyleProp, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useState } from "react";
 import { useI18n } from "../i18n/I18nProvider";
+import ChatbotIcon from "../assets/images/chatbot.svg";
+import { useTheme } from "../theme/useTheme";
 
 type Props = {
   onMenuPress?: () => void;
@@ -12,16 +14,27 @@ type Props = {
 };
 
 export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props) {
-  const { t } = useI18n();
+  const theme = useTheme();
+  const { language, setLanguage, t } = useI18n();
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
   const [cafExpanded, setCafExpanded] = useState(true);
+  const [scafExpanded, setScafExpanded] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+
+  const CHAT_ICON_SIZE = 72;
+
+  const closeMenu = () => {
+    setShowLanguageMenu(false);
+    setShowMenu(false);
+  };
 
   return (
     <>
       <StatusBar style="dark" />
 
       {/* ===== Page Background ===== */}
-      <LinearGradient colors={["#f8fafc", "#eef2ff"]} style={{ flex: 1 }}>
+      <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         {/* ===== Header ===== */}
         <View
           style={{
@@ -32,7 +45,10 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
             justifyContent: "space-between",
             backgroundColor: "#ffffff",
             borderBottomWidth: 1,
-            borderColor: "#e2e8f0"
+            borderColor: "#e2e8f0",
+            position: "relative",
+            zIndex: 50,
+            elevation: 50
           }}
         >
           <Pressable onPress={onMenuPress} style={{ padding: 8 }}>
@@ -41,36 +57,146 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
 
           <Text style={{ fontSize: 18, fontWeight: "800", color: "#1d4ed8" }}>{t("myProjects.title")}</Text>
 
-          <View>
-            <Image
-              source={{
-                uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKDdNesCdkuKndJYHsr4X-VLFRXXIQorbVL09p3jjzHE9dV0NoPt-vufss8YxyxwggLaRq9Vn1WGsuqH0Cztp78j0US6ShyG61lOH1ZngoMABU43LmhEwU694nspmWJnCTjX7TPj8ArDxpabPBgnFMzJ0_fmzjkYH2JsAwilNqf0sqjGCWwM-FIZen85IzL5if21e9g-4tJFLRnbOA5wHve4WoJ-44LYGulvHggO1wEgkr3e9U5YBSZaoHr7Lopj9DE_BdBkpvv498"
+          <View style={{ position: "relative" }}>
+            <Pressable
+              onPress={() => {
+                setShowMenu((v) => !v);
+                setShowLanguageMenu(false);
               }}
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                borderWidth: 1,
-                borderColor: "#e2e8f0"
-              }}
-            />
-            <View
-              style={{
-                position: "absolute",
-                bottom: 0,
-                right: 0,
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: "#22c55e",
-                borderWidth: 2,
-                borderColor: "#fff"
-              }}
-            />
+              hitSlop={10}
+              style={{ borderRadius: 999, overflow: "hidden" }}
+            >
+              <Image
+                source={{
+                  uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKDdNesCdkuKndJYHsr4X-VLFRXXIQorbVL09p3jjzHE9dV0NoPt-vufss8YxyxwggLaRq9Vn1WGsuqH0Cztp78j0US6ShyG61lOH1ZngoMABU43LmhEwU694nspmWJnCTjX7TPj8ArDxpabPBgnFMzJ0_fmzjkYH2JsAwilNqf0sqjGCWwM-FIZen85IzL5if21e9g-4tJFLRnbOA5wHve4WoJ-44LYGulvHggO1wEgkr3e9U5YBSZaoHr7Lopj9DE_BdBkpvv498"
+                }}
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 18,
+                  borderWidth: 1,
+                  borderColor: "#e2e8f0"
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  backgroundColor: "#22c55e",
+                  borderWidth: 2,
+                  borderColor: "#fff"
+                }}
+              />
+            </Pressable>
+
+            {showMenu ? (
+              <>
+                <Pressable
+                  onPress={closeMenu}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: -9999,
+                    right: -9999,
+                    bottom: -9999,
+                    backgroundColor: "transparent",
+                    zIndex: 998
+                  }}
+                />
+
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 44,
+                    right: 0,
+                    width: 220,
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    backgroundColor: "rgba(255,255,255,0.92)",
+                    borderWidth: 1,
+                    borderColor: "rgba(203,213,225,0.9)",
+                    zIndex: 9999,
+                    elevation: 9999
+                  }}
+                >
+                  <Pressable
+                    onPress={() => setShowLanguageMenu((v) => !v)}
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 12,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("menu.language")}</Text>
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                      <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>
+                        {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+                      </Text>
+                      <MaterialIcons name={showLanguageMenu ? "expand-less" : "expand-more"} size={18} color="#64748b" />
+                    </View>
+                  </Pressable>
+
+                  {showLanguageMenu ? (
+                    <View style={{ borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}>
+                      {["en", "pa", "hi"].map((code) => (
+                        <Pressable
+                          key={code}
+                          onPress={() => {
+                            setLanguage(code as any);
+                            closeMenu();
+                          }}
+                          style={{
+                            paddingHorizontal: 14,
+                            paddingVertical: 12,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                          }}
+                        >
+                          <Text style={{ fontSize: 14, fontWeight: "600", color: "#0f172a" }}>
+                            {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
+                          </Text>
+                          {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                        </Pressable>
+                      ))}
+                    </View>
+                  ) : null}
+
+                  <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.7)" }} />
+
+                  <Pressable
+                    onPress={closeMenu}
+                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+                  >
+                    <MaterialIcons name="person" size={18} color="#0f172a" />
+                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myProjects.bottomNav.profile")}</Text>
+                  </Pressable>
+
+                  <Pressable
+                    onPress={closeMenu}
+                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+                  >
+                    <MaterialIcons name="logout" size={18} color="#e11d48" />
+                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#e11d48" }}>{t("drawer.logout")}</Text>
+                  </Pressable>
+                </View>
+              </>
+            ) : null}
           </View>
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 180 }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ zIndex: 1 }}
+          contentContainerStyle={{ paddingBottom: 180 }}
+        >
           {/* ===== Quick Action Grid ===== */}
           <View
             style={{
@@ -139,63 +265,86 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
           </View>
 
           {/* ===== RTBA ===== */}
-          <SectionHeader title={t("myProjects.section.rtbaCaf")} expanded={rtbaExpanded} onPress={() => setRtbaExpanded((v) => !v)} />
+          <SectionHeader
+            title={t("myProjects.section.rtbaCaf")}
+            expanded={rtbaExpanded}
+            onPress={() => setRtbaExpanded((v) => !v)}
+          />
 
           {rtbaExpanded ? (
-            <>
-              {/* ===== CAF SECTION ===== */}
-              <View style={cardContainer}>
-                <Pressable onPress={() => setCafExpanded((v) => !v)} style={cardHeader}>
-                  <Text style={{ fontWeight: "800" }}>{t("myProjects.section.caf")}</Text>
-                  <MaterialIcons name={cafExpanded ? "expand-less" : "expand-more"} size={22} color="#64748b" />
-                </Pressable>
-
-                {cafExpanded
-                  ? [
-                      {
-                        pin: "250535096",
-                        name: "K A Demo New",
-                        status: t("myProjects.status.pendingVerification"),
-                        color: "#3b82f6",
-                        applicant: "Mr Sunny Kumar",
-                        date: "01-May-2025",
-                        sector: "Manufacturing",
-                        district: "S.A.S Nagar"
-                      },
-                      {
-                        pin: "250535098",
-                        name: "Bond & Associates",
-                        status: t("myProjects.status.filingInProcess"),
-                        color: "#f59e0b",
-                        applicant: "Mr Ankit Kumar",
-                        date: "01-May-2025",
-                        sector: "Manufacturing",
-                        district: "S.A.S Nagar"
-                      },
-                      {
-                        pin: "150535024",
-                        name: "New Demo Industries",
-                        status: t("myProjects.status.accepted"),
-                        color: "#10b981",
-                        applicant: "Mr Vikas Sharma",
-                        date: "01-May-2025",
-                        sector: "Other Service",
-                        district: "S.A.S Nagar"
-                      }
-                    ].map((item, i) => <ProjectCard key={i} {...item} />)
-                  : null}
+            <View style={cardContainer}>
+              <View style={{ padding: 16 }}>
+                <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>{t("myProjects.empty")}</Text>
               </View>
+            </View>
+          ) : null}
 
-              {/* ===== S-CAF ===== */}
-              <SectionHeader title={t("myProjects.section.scaf")} faded expanded={false} />
-            </>
+          {/* ===== CAF ===== */}
+          <SectionHeader
+            title={t("myProjects.section.caf")}
+            expanded={cafExpanded}
+            onPress={() => setCafExpanded((v) => !v)}
+          />
+
+          {cafExpanded ? (
+            <View style={cardContainer}>
+              {[
+                {
+                  pin: "250535096",
+                  name: "K A Demo New",
+                  status: t("myProjects.status.pendingVerification"),
+                  color: "#3b82f6",
+                  applicant: "Mr Sunny Kumar",
+                  date: "01-May-2025",
+                  sector: t("myProjects.sector.manufacturing"),
+                  district: "S.A.S Nagar"
+                },
+                {
+                  pin: "250535098",
+                  name: "Bond & Associates",
+                  status: t("myProjects.status.filingInProcess"),
+                  color: "#f59e0b",
+                  applicant: "Mr Ankit Kumar",
+                  date: "01-May-2025",
+                  sector: t("myProjects.sector.manufacturing"),
+                  district: "S.A.S Nagar"
+                },
+                {
+                  pin: "150535024",
+                  name: "New Demo Industries",
+                  status: t("myProjects.status.accepted"),
+                  color: "#10b981",
+                  applicant: "Mr Vikas Sharma",
+                  date: "01-May-2025",
+                  sector: t("myProjects.sector.otherService"),
+                  district: "S.A.S Nagar"
+                }
+              ].map((item, i) => (
+                <ProjectCard key={i} {...item} />
+              ))}
+            </View>
+          ) : null}
+
+          {/* ===== S-CAF ===== */}
+          <SectionHeader
+            title={t("myProjects.section.scaf")}
+            expanded={scafExpanded}
+            onPress={() => setScafExpanded((v) => !v)}
+          />
+
+          {scafExpanded ? (
+            <View style={cardContainer}>
+              <View style={{ padding: 16 }}>
+                <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>{t("myProjects.empty")}</Text>
+              </View>
+            </View>
           ) : null}
         </ScrollView>
 
         {/* ===== Floating Buttons ===== */}
-        <View style={{ position: "absolute", right: 16, bottom: 90 }}>
-          <Pressable onPress={onChatPress} style={fab}>
-            <MaterialIcons name="smart-toy" size={26} color="white" />
+        <View style={{ position: "absolute", right: 16, bottom: 90, zIndex: 2000, elevation: 2000 }}>
+          <Pressable onPress={onChatPress} style={chatFab}>
+            <ChatbotIcon width={CHAT_ICON_SIZE} height={CHAT_ICON_SIZE} />
           </Pressable>
 
           <Pressable onPress={onAddPress} style={[fab, { marginTop: 12, backgroundColor: "#1d4ed8" }]}>
@@ -237,27 +386,31 @@ type SectionHeaderProps = {
   faded?: boolean;
   expanded?: boolean;
   onPress?: () => void;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-function SectionHeader({ title, faded, expanded, onPress }: SectionHeaderProps) {
-  const iconName = expanded ? "expand-less" : "expand-more";
+function SectionHeader({ title, faded, expanded, onPress, containerStyle }: SectionHeaderProps) {
+  const iconName = expanded ? "keyboard-arrow-up" : "keyboard-arrow-down";
 
   return (
     <Pressable
       onPress={onPress}
-      style={{
-        backgroundColor: "#ffffff",
-        marginHorizontal: 16,
-        marginBottom: 12,
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: "#e2e8f0",
-        padding: 16,
-        opacity: faded ? 0.8 : 1,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-      }}
+      style={[
+        {
+          backgroundColor: "#ffffff",
+          marginHorizontal: 16,
+          marginBottom: 12,
+          borderRadius: 12,
+          borderWidth: 1,
+          borderColor: "#e2e8f0",
+          padding: 16,
+          opacity: faded ? 0.8 : 1,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+        },
+        containerStyle
+      ]}
     >
       <Text style={{ fontSize: 14, fontWeight: "600" }}>{title}</Text>
       <MaterialIcons name={iconName} size={22} color="#64748b" />
@@ -370,11 +523,12 @@ const cardContainer = {
 } as const;
 
 const cardHeader = {
-  padding: 16,
-  backgroundColor: "#f1f5f9",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center"
+  marginHorizontal: 0,
+  marginBottom: 0,
+  borderRadius: 0,
+  borderWidth: 0,
+  borderColor: "transparent",
+  backgroundColor: "#f1f5f9"
 } as const;
 
 const fab = {
@@ -387,6 +541,14 @@ const fab = {
   shadowOpacity: 0.3
 } as const;
 
+const chatFab = {
+  width: 72,
+  height: 72,
+  backgroundColor: "transparent",
+  alignItems: "center",
+  justifyContent: "center"
+} as const;
+
 const bottomBar = {
   position: "absolute",
   bottom: 0,
@@ -395,7 +557,9 @@ const bottomBar = {
   backgroundColor: "#ffffff",
   borderTopWidth: 1,
   borderColor: "#e2e8f0",
-  flexDirection: "row"
+  flexDirection: "row",
+  zIndex: 1000,
+  elevation: 1000
 } as const;
 
 const bottomItem = {
