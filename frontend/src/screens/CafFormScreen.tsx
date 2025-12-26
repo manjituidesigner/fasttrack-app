@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
+import type { ReactNode } from "react";
+import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
 
@@ -12,6 +14,24 @@ type Props = {
 export function CafFormScreen({ onBack }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
+  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [investment, setInvestment] = useState({
+    landCost: "",
+    buildingCost: "",
+    plantMachineryCost: "",
+    fci: "",
+    otherCost: "",
+    proposedDate: "",
+    industryType: "",
+    fdiInvolved: false
+  });
+
+  const totalProjectCost =
+    (Number(investment.landCost || 0) || 0) +
+    (Number(investment.buildingCost || 0) || 0) +
+    (Number(investment.plantMachineryCost || 0) || 0) +
+    (Number(investment.fci || 0) || 0) +
+    (Number(investment.otherCost || 0) || 0);
 
   return (
     <>
@@ -19,128 +39,287 @@ export function CafFormScreen({ onBack }: Props) {
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         <View style={styles.header}>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <View style={styles.headerLeft}>
             <Pressable onPress={onBack} hitSlop={10}>
               <MaterialIcons name="arrow-back-ios" size={20} color="#6b7280" />
             </Pressable>
-            <Text style={styles.headerTitle}>{t("cafForm.title")}</Text>
+            <Text style={styles.headerTitle}>{step === 1 ? t("cafForm.title") : "CAF Application"}</Text>
           </View>
 
-          <View style={styles.avatarCircle}>
-            <Text style={{ fontWeight: "800", color: "#2563eb" }}>AK</Text>
-          </View>
+          {step === 1 ? (
+            <View style={styles.avatar}>
+              <Text style={styles.avatarText}>AK</Text>
+            </View>
+          ) : (
+            <Pressable hitSlop={10}>
+              <Text style={styles.saveDraft}>Save Draft</Text>
+            </Pressable>
+          )}
         </View>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 140 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 160 }}>
           <View style={styles.container}>
-            <View style={{ marginBottom: 24 }}>
-              <View style={styles.progressTop}>
-                <Text style={styles.stepText}>{t("cafForm.progress.step")}</Text>
-                <Text style={styles.progressText}>{t("cafForm.progress.completed")}</Text>
-              </View>
-              <View style={styles.progressTrack}>
-                <View style={styles.progressFill} />
-              </View>
-            </View>
+            {step === 1 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>{t("cafForm.progress.step")}</Text>
+                    <Text style={styles.progressText}>{t("cafForm.progress.completed")}</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={styles.progressFill} />
+                  </View>
+                </View>
 
-            <View style={{ marginBottom: 32 }}>
-              <View style={styles.sectionTitleRow}>
                 <Text style={styles.sectionTitle}>{t("cafForm.section.applicantDetails")}</Text>
-                <View style={styles.verifiedBadge}>
-                  <Text style={styles.verifiedText}>{t("cafForm.badge.verified")}</Text>
+
+                <Card>
+                  <View style={styles.profileUpload}>
+                    <View style={{ position: "relative" }}>
+                      <Image
+                        source={{
+                          uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2oogmzKIX3XrJBsKjb3YbxojaKn4re0jvxm0vkr-2l_4rP_-iTW1TNvbGw-qS5XWddpRmXVYEtp-7Rmo6iA4FQIUebdzBbIkoDRWwmHyRgK23tMMSBkmf0dcZlgv0utNROi0exNH6fwMNhHZ6pjgKh2tdIMEtsvplMjZOBeu0CWe_NZJ4IGSfxuGVsBUucR23uYMuZkrwVkyqnDWJgukW_2tE2EivCtOYXL8d47hmkNGQHLeZdRzP5Q8NSj2Bft8JxLT2z0hLTRk2"
+                        }}
+                        style={styles.profileImage}
+                      />
+                      <View style={styles.cameraIcon}>
+                        <MaterialIcons name="camera-alt" size={18} color="white" />
+                      </View>
+                    </View>
+                    <Text style={styles.uploadText}>Upload Profile Photo</Text>
+                  </View>
+
+                  <Input label={t("cafForm.field.name")} value="Mr. Ajay Kumar" />
+                  <Input label={t("cafForm.field.role")} value="Chief Executive Officer" />
+                </Card>
+
+                <Card title="Identity Proofs">
+                  <Input label={t("cafForm.field.aadhaar")} value="********9123" mono />
+                  <DropZone label="Upload Aadhar Card" />
+
+                  <Input label={t("cafForm.field.pan")} value="******567F" mono />
+                  <DropZone label="Upload PAN Card" />
+                </Card>
+
+                <Card title="Contact Details">
+                  <Input label={t("cafForm.field.mobile")} value="7894561235" prefix="+91" keyboard="phone-pad" />
+                  <Input label={t("cafForm.field.phone")} placeholder="STD - Number" />
+                  <Input label={t("cafForm.field.email")} value="xyz@gmail.com" keyboard="email-address" />
+                </Card>
+
+                <Card title={t("cafForm.section.addressDetails")}>
+                  <Input label={t("cafForm.field.country")} value={t("cafForm.value.india")} />
+                  <TwoCol>
+                    <Input label={t("cafForm.field.state")} value={t("cafForm.value.punjab")} />
+                    <Input label={t("cafForm.field.district")} value="S.A.S Nagar" />
+                    <Input label={t("cafForm.field.tehsil")} value="Mohali" />
+                    <Input label={t("cafForm.field.pinCode")} value="123456" />
+                  </TwoCol>
+                  <Input label={t("cafForm.field.villageTown")} value="Mohali" />
+                  <Input label={t("cafForm.field.address")} value="Mohali, Mohali, S.A.S Nagar" multiline />
+                </Card>
+
+                <Card title="Documents">
+                  <DropZone
+                    label={`Click to upload ${t("cafForm.file.authorizationLetter")}`}
+                    sub={t("cafForm.file.meta")}
+                    large
+                  />
+                </Card>
+
+                <View style={styles.disabledCard}>
+                  <View style={styles.disabledHeader}>
+                    <Text style={styles.disabledTitle}>{t("cafForm.section.businessEntityInfo")}</Text>
+                    <MaterialIcons name="expand-more" size={22} color="#9ca3af" />
+                  </View>
+                  <Text style={styles.disabledText}>{t("cafForm.section.businessEntityInfo.sub")}</Text>
                 </View>
-              </View>
 
-              <View style={styles.card}>
-                <View style={styles.decorCircle} />
+                <View style={styles.signatureWrap}>
+                  <Image
+                    source={{
+                      uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCSjEJ1sSEanOxbsMYeQuRBVTMEiJdaTnaDIURIvFI0W8W80WmBdPzLNw_h3IuLdPKwo9IpXfKIPVb9Pl5fsYgUN2soB31hfTknseybnJ51yRmElEFb0sHyZEI42WUZioyOaCDN-GDc5wJfhUj8a0SeFbIP0upt584e-QCJKKL5FEG3Ny_QIuI_N_Vu8YfJp5jNBHdnru-0tsw-5hJXinVECuKeNBdQukCZKVU4kFRqdT-pQU3GKWXJd6ap1Ip_bA5iR7R5FguTg_iA"
+                    }}
+                    style={styles.signature}
+                  />
+                  <Text style={styles.signatureLabel}>{t("cafForm.signature.authorizedSignatory")}</Text>
+                </View>
+              </>
+            ) : step === 2 ? (
+              <>
+                <View style={styles.progressCard}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 2 of 5</Text>
+                    <Text style={styles.progressText}>40% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "40%" }]} />
+                  </View>
+                  <Text style={styles.pageTitle}>Business Entity & Project Details</Text>
+                  <Text style={styles.subText}>Fill in the details below to proceed with your application.</Text>
+                </View>
 
-                <View style={styles.profileRow}>
-                  <View>
-                    <Image
-                      source={{
-                        uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2oogmzKIX3XrJBsKjb3YbxojaKn4re0jvxm0vkr-2l_4rP_-iTW1TNvbGw-qS5XWddpRmXVYEtp-7Rmo6iA4FQIUebdzBbIkoDRWwmHyRgK23tMMSBkmf0dcZlgv0utNROi0exNH6fwMNhHZ6pjgKh2tdIMEtsvplMjZOBeu0CWe_NZJ4IGSfxuGVsBUucR23uYMuZkrwVkyqnDWJgukW_2tE2EivCtOYXL8d47hmkNGQHLeZdRzP5Q8NSj2Bft8JxLT2z0hLTRk2"
-                      }}
-                      style={styles.profileImage}
+                <SectionHeader number="2" title="Business Entity Information" />
+                <Card>
+                  <Input label="2.1 Business Entity Name" />
+                  <Input label="2.2 Business Entity Type" placeholder="Select" />
+
+                  <TwoCol>
+                    <Input label="2.3 Country" value="India" />
+                    <Input label="2.4 State" value="Punjab" />
+                  </TwoCol>
+
+                  <TwoCol>
+                    <Input label="2.5 District" />
+                    <Input label="2.6 Tehsil" />
+                  </TwoCol>
+
+                  <Input label="2.8 Business Entity Address" multiline />
+
+                  <Input label="2.11 Company PAN" placeholder="ABCDE1234F" mono />
+
+                  <Upload label="2.12 Company PAN Attachment" />
+                  <Upload label="2.13 Certificate / MoA / Partnership Deed" />
+                </Card>
+
+                <SectionHeader number="3" title="Project Details" />
+                <Card>
+                  <Input label="3.1 Project Name" />
+                  <Input label="3.2 Project Purpose" />
+                  <Input label="3.3 Project Type" placeholder="Select" />
+                  <Input label="3.4 Sector" placeholder="Select" />
+
+                  <TwoCol>
+                    <Input label="3.5 State" value="Punjab" />
+                    <Input label="3.6 District" />
+                  </TwoCol>
+
+                  <TwoCol>
+                    <Input label="3.7 Tehsil" />
+                    <Input label="3.8 City / Village" />
+                  </TwoCol>
+
+                  <View style={styles.checkboxRow}>
+                    <Switch />
+                    <Text style={styles.checkboxText}>Multiple City/Town/Village Involved</Text>
+                  </View>
+
+                  <Input label="3.9 Project Address" multiline />
+                  <Input label="3.11 Pincode" keyboard="numeric" />
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>Does this site lies under MC Limit?</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label="Yes" />
+                      <Radio label="No" checked />
+                    </View>
+                  </View>
+
+                  <Input label="Type of Lease Deed" placeholder="Select" />
+
+                  <Upload label="Copy of Registry / Allotment Letter" />
+                  <Upload label="Detailed Project Report" />
+                </Card>
+              </>
+            ) : (
+              <>
+                <View style={styles.progressCard}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 3 of 9</Text>
+                    <Text style={styles.progressText}>3/9 Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "33%" }]} />
+                  </View>
+                  <Text style={styles.pageTitle}>Investment Details</Text>
+                  <Text style={styles.subText}>Provide the cost breakdown and project timeline details.</Text>
+                </View>
+
+                <SectionHeader number="6" title="Investment Details" />
+                <Card>
+                  <TwoCol>
+                    <MoneyInput
+                      label="6.1 Land Cost"
+                      value={investment.landCost}
+                      onChangeText={(v) => setInvestment((s) => ({ ...s, landCost: v }))}
                     />
-                    <Pressable style={styles.editIcon}>
-                      <MaterialIcons name="edit" size={14} color="white" />
-                    </Pressable>
+                    <MoneyInput
+                      label="6.2 Building Cost"
+                      value={investment.buildingCost}
+                      onChangeText={(v) => setInvestment((s) => ({ ...s, buildingCost: v }))}
+                    />
+                  </TwoCol>
+
+                  <MoneyInput
+                    label="6.3 Plant and Machinery Cost"
+                    value={investment.plantMachineryCost}
+                    onChangeText={(v) => setInvestment((s) => ({ ...s, plantMachineryCost: v }))}
+                  />
+
+                  <TwoCol>
+                    <MoneyInput
+                      label="6.4 FCI"
+                      value={investment.fci}
+                      onChangeText={(v) => setInvestment((s) => ({ ...s, fci: v }))}
+                    />
+                    <MoneyInput
+                      label="6.5 Other Cost"
+                      value={investment.otherCost}
+                      onChangeText={(v) => setInvestment((s) => ({ ...s, otherCost: v }))}
+                    />
+                  </TwoCol>
+
+                  <MoneyInput label="6.6 Total Project Cost" value={String(totalProjectCost)} readOnly helper="Auto-calculated based on inputs above" />
+
+                  <Input
+                    label="6.7 Proposed Date of Commercial Production"
+                    value={investment.proposedDate}
+                    placeholder="YYYY-MM-DD"
+                    keyboard="default"
+                    onChangeText={(v) => setInvestment((s) => ({ ...s, proposedDate: v }))}
+                  />
+                </Card>
+
+                <SectionHeader number="6.8" title="Type of Industry" />
+                <Card>
+                  <Input
+                    label="6.8.1 Type of Industry"
+                    value={investment.industryType}
+                    placeholder="Select Industry Category"
+                    onChangeText={(v) => setInvestment((s) => ({ ...s, industryType: v }))}
+                  />
+
+                  <View style={styles.toggleCard}>
+                    <View style={styles.toggleTop}>
+                      <Text style={styles.toggleLabel}>Is FDI Involved?</Text>
+                      <Switch
+                        value={investment.fdiInvolved}
+                        onValueChange={(v) => setInvestment((s) => ({ ...s, fdiInvolved: v }))}
+                      />
+                    </View>
+                    <Text style={styles.toggleHelp}>Toggle if Foreign Direct Investment is involved in this project.</Text>
                   </View>
-
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.label}>{t("cafForm.field.name")}</Text>
-                    <Text style={styles.name}>Mr. Ajay Kumar</Text>
-                    <Text style={styles.role}>{t("cafForm.field.role")}</Text>
-                  </View>
-                </View>
-
-                <InfoBox title={t("cafForm.field.aadhaar") } value="********9123" verified={false} />
-
-                <InfoBox title={t("cafForm.field.pan")} value="******567F" verified />
-
-                <View style={styles.twoCol}>
-                  <Field label={t("cafForm.field.mobile")} value="7894561235" />
-                  <Field label={t("cafForm.field.phone")} value={t("cafForm.value.na")} muted />
-                </View>
-
-                <Field label={t("cafForm.field.email")} value="xyz@gmail.com" />
-
-                <View style={{ marginTop: 16 }}>
-                  <Text style={styles.subHeader}>{t("cafForm.section.addressDetails")}</Text>
-
-                  <View style={styles.twoCol}>
-                    <Field label={t("cafForm.field.country")} value={t("cafForm.value.india")} />
-                    <Field label={t("cafForm.field.state")} value={t("cafForm.value.punjab")} />
-                    <Field label={t("cafForm.field.district")} value="S.A.S Nagar" />
-                    <Field label={t("cafForm.field.tehsil")} value="Mohali" />
-                  </View>
-
-                  <Field label={t("cafForm.field.villageTown")} value="Mohali" />
-                  <Field label={t("cafForm.field.address")} value="Mohali, Mohali, S.A.S Nagar" />
-                  <Field label={t("cafForm.field.pinCode")} value="123456" />
-                </View>
-
-                <View style={styles.fileBox}>
-                  <View>
-                    <Text style={styles.fileTitle}>{t("cafForm.file.authorizationLetter")}</Text>
-                    <Text style={styles.fileMeta}>{t("cafForm.file.meta")}</Text>
-                  </View>
-                  <Pressable style={styles.downloadBtn}>
-                    <MaterialIcons name="download" size={20} color="#2563eb" />
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.disabledCard}>
-              <View style={styles.disabledHeader}>
-                <Text style={styles.disabledTitle}>{t("cafForm.section.businessEntityInfo")}</Text>
-                <MaterialIcons name="expand-more" size={20} color="#9ca3af" />
-              </View>
-              <Text style={styles.disabledText}>{t("cafForm.section.businessEntityInfo.sub")}</Text>
-            </View>
-
-            <View style={styles.signatureWrap}>
-              <Image
-                source={{
-                  uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCSjEJ1sSEanOxbsMYeQuRBVTMEiJdaTnaDIURIvFI0W8W80WmBdPzLNw_h3IuLdPKwo9IpXfKIPVb9Pl5fsYgUN2soB31hfTknseybnJ51yRmElEFb0sHyZEI42WUZioyOaCDN-GDc5wJfhUj8a0SeFbIP0upt584e-QCJKKL5FEG3Ny_QIuI_N_Vu8YfJp5jNBHdnru-0tsw-5hJXinVECuKeNBdQukCZKVU4kFRqdT-pQU3GKWXJd6ap1Ip_bA5iR7R5FguTg_iA"
-                }}
-                style={styles.signature}
-              />
-              <Text style={styles.signatureLabel}>{t("cafForm.signature.authorizedSignatory")}</Text>
-            </View>
+                </Card>
+              </>
+            )}
           </View>
         </ScrollView>
 
         <View style={styles.bottomBar}>
           <View style={styles.bottomGrid}>
-            <Pressable style={styles.cancelBtn}>
-              <MaterialIcons name="close" size={18} color="#dc2626" />
-              <Text style={styles.cancelText}>{t("cafForm.action.cancel")}</Text>
-            </Pressable>
+            {step === 1 ? (
+              <Pressable style={styles.cancelBtn} onPress={onBack}>
+                <MaterialIcons name="close" size={18} color="#dc2626" />
+                <Text style={styles.cancelText}>{t("cafForm.action.cancel")}</Text>
+              </Pressable>
+            ) : (
+              <Pressable style={styles.backBtn} onPress={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : 1))}>
+                <Text style={styles.backText}>Back</Text>
+              </Pressable>
+            )}
 
-            <Pressable style={styles.nextBtn}>
-              <Text style={styles.nextText}>{t("cafForm.action.nextStep")}</Text>
+            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 3 ? ((s + 1) as 1 | 2 | 3) : 3))}>
+              <Text style={styles.nextText}>{step === 3 ? "Next" : t("cafForm.action.nextStep")}</Text>
               <MaterialIcons name="arrow-forward" size={18} color="white" />
             </Pressable>
           </View>
@@ -150,29 +329,133 @@ export function CafFormScreen({ onBack }: Props) {
   );
 }
 
-function InfoBox({ title, value, verified }: { title: string; value: string; verified?: boolean }) {
-  const { t } = useI18n();
-
+function Card({ children, title }: { children: ReactNode; title?: string }) {
   return (
-    <View style={styles.infoBox}>
-      <View style={styles.infoHeader}>
-        <Text style={styles.label}>{title}</Text>
-        <View style={{ flexDirection: "row", gap: 6 }}>
-          {verified ? <MaterialIcons name="check-circle" size={16} color="#22c55e" /> : null}
-          <MaterialIcons name="visibility-off" size={16} color="#9ca3af" />
-        </View>
-      </View>
-      <Text style={styles.mono}>{value}</Text>
-      <Text style={styles.attachment}>{t("cafForm.action.viewAttachment")}</Text>
+    <View style={styles.card}>
+      {title ? <Text style={styles.cardTitle}>{title}</Text> : null}
+      {children}
     </View>
   );
 }
 
-function Field({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
+function SectionHeader({ number, title }: { number: string; title: string }) {
   return (
-    <View style={{ marginBottom: 12, flex: 1 }}>
+    <View style={styles.sectionHeader}>
+      <View style={styles.sectionCircle}>
+        <Text style={styles.sectionCircleText}>{number}</Text>
+      </View>
+      <Text style={styles.sectionHeaderTitle}>{title}</Text>
+    </View>
+  );
+}
+
+function Input({
+  label,
+  value,
+  placeholder,
+  mono,
+  multiline,
+  prefix,
+  keyboard,
+  onChangeText
+}: {
+  label: string;
+  value?: string;
+  placeholder?: string;
+  mono?: boolean;
+  multiline?: boolean;
+  prefix?: string;
+  keyboard?: "default" | "email-address" | "phone-pad" | "numeric";
+  onChangeText?: (text: string) => void;
+}) {
+  return (
+    <View style={{ marginBottom: 12, flex: 1, minWidth: 160 }}>
       <Text style={styles.label}>{label}</Text>
-      <Text style={[styles.value, muted ? { color: "#9ca3af" } : null]}>{value}</Text>
+      <View style={styles.inputWrap}>
+        {prefix ? <Text style={styles.prefix}>{prefix}</Text> : null}
+        <TextInput
+          value={value}
+          placeholder={placeholder}
+          keyboardType={keyboard}
+          multiline={multiline}
+          onChangeText={onChangeText}
+          style={[
+            styles.input,
+            mono ? { fontFamily: "monospace" } : null,
+            prefix ? { paddingLeft: 40 } : null,
+            multiline ? { height: 80, textAlignVertical: "top" } : null
+          ]}
+        />
+      </View>
+    </View>
+  );
+}
+
+function MoneyInput({
+  label,
+  value,
+  onChangeText,
+  readOnly,
+  helper
+}: {
+  label: string;
+  value?: string;
+  onChangeText?: (text: string) => void;
+  readOnly?: boolean;
+  helper?: string;
+}) {
+  return (
+    <View style={{ marginBottom: 12, flex: 1, minWidth: 160 }}>
+      <Text style={styles.label}>{label}</Text>
+      <View style={styles.moneyInputWrap}>
+        <Text style={styles.moneyPrefix}>₹</Text>
+        <TextInput
+          value={value}
+          editable={!readOnly}
+          keyboardType="numeric"
+          placeholder="0"
+          onChangeText={onChangeText}
+          style={[styles.input, styles.moneyInput, readOnly ? styles.readOnlyInput : null]}
+        />
+      </View>
+      {helper ? <Text style={styles.helperText}>{helper}</Text> : null}
+    </View>
+  );
+}
+
+function DropZone({ label, sub, large }: { label: string; sub?: string; large?: boolean }) {
+  return (
+    <Pressable style={[styles.dropZone, large ? { paddingVertical: 28 } : null]}>
+      <View style={styles.dropIcon}>
+        <MaterialIcons name="upload-file" size={26} color="#2563eb" />
+      </View>
+      <Text style={styles.dropText}>{label}</Text>
+      {sub ? <Text style={styles.dropSub}>{sub}</Text> : null}
+    </Pressable>
+  );
+}
+
+function Upload({ label }: { label: string }) {
+  return (
+    <Pressable style={styles.upload}>
+      <MaterialIcons name="cloud-upload" size={30} color="#9ca3af" />
+      <Text style={styles.uploadText2}>{label}</Text>
+      <Text style={styles.uploadSub}>PDF, JPG up to 5MB</Text>
+    </Pressable>
+  );
+}
+
+function TwoCol({ children }: { children: ReactNode }) {
+  return <View style={styles.twoCol}>{children}</View>;
+}
+
+function Radio({ label, checked }: { label: string; checked?: boolean }) {
+  return (
+    <View style={styles.radio}>
+      <View style={[styles.radioOuter, checked ? styles.radioOuterActive : null]}>
+        {checked ? <View style={styles.radioInner} /> : null}
+      </View>
+      <Text>{label}</Text>
     </View>
   );
 }
@@ -188,8 +471,10 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center"
   },
+  headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
   headerTitle: { fontSize: 18, fontWeight: "800", color: "#2563eb" },
-  avatarCircle: {
+  saveDraft: { color: "#2563eb", fontWeight: "700" },
+  avatar: {
     width: 32,
     height: 32,
     borderRadius: 16,
@@ -197,7 +482,17 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
+  avatarText: { fontWeight: "800", color: "#2563eb" },
   container: { maxWidth: 420, alignSelf: "center", padding: 16 },
+  progressWrap: { marginBottom: 24 },
+  progressCard: {
+    backgroundColor: "#ffffff",
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
+    marginBottom: 20
+  },
   progressTop: { flexDirection: "row", justifyContent: "space-between" },
   stepText: { fontSize: 11, fontWeight: "700", color: "#6b7280" },
   progressText: { fontSize: 13, fontWeight: "800", color: "#2563eb" },
@@ -213,124 +508,166 @@ const styles = {
     backgroundColor: "#2563eb",
     borderRadius: 999
   },
-  sectionTitleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 12
+  pageTitle: { fontSize: 18, fontWeight: "800" },
+  subText: { fontSize: 13, color: "#6b7280", marginTop: 4 },
+  sectionTitle: { fontSize: 20, fontWeight: "800", marginBottom: 10 },
+  sectionHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 },
+  sectionCircle: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: "#dbeafe",
+    alignItems: "center",
+    justifyContent: "center"
   },
-  sectionTitle: { fontSize: 20, fontWeight: "800" },
-  verifiedBadge: {
-    backgroundColor: "#dcfce7",
-    borderColor: "#bbf7d0",
-    borderWidth: 1,
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 6
-  },
-  verifiedText: { fontSize: 11, fontWeight: "800", color: "#15803d" },
+  sectionCircleText: { color: "#2563eb", fontWeight: "800" },
+  sectionHeaderTitle: { fontSize: 18, fontWeight: "700" },
   card: {
     backgroundColor: "#ffffff",
     borderRadius: 16,
     padding: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb"
+    borderColor: "#e5e7eb",
+    marginBottom: 16
   },
-  decorCircle: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    width: 120,
-    height: 120,
-    backgroundColor: "#2563eb",
-    opacity: 0.05,
-    borderBottomLeftRadius: 120
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "800",
+    color: "#2563eb",
+    marginBottom: 12,
+    borderBottomWidth: 1,
+    borderColor: "#e5e7eb",
+    paddingBottom: 6
   },
-  profileRow: {
-    flexDirection: "row",
-    gap: 16,
+  profileUpload: {
+    alignItems: "center",
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderColor: "#e5e7eb"
+    borderColor: "#e5e7eb",
+    marginBottom: 16
   },
   profileImage: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    borderWidth: 2,
-    borderColor: "#2563eb"
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    borderWidth: 4,
+    borderColor: "#ffffff"
   },
-  editIcon: {
+  cameraIcon: {
     position: "absolute",
     bottom: 0,
     right: 0,
     backgroundColor: "#2563eb",
-    width: 24,
-    height: 24,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  uploadText: { marginTop: 8, fontWeight: "700", color: "#2563eb" },
+  label: { fontSize: 14, fontWeight: "700", marginBottom: 6 },
+  inputWrap: { position: "relative" },
+  moneyInputWrap: { position: "relative" },
+  prefix: {
+    position: "absolute",
+    left: 12,
+    top: 14,
+    fontWeight: "700",
+    color: "#6b7280"
+  },
+  moneyPrefix: {
+    position: "absolute",
+    left: 12,
+    top: 14,
+    fontWeight: "700",
+    color: "#6b7280",
+    zIndex: 1
+  },
+  input: {
+    backgroundColor: "#f9fafb",
+    borderWidth: 1,
+    borderColor: "#d1d5db",
     borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    fontSize: 16
+  },
+  moneyInput: { paddingLeft: 28 },
+  readOnlyInput: { backgroundColor: "#f3f4f6", color: "#374151" },
+  helperText: { fontSize: 12, color: "#6b7280", marginTop: 6 },
+  dropZone: {
+    borderWidth: 2,
+    borderStyle: "dashed",
+    borderColor: "#d1d5db",
+    borderRadius: 14,
+    paddingVertical: 18,
+    alignItems: "center",
+    marginBottom: 16,
+    backgroundColor: "#f9fafb"
+  },
+  dropIcon: {
+    backgroundColor: "#dbeafe",
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 8
+  },
+  dropText: { fontWeight: "700" },
+  dropSub: { fontSize: 12, color: "#6b7280", marginTop: 4 },
+  twoCol: { flexDirection: "row", flexWrap: "wrap", gap: 12 },
+  upload: {
     borderWidth: 2,
-    borderColor: "#fff"
+    borderStyle: "dashed",
+    borderColor: "#d1d5db",
+    borderRadius: 14,
+    padding: 20,
+    alignItems: "center",
+    marginBottom: 12,
+    backgroundColor: "#f9fafb"
   },
-  label: { fontSize: 11, fontWeight: "600", color: "#6b7280" },
-  name: { fontSize: 18, fontWeight: "800" },
-  role: { fontSize: 12, fontWeight: "600", color: "#2563eb" },
-  infoBox: {
+  uploadText2: { fontWeight: "700", marginTop: 6 },
+  uploadSub: { fontSize: 12, color: "#6b7280" },
+  checkboxRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 },
+  checkboxText: { fontSize: 14 },
+  radioBlock: { marginBottom: 12 },
+  radioRow: { flexDirection: "row", gap: 24, marginTop: 6 },
+  radio: { flexDirection: "row", alignItems: "center", gap: 6 },
+  radioOuter: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    borderWidth: 2,
+    borderColor: "#9ca3af",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  radioOuterActive: { borderColor: "#2563eb" },
+  radioInner: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: "#2563eb"
+  },
+  toggleCard: {
     backgroundColor: "#f9fafb",
-    padding: 12,
-    borderRadius: 12,
     borderWidth: 1,
     borderColor: "#e5e7eb",
-    marginTop: 16
+    borderRadius: 14,
+    padding: 14
   },
-  infoHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  mono: { fontFamily: "monospace", marginTop: 4 },
-  attachment: {
-    marginTop: 8,
-    fontSize: 12,
-    fontWeight: "700",
-    color: "#2563eb"
-  },
-  twoCol: { flexDirection: "row", gap: 16, marginTop: 16 },
-  value: { fontSize: 14, fontWeight: "700" },
-  subHeader: {
-    fontSize: 13,
-    fontWeight: "800",
-    color: "#2563eb",
-    borderBottomWidth: 1,
-    borderColor: "#e5e7eb",
-    paddingBottom: 6,
-    marginBottom: 12
-  },
-  fileBox: {
-    marginTop: 16,
-    padding: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#bfdbfe",
-    backgroundColor: "#eff6ff",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-  fileTitle: { fontSize: 12, fontWeight: "800", color: "#2563eb" },
-  fileMeta: { fontSize: 10, color: "#6b7280" },
-  downloadBtn: {
-    backgroundColor: "#ffffff",
-    padding: 8,
-    borderRadius: 999
-  },
+  toggleTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
+  toggleLabel: { fontSize: 14, fontWeight: "800" },
+  toggleHelp: { fontSize: 12, color: "#6b7280", marginTop: 6 },
   disabledCard: {
     opacity: 0.6,
-    marginBottom: 24,
     backgroundColor: "#ffffff",
-    padding: 16,
     borderRadius: 16,
+    padding: 16,
     borderWidth: 1,
-    borderColor: "#e5e7eb"
+    borderColor: "#e5e7eb",
+    marginBottom: 40
   },
   disabledHeader: {
     flexDirection: "row",
@@ -357,6 +694,16 @@ const styles = {
     padding: 16
   },
   bottomGrid: { flexDirection: "row", gap: 16 },
+  backBtn: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#d1d5db",
+    paddingVertical: 14,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  backText: { fontWeight: "700" },
   cancelBtn: {
     flex: 1,
     flexDirection: "row",
