@@ -3,6 +3,7 @@ import { View, ScrollView, TextInput, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { MaterialIcons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
 import { useTheme } from "../theme/useTheme";
 import { ThemedText } from "../components/ThemedText";
 import { useI18n } from "../i18n/I18nProvider";
@@ -14,6 +15,7 @@ type Props = {
 export function ChangePasswordScreen({ onBack }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   return (
     <>
@@ -23,7 +25,8 @@ export function ChangePasswordScreen({ onBack }: Props) {
         <BlurView intensity={40}>
           <View
             style={{
-              height: 56,
+              height: 56 + STATUS_BAR_HEIGHT,
+              paddingTop: STATUS_BAR_HEIGHT,
               paddingHorizontal: 20,
               flexDirection: "row",
               alignItems: "center",

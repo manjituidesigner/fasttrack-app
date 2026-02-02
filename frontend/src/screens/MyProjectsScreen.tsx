@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, Text, ScrollView, Pressable, Image, StyleProp, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
 import { useState } from "react";
 import { useI18n } from "../i18n/I18nProvider";
 import ChatbotIcon from "../assets/images/chatbot.svg";
@@ -21,6 +22,7 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
   const [scafExpanded, setScafExpanded] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const CHAT_ICON_SIZE = 72;
 
@@ -38,7 +40,8 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
         {/* ===== Header ===== */}
         <View
           style={{
-            height: 64,
+            height: 64 + STATUS_BAR_HEIGHT,
+            paddingTop: STATUS_BAR_HEIGHT,
             paddingHorizontal: 16,
             flexDirection: "row",
             alignItems: "center",
@@ -51,7 +54,17 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
             elevation: 50
           }}
         >
-          <Pressable onPress={onMenuPress} style={{ padding: 8 }}>
+          <Pressable
+            onPress={onMenuPress}
+            hitSlop={10}
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
             <MaterialIcons name="menu" size={24} color="#1e293b" />
           </Pressable>
 
@@ -64,7 +77,14 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
                 setShowLanguageMenu(false);
               }}
               hitSlop={10}
-              style={{ borderRadius: 999, overflow: "hidden" }}
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                overflow: "hidden",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
             >
               <Image
                 source={{
@@ -111,7 +131,7 @@ export function MyProjectsScreen({ onMenuPress, onChatPress, onAddPress }: Props
                 <View
                   style={{
                     position: "absolute",
-                    top: 44,
+                    top: 44 + STATUS_BAR_HEIGHT,
                     right: 0,
                     width: 220,
                     borderRadius: 16,

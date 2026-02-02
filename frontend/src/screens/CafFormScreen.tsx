@@ -3,6 +3,7 @@ import { Image, Pressable, ScrollView, Switch, Text, TextInput, View } from "rea
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ReactNode } from "react";
+ import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
@@ -15,6 +16,7 @@ export function CafFormScreen({ onBack }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const [step, setStep] = useState<1 | 2 | 3>(1);
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
   const [investment, setInvestment] = useState({
     landCost: "",
     buildingCost: "",
@@ -462,14 +464,15 @@ function Radio({ label, checked }: { label: string; checked?: boolean }) {
 
 const styles = {
   header: {
-    height: 64,
+    height: 64 + (Constants.statusBarHeight ?? 0),
+    paddingTop: Constants.statusBarHeight ?? 0,
     paddingHorizontal: 16,
     backgroundColor: "#ffffff",
     borderBottomWidth: 1,
     borderColor: "#e5e7eb",
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between"
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
   headerTitle: { fontSize: 18, fontWeight: "800", color: "#2563eb" },

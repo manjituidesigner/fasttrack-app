@@ -3,6 +3,7 @@ import { View, ScrollView, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { MaterialIcons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
 import { useState } from "react";
 import { ThemedText } from "../components/ThemedText";
 import { useI18n } from "../i18n/I18nProvider";
@@ -20,6 +21,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
   const { language, setLanguage, t } = useI18n();
   const [showMenu, setShowMenu] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const closeMenu = () => {
     setShowLanguageMenu(false);
@@ -37,7 +39,8 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
               position: "relative",
               zIndex: 20,
               elevation: 20,
-              height: 56,
+              height: 56 + STATUS_BAR_HEIGHT,
+              paddingTop: STATUS_BAR_HEIGHT,
               paddingHorizontal: 20,
               flexDirection: "row",
               alignItems: "center",
@@ -48,10 +51,11 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
           >
             <Pressable
               onPress={onMenuPress}
+              hitSlop={10}
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
                 backgroundColor: "rgba(255,255,255,0.6)",
                 alignItems: "center",
                 justifyContent: "center"
@@ -60,28 +64,35 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
               <MaterialIcons name="menu" size={24} color="#1f2937" />
             </Pressable>
 
-            <ThemedText
+            <View
+              pointerEvents="none"
               style={{
                 position: "absolute",
                 left: "50%",
-                transform: [{ translateX: -50 }],
-                fontSize: 20,
-                fontWeight: "900",
-                color: "#0f172a"
+                transform: [{ translateX: -50 }]
               }}
             >
-              {t("dashboard.title")}
-            </ThemedText>
+              <ThemedText
+                style={{
+                  fontSize: 20,
+                  fontWeight: "900",
+                  color: "#0f172a"
+                }}
+              >
+                {t("dashboard.title")}
+              </ThemedText>
+            </View>
 
             <Pressable
               onPress={() => {
                 setShowMenu((v) => !v);
                 setShowLanguageMenu(false);
               }}
+              hitSlop={10}
               style={{
-                width: 32,
-                height: 32,
-                borderRadius: 16,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
                 backgroundColor: "#ddd",
                 overflow: "hidden",
                 borderWidth: 2,
@@ -115,7 +126,7 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
                   style={{
                     position: "absolute",
                     right: 20,
-                    top: 56,
+                    top: 56 + STATUS_BAR_HEIGHT,
                     width: 220,
                     borderRadius: 16,
                     overflow: "hidden",

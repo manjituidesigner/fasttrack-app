@@ -4,6 +4,7 @@ import { View, ScrollView, Image, Pressable, FlatList, Dimensions } from "react-
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
 import { ThemedText } from "../components/ThemedText";
@@ -20,6 +21,7 @@ export function HomeScreen({ onLoginPress }: Props) {
   const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
   const [showLangMenu, setShowLangMenu] = useState(false);
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const features = useMemo(
     () => [
@@ -98,7 +100,7 @@ export function HomeScreen({ onLoginPress }: Props) {
               alignItems: "center",
               justifyContent: "space-between",
               paddingHorizontal: 20,
-              paddingTop: 8,
+              paddingTop: STATUS_BAR_HEIGHT + 8,
               paddingBottom: 12,
               borderBottomWidth: 1,
               borderColor: theme.colors.border.hairline
@@ -163,7 +165,7 @@ export function HomeScreen({ onLoginPress }: Props) {
               style={{
                 position: "absolute",
                 right: 20,
-                top: 66,
+                top: STATUS_BAR_HEIGHT + 66,
                 width: 170,
                 borderRadius: 14,
                 overflow: "hidden",

@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, Text, ScrollView, Pressable, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
+ import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
@@ -20,6 +21,7 @@ export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(true);
   const [showFabMenu, setShowFabMenu] = useState(false);
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const closeMenu = () => {
     setShowLanguageMenu(false);
@@ -38,7 +40,7 @@ export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         {/* ===== Header ===== */}
         <View style={styles.header}>
-          <Pressable style={styles.iconBtn} onPress={onMenuPress}>
+          <Pressable style={styles.iconBtn} onPress={onMenuPress} hitSlop={10}>
             <MaterialIcons name="menu" size={24} color="#6b7280" />
           </Pressable>
 
@@ -51,7 +53,14 @@ export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
                 setShowLanguageMenu(false);
               }}
               hitSlop={10}
-              style={{ borderRadius: 999, overflow: "hidden" }}
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 22,
+                overflow: "hidden",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
             >
               <Image
                 source={{
@@ -80,7 +89,7 @@ export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
                 <View
                   style={{
                     position: "absolute",
-                    top: 44,
+                    top: 44 + STATUS_BAR_HEIGHT,
                     right: 0,
                     width: 220,
                     borderRadius: 16,
@@ -403,7 +412,8 @@ function Section({ title, badge, badgeColor, items, expanded, onToggle }: any) {
 
 const styles = {
   header: {
-    height: 64,
+    height: 64 + (Constants.statusBarHeight ?? 0),
+    paddingTop: Constants.statusBarHeight ?? 0,
     paddingHorizontal: 16,
     backgroundColor: "#ffffffee",
     borderBottomWidth: 1,
@@ -415,7 +425,7 @@ const styles = {
     zIndex: 50,
     elevation: 50
   },
-  iconBtn: { padding: 8 },
+  iconBtn: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
   headerTitle: { fontSize: 18, fontWeight: "800" },
   avatar: { width: 36, height: 36, borderRadius: 18 },
   onlineDot: {
