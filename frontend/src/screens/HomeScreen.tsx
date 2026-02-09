@@ -1,419 +1,262 @@
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { View, ScrollView, Image, Pressable, FlatList, Dimensions } from "react-native";
+import type { ComponentType } from "react";
+import { View, Image, Pressable, FlatList, Dimensions, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { BlurView } from "expo-blur";
-import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
- import Constants from "expo-constants";
-import { useTheme } from "../theme/useTheme";
-import { useI18n } from "../i18n/I18nProvider";
-import { ThemedText } from "../components/ThemedText";
-import { ThemedCard } from "../components/ThemedCard";
-import { ThemedButton } from "../components/ThemedButton";
+import GovtLogo from "../assets/images/govt logo.svg";
+import GetGuidance from "../assets/images/get_guidance.svg";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 type Props = {
   onLoginPress: () => void;
 };
 
 export function HomeScreen({ onLoginPress }: Props) {
-  const theme = useTheme();
-  const { language, setLanguage, t } = useI18n();
-  const [showLangMenu, setShowLangMenu] = useState(false);
-  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
+  type SlideItem =
+    | { id: string; titleTop: string; titleBottom: string; image: any }
+    | { id: string; titleTop: string; titleBottom: string; Svg: ComponentType<any> };
 
-  const features = useMemo(
-    () => [
+  const slides = useMemo(
+    (): SlideItem[] => [
       {
-        icon: "rocket-launch",
-        iconSet: "mci" as const,
-        title: t("home.feature.instantFiling.title"),
-        desc: t("home.feature.instantFiling.desc"),
-        color: theme.colors.brand.primary
+        id: "s1",
+        titleTop: "SINGLE WINDOW",
+        titleBottom: "FASTER APPROVALS.",
+        image: require("../assets/images/slide-1.png")
       },
       {
-        icon: "radar",
-        iconSet: "mci" as const,
-        title: t("home.feature.liveTracking.title"),
-        desc: t("home.feature.liveTracking.desc"),
-        color: "#059669"
+        id: "s2",
+        titleTop: "TRACK STATUS",
+        titleBottom: "IN REAL TIME.",
+        image: require("../assets/images/track-status.png")
       },
       {
-        icon: "verified-user",
-        iconSet: "mi" as const,
-        title: t("home.feature.eCertificates.title"),
-        desc: t("home.feature.eCertificates.desc"),
-        color: "#7c3aed"
+        id: "s3",
+        titleTop: "APPLY ONLINE",
+        titleBottom: "ANYTIME.",
+        image: require("../assets/images/online-apply.png")
       },
       {
-        icon: "domain-verification",
-        iconSet: "mci" as const,
-        title: t("home.feature.singleWindow.title"),
-        desc: t("home.feature.singleWindow.desc"),
-        color: "#0ea5e9"
-      },
-      {
-        icon: "shield-check",
-        iconSet: "mci" as const,
-        title: t("home.feature.secureTrusted.title"),
-        desc: t("home.feature.secureTrusted.desc"),
-        color: "#f59e0b"
+        id: "s4",
+        titleTop: "GET GUIDANCE",
+        titleBottom: "EASILY.",
+        Svg: GetGuidance
       }
     ],
-    [theme.colors.brand.primary, t]
+    []
   );
 
-  const CARD_WIDTH = Math.min(260, Math.max(220, SCREEN_WIDTH * 0.72));
-  const CARD_GAP = 16;
-  const SNAP_INTERVAL = CARD_WIDTH + CARD_GAP;
+  const CARD_GAP = 14;
+  const [cardWidth, setCardWidth] = useState(() => Math.min(260, Math.max(240, SCREEN_WIDTH * 0.76)));
+  const snapInterval = cardWidth + CARD_GAP;
 
-  const listRef = useRef<FlatList<(typeof features)[number]>>(null);
+  const listRef = useRef<FlatList<SlideItem>>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselWrapWidth, setCarouselWrapWidth] = useState(0);
+  const currentIndexRef = useRef(0);
+
+  const viewabilityConfigRef = useRef({ itemVisiblePercentThreshold: 70 });
+  const onViewableItemsChangedRef = useRef(
+    ({ viewableItems }: { viewableItems: Array<{ index: number | null }> }) => {
+      const next = viewableItems?.[0]?.index;
+      if (typeof next === "number") {
+        currentIndexRef.current = next;
+        setActiveIndex(next);
+      }
+    }
+  );
 
   useEffect(() => {
-    if (features.length <= 1) return;
+    if (slides.length <= 1) return;
 
     const id = setInterval(() => {
-      setActiveIndex((prev) => {
-        const next = (prev + 1) % features.length;
-        listRef.current?.scrollToOffset({ offset: next * SNAP_INTERVAL, animated: true });
-        return next;
-      });
-    }, 3500);
+      const next = (currentIndexRef.current + 1) % slides.length;
+      try {
+        listRef.current?.scrollToIndex({ index: next, animated: true, viewPosition: 0.5 });
+      } catch {
+        setTimeout(() => {
+          try {
+            listRef.current?.scrollToIndex({ index: next, animated: true, viewPosition: 0.5 });
+          } catch {
+            // ignore
+          }
+        }, 50);
+      }
+      currentIndexRef.current = next;
+      setActiveIndex(next);
+    }, 3200);
 
     return () => clearInterval(id);
-  }, [features.length, SNAP_INTERVAL]);
+  }, [slides.length, snapInterval]);
+
+  useEffect(() => {
+    if (!carouselWrapWidth) return;
+
+    // Make sure the focused card fits inside the splash card and doesn't overflow the screen.
+    // Leave space so adjacent cards are partially visible.
+    const nextWidth = Math.round(Math.min(280, Math.max(220, carouselWrapWidth * 0.72)));
+    if (nextWidth !== cardWidth) setCardWidth(nextWidth);
+  }, [carouselWrapWidth, cardWidth]);
 
   return (
     <>
-      <StatusBar style={theme.mode === "dark" ? "light" : "dark"} />
+      <StatusBar style="dark" />
 
-      <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <BlurView intensity={40} style={{ zIndex: 20, elevation: 20 }}>
+      <LinearGradient
+        colors={["#8CD2F2", "#A8D5E5", "#C8D4F3", "#CDEED1"]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 28, justifyContent: "center" }}
+      >
+        <View
+          style={{
+            width: "100%",
+            maxWidth: 320,
+            alignSelf: "center",
+            borderRadius: 34,
+            backgroundColor: "rgba(255,255,255,0.62)",
+            minHeight: 600,
+            height: Math.max(600, Math.round(SCREEN_HEIGHT * 0.82)),
+            paddingHorizontal: 18,
+            paddingTop: 26,
+            paddingBottom: 22
+          }}
+        >
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+            <Image
+              source={require("../assets/images/fasttrack_dark_logo.png")}
+              style={{ width: 118, height: 40, resizeMode: "contain" }}
+            />
+            <GovtLogo width={40} height={40} />
+            <Image source={require("../assets/images/ip-logo.png")} style={{ width: 110, height: 40, resizeMode: "contain" }} />
+          </View>
+
+          <Text style={{ textAlign: "center", fontSize: 26, fontWeight: "900", marginTop: 6 }}>
+            <Text style={{ color: "#1565D8" }}>Invest.</Text> <Text style={{ color: "#F59E0B" }}>Build.</Text>{" "}
+            <Text style={{ color: "#22C55E" }}>Grow.</Text>
+          </Text>
+
+          <Text style={{ textAlign: "center", fontSize: 13, fontWeight: "500", color: "#64748b", marginTop: 8 }}>
+            Your single-window gateway for industrial{"\n"}approvals in Punjab.
+          </Text>
+
           <View
             style={{
-              position: "relative",
-              zIndex: 20,
-              elevation: 20,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              paddingHorizontal: 20,
-              paddingTop: STATUS_BAR_HEIGHT + 8,
-              paddingBottom: 12,
-              borderBottomWidth: 1,
-              borderColor: theme.colors.border.hairline
+              marginTop: 20,
+              alignItems: "center"
             }}
+            onLayout={(e) => setCarouselWrapWidth(e.nativeEvent.layout.width)}
           >
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-              <View
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 16,
-                  backgroundColor: theme.colors.icon.headerBadgeBg,
-                  alignItems: "center",
-                  justifyContent: "center"
-                }}
-              >
-                <MaterialIcons name="account-balance" size={22} color="white" />
-              </View>
+            <View style={{ width: "100%", borderRadius: 24, overflow: "hidden" }}>
+            {(() => {
+              const START_SHIFT = 18;
+              const basePadding = Math.max(0, (carouselWrapWidth - cardWidth) / 2);
+              const sidePadding = Math.max(0, basePadding - START_SHIFT);
 
-              <View>
-                <ThemedText
-                  style={{
-                    fontSize: theme.typography.headerTitle.size,
-                    fontWeight: theme.typography.headerTitle.weight
-                  }}
-                >
-                  {t("home.appTitle")}
-                </ThemedText>
-                <ThemedText
-                  variant="muted"
-                  style={{
-                    fontSize: theme.typography.headerSubtitle.size,
-                    fontWeight: theme.typography.headerSubtitle.weight,
-                    textTransform: "uppercase"
-                  }}
-                >
-                  {t("home.govt")}
-                </ThemedText>
-              </View>
-            </View>
-
-            <Pressable
-              onPress={() => setShowLangMenu((v) => !v)}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                paddingHorizontal: 12,
-                paddingVertical: 6,
-                borderRadius: theme.radii.badge,
-                backgroundColor: theme.colors.surface.glass
-              }}
-            >
-              <ThemedText style={{ fontSize: 12, fontWeight: "700" }}>
-                {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
-              </ThemedText>
-              <MaterialIcons name="expand-more" size={16} color={theme.colors.text.muted} />
-            </Pressable>
-          </View>
-
-          {showLangMenu ? (
-            <View
-              style={{
-                position: "absolute",
-                right: 20,
-                top: STATUS_BAR_HEIGHT + 66,
-                width: 170,
-                borderRadius: 14,
-                overflow: "hidden",
-                backgroundColor: "rgba(255,255,255,0.92)",
-                borderWidth: 1,
-                borderColor: theme.colors.border.hairline,
-                zIndex: 999,
-                elevation: 999
-              }}
-            >
-              {["en", "pa", "hi"].map((code) => (
-                <Pressable
-                  key={code}
-                  onPress={() => {
-                    setLanguage(code as any);
-                    setShowLangMenu(false);
-                  }}
-                  style={{
-                    paddingHorizontal: 14,
-                    paddingVertical: 12,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
-                  }}
-                >
-                  <ThemedText style={{ fontSize: 14, fontWeight: "600", color: "#0f172a" }}>
-                    {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
-                  </ThemedText>
-                  {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
-                </Pressable>
-              ))}
-            </View>
-          ) : null}
-        </BlurView>
-
-        <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
-          <View style={{ marginTop: 12, paddingHorizontal: 20 }}>
-            <View
-              style={{
-                width: "100%",
-                height: 190,
-                borderRadius: theme.radii.card,
-                overflow: "hidden",
-                backgroundColor: theme.colors.surface.glass,
-                borderWidth: 1,
-                borderColor: theme.colors.border.hairline
-              }}
-            >
-              <LinearGradient
-                colors={[
-                  "rgba(37,99,235,0.18)",
-                  "rgba(255,255,255,0.35)",
-                  "rgba(236,72,153,0.14)"
-                ]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                style={{ flex: 1, padding: 18 }}
-              >
-                <View
-                  style={{
-                    position: "absolute",
-                    width: 220,
-                    height: 220,
-                    borderRadius: 110,
-                    backgroundColor: "rgba(37,99,235,0.10)",
-                    top: -110,
-                    right: -90
-                  }}
-                />
-                <View
-                  style={{
-                    position: "absolute",
-                    width: 180,
-                    height: 180,
-                    borderRadius: 90,
-                    backgroundColor: "rgba(236,72,153,0.10)",
-                    bottom: -90,
-                    left: -70
-                  }}
-                />
-
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                  <View style={{ gap: 6 }}>
-                    <ThemedText style={{ fontSize: 18, fontWeight: "800" }}>{t("home.bannerTitle")}</ThemedText>
-                    <ThemedText variant="muted" style={{ fontSize: 12, fontWeight: "600" }}>
-                      {t("home.bannerSubtitle")}
-                    </ThemedText>
-                  </View>
-
-                  <View
-                    style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 16,
-                      backgroundColor: "rgba(255,255,255,0.8)",
-                      alignItems: "center",
-                      justifyContent: "center"
-                    }}
-                  >
-                    <MaterialCommunityIcons name="factory" size={22} color={theme.colors.brand.primary} />
-                  </View>
-                </View>
-
-                <View style={{ flex: 1, justifyContent: "flex-end" }}>
-                  <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-end" }}>
-                    <View
-                      style={{
-                        width: 76,
-                        height: 76,
-                        borderRadius: 26,
-                        backgroundColor: "rgba(255,255,255,0.75)",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <MaterialCommunityIcons name="crane" size={34} color="#0ea5e9" />
-                    </View>
-
-                    <View
-                      style={{
-                        width: 76,
-                        height: 76,
-                        borderRadius: 26,
-                        backgroundColor: "rgba(255,255,255,0.75)",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <MaterialCommunityIcons name="truck-fast" size={34} color="#7c3aed" />
-                    </View>
-
-                    <View
-                      style={{
-                        width: 76,
-                        height: 76,
-                        borderRadius: 26,
-                        backgroundColor: "rgba(255,255,255,0.75)",
-                        alignItems: "center",
-                        justifyContent: "center"
-                      }}
-                    >
-                      <MaterialCommunityIcons name="file-document-outline" size={34} color="#059669" />
-                    </View>
-                  </View>
-                </View>
-              </LinearGradient>
-            </View>
-          </View>
-
-          <View style={{ paddingHorizontal: theme.spacing.screenX, marginTop: 28 }}>
-            <ThemedText
-              style={{
-                fontSize: 36,
-                fontWeight: theme.typography.title.weight,
-                textAlign: "center",
-                lineHeight: 46
-              }}
-            >
-              {t("home.heroTitle")} <ThemedText variant="link">{t("home.heroTitleLink")}</ThemedText>
-            </ThemedText>
-
-            <ThemedText
-              variant="secondary"
-              style={{
-                fontSize: 15,
-                marginTop: 12,
-                textAlign: "center",
-                maxWidth: 320,
-                alignSelf: "center"
-              }}
-            >
-              {t("home.heroSubtitle")}
-            </ThemedText>
-          </View>
-
-          <View style={{ marginTop: 28 }}>
+              return (
             <FlatList
               ref={listRef}
-              data={features}
+              data={slides}
               horizontal
-              keyExtractor={(_item, idx) => String(idx)}
+              keyExtractor={(item) => item.id}
               showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingLeft: 20, paddingRight: 20 }}
-              snapToInterval={SNAP_INTERVAL}
+              contentContainerStyle={{ paddingHorizontal: sidePadding }}
+              snapToInterval={snapInterval}
               decelerationRate="fast"
-              onMomentumScrollEnd={(e) => {
-                const x = e.nativeEvent.contentOffset.x;
-                const idx = Math.round(x / SNAP_INTERVAL);
-                setActiveIndex(Math.max(0, Math.min(idx, features.length - 1)));
+              snapToAlignment="center"
+              disableIntervalMomentum
+              getItemLayout={(_data, index) => ({ length: snapInterval, offset: snapInterval * index, index })}
+              onScrollToIndexFailed={() => {
+                setTimeout(() => {
+                  listRef.current?.scrollToIndex({ index: activeIndex, animated: true, viewPosition: 0.5 });
+                }, 50);
               }}
+              viewabilityConfig={viewabilityConfigRef.current}
+              onViewableItemsChanged={onViewableItemsChangedRef.current}
               renderItem={({ item }) => (
-                <ThemedCard style={{ width: CARD_WIDTH, marginRight: CARD_GAP, padding: 20 }}>
+                <View
+                  style={{
+                    width: cardWidth,
+                    marginRight: CARD_GAP,
+                    borderRadius: 22,
+                    backgroundColor: "white",
+                    paddingVertical: 18,
+                    paddingHorizontal: 14,
+                    borderWidth: 1,
+                    borderColor: "rgba(226,232,240,1)",
+                    alignItems: "center",
+                    shadowColor: "#000",
+                    shadowOpacity: 0.08,
+                    shadowRadius: 10,
+                    shadowOffset: { width: 0, height: 6 },
+                    elevation: 3
+                  }}
+                >
                   <View
                     style={{
-                      width: 48,
-                      height: 48,
-                      borderRadius: theme.radii.icon,
-                      backgroundColor: item.color,
+                      width: 140,
+                      height: 140,
+                      borderRadius: 70,
+                      backgroundColor: "rgba(37,99,235,0.10)",
                       alignItems: "center",
                       justifyContent: "center",
-                      marginBottom: 16
+                      marginBottom: 14
                     }}
                   >
-                    {item.iconSet === "mi" ? (
-                      <MaterialIcons name={item.icon as any} size={26} color="white" />
+                    {"image" in item ? (
+                      <Image source={item.image} style={{ width: 130, height: 130, resizeMode: "contain" }} />
                     ) : (
-                      <MaterialCommunityIcons name={item.icon as any} size={26} color="white" />
+                      <item.Svg width={130} height={130} />
                     )}
                   </View>
 
-                  <ThemedText style={{ fontSize: 18, fontWeight: "700", marginBottom: 6 }}>{item.title}</ThemedText>
-
-                  <ThemedText variant="muted" style={{ fontSize: 14, fontWeight: "500" }}>
-                    {item.desc}
-                  </ThemedText>
-                </ThemedCard>
+                  <Text style={{ fontSize: 12, fontWeight: "900", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleTop}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: "900", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleBottom}</Text>
+                </View>
               )}
             />
+              );
+            })()}
+            </View>
 
-            <View style={{ flexDirection: "row", justifyContent: "center", marginTop: 12, gap: 8 }}>
-              {features.map((_, i) => (
+            <View style={{ flexDirection: "row", justifyContent: "center", gap: 8, marginTop: 10 }}>
+              {slides.map((_, i) => (
                 <View
                   key={i}
                   style={{
-                    width: i === activeIndex ? 18 : 8,
+                    width: 8,
                     height: 8,
                     borderRadius: 99,
-                    backgroundColor: i === activeIndex ? theme.colors.brand.primary : theme.colors.border.outline,
-                    opacity: i === activeIndex ? 1 : 0.6
+                    backgroundColor: i === activeIndex ? "#1565D8" : "#cbd5e1",
+                    opacity: i === activeIndex ? 1 : 0.9
                   }}
                 />
               ))}
             </View>
           </View>
 
-          <View style={{ paddingHorizontal: theme.spacing.screenX, marginTop: 28, paddingBottom: 30 }}>
-            <ThemedButton
-              title={t("home.loginToPortal")}
-              variant="primary"
-              onPress={onLoginPress}
-              containerStyle={{ marginBottom: 14 }}
-              rightIcon={<MaterialIcons name="arrow-forward" size={20} color={theme.colors.button.primaryText} style={{ marginLeft: 6 }} />}
-            />
+          <Pressable
+            onPress={onLoginPress}
+            style={{
+              marginTop: 22,
+              height: 52,
+              borderRadius: 26,
+              backgroundColor: "#1565D8",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "800" }}>Login to Portal</Text>
+          </Pressable>
 
-            <ThemedButton title={t("home.newInvestorRegistration")} variant="outline" />
-          </View>
-        </ScrollView>
+          <Pressable
+            onPress={() => {}}
+            style={{ marginTop: 14, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" }}
+          >
+            <Text style={{ color: "#0f172a", fontSize: 13.5, fontWeight: "700" }}>New Investor Registration</Text>
+          </Pressable>
+        </View>
       </LinearGradient>
     </>
   );

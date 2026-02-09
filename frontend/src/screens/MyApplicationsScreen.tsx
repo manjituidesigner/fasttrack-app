@@ -1,32 +1,25 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, Pressable, Image } from "react-native";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
- import Constants from "expo-constants";
+import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
+  onBack?: () => void;
   onMenuPress?: () => void;
   onFillCaf?: () => void;
 };
 
-export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
+export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) {
   const theme = useTheme();
-  const { language, setLanguage, t } = useI18n();
-  const [showMenu, setShowMenu] = useState(false);
-  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+  const { t } = useI18n();
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(true);
   const [showFabMenu, setShowFabMenu] = useState(false);
-  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
-
-  const closeMenu = () => {
-    setShowLanguageMenu(false);
-    setShowMenu(false);
-  };
 
   const closeFabMenu = () => {
     setShowFabMenu(false);
@@ -40,134 +33,15 @@ export function MyApplicationsScreen({ onMenuPress, onFillCaf }: Props) {
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         {/* ===== Header ===== */}
         <View style={styles.header}>
-          <Pressable style={styles.iconBtn} onPress={onMenuPress} hitSlop={10}>
-            <MaterialIcons name="menu" size={24} color="#6b7280" />
+          <Pressable style={styles.iconBtn} onPress={onBack} hitSlop={10}>
+            <MaterialIcons name="arrow-back" size={24} color="#6b7280" />
           </Pressable>
 
           <Text style={styles.headerTitle}>{t("myApplications.title")}</Text>
 
-          <View style={{ position: "relative" }}>
-            <Pressable
-              onPress={() => {
-                setShowMenu((v) => !v);
-                setShowLanguageMenu(false);
-              }}
-              hitSlop={10}
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 22,
-                overflow: "hidden",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <Image
-                source={{
-                  uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuBUMTasDMmgMrOEaBIWgw11dajvQiEBYCCQOYePI-aaS9Bk8T77Q4LhY5nX0_LVmTVF5BxJiAsCW0IoWRzBp4py2f1JPKUmuloz6ghOJ8cD3pi8kb4MU7CfN454j6X_J9hBAvHis5RBJQyDoUzuuHoKAAf3w8T2uDrXCNJ0udF-E3dn0ZkO01AhYegU6V8hyefsrlgFCkfYFe4g8_VaqgOSc19mhCZ-W6RAZ1_HegZP4cksmh1QlmBTyOH4xJjsUINk8D9-7jq26zT9"
-                }}
-                style={styles.avatar}
-              />
-              <View style={styles.onlineDot} />
-            </Pressable>
-
-            {showMenu ? (
-              <>
-                <Pressable
-                  onPress={closeMenu}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: -9999,
-                    right: -9999,
-                    bottom: -9999,
-                    backgroundColor: "transparent",
-                    zIndex: 998
-                  }}
-                />
-
-                <View
-                  style={{
-                    position: "absolute",
-                    top: 44 + STATUS_BAR_HEIGHT,
-                    right: 0,
-                    width: 220,
-                    borderRadius: 16,
-                    overflow: "hidden",
-                    backgroundColor: "rgba(255,255,255,0.92)",
-                    borderWidth: 1,
-                    borderColor: "rgba(203,213,225,0.9)",
-                    zIndex: 9999,
-                    elevation: 9999
-                  }}
-                >
-                  <Pressable
-                    onPress={() => setShowLanguageMenu((v) => !v)}
-                    style={{
-                      paddingHorizontal: 14,
-                      paddingVertical: 12,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between"
-                    }}
-                  >
-                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("menu.language")}</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                      <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>
-                        {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
-                      </Text>
-                      <MaterialIcons name={showLanguageMenu ? "expand-less" : "expand-more"} size={18} color="#64748b" />
-                    </View>
-                  </Pressable>
-
-                  {showLanguageMenu ? (
-                    <View style={{ borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}>
-                      {["en", "pa", "hi"].map((code) => (
-                        <Pressable
-                          key={code}
-                          onPress={() => {
-                            setLanguage(code as any);
-                            closeMenu();
-                          }}
-                          style={{
-                            paddingHorizontal: 14,
-                            paddingVertical: 12,
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
-                          }}
-                        >
-                          <Text style={{ fontSize: 14, fontWeight: "600", color: "#0f172a" }}>
-                            {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
-                          </Text>
-                          {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
-                        </Pressable>
-                      ))}
-                    </View>
-                  ) : null}
-
-                  <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.7)" }} />
-
-                  <Pressable
-                    onPress={closeMenu}
-                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
-                  >
-                    <MaterialIcons name="person" size={18} color="#0f172a" />
-                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myApplications.menu.profile")}</Text>
-                  </Pressable>
-
-                  <Pressable
-                    onPress={closeMenu}
-                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
-                  >
-                    <MaterialIcons name="logout" size={18} color="#e11d48" />
-                    <Text style={{ fontSize: 14, fontWeight: "700", color: "#e11d48" }}>{t("drawer.logout")}</Text>
-                  </Pressable>
-                </View>
-              </>
-            ) : null}
-          </View>
+          <Pressable style={styles.iconBtn} onPress={onMenuPress} hitSlop={10}>
+            <MaterialIcons name="menu" size={24} color="#6b7280" />
+          </Pressable>
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false} style={{ zIndex: 1 }} contentContainerStyle={{ paddingBottom: 160 }}>
@@ -426,7 +300,7 @@ const styles = {
     elevation: 50
   },
   iconBtn: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
-  headerTitle: { fontSize: 18, fontWeight: "800" },
+  headerTitle: { fontSize: 20, fontWeight: "800" },
   avatar: { width: 36, height: 36, borderRadius: 18 },
   onlineDot: {
     position: "absolute",
@@ -449,7 +323,7 @@ const styles = {
     flexDirection: "row",
     gap: 10
   },
-  infoText: { fontSize: 12, color: "#374151", flex: 1 },
+  infoText: { fontSize: 13, color: "#374151", flex: 1 },
   link: { color: "#2563eb", fontWeight: "700" },
   section: {
     marginHorizontal: 16,
@@ -466,7 +340,7 @@ const styles = {
     borderBottomWidth: 1,
     borderColor: "#e5e7eb"
   },
-  sectionTitle: { fontSize: 13, fontWeight: "800", textTransform: "uppercase" },
+  sectionTitle: { fontSize: 14, fontWeight: "800", textTransform: "uppercase" },
   card: {
     padding: 14,
     borderBottomWidth: 1,
@@ -477,10 +351,10 @@ const styles = {
     justifyContent: "space-between",
     marginBottom: 6
   },
-  cardTitle: { fontSize: 14, fontWeight: "800" },
-  muted: { fontSize: 11, color: "#6b7280" },
-  detail: { fontSize: 12, color: "#374151" },
-  pin: { fontSize: 12, fontWeight: "800", color: "#2563eb", marginTop: 4 },
+  cardTitle: { fontSize: 16, fontWeight: "800" },
+  muted: { fontSize: 12, color: "#6b7280" },
+  detail: { fontSize: 13, color: "#374151" },
+  pin: { fontSize: 14, fontWeight: "800", color: "#2563eb", marginTop: 4 },
   plusFab: {
     position: "absolute",
     bottom: 32,

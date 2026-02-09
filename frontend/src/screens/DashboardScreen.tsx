@@ -11,12 +11,13 @@ import { useTheme } from "../theme/useTheme";
 
 type Props = {
   onMenuPress?: () => void;
+  onInvestmentProject?: () => void;
   onChangePassword?: () => void;
   onLogout?: () => void;
   onMyApplications?: () => void;
 };
 
-export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyApplications }: Props) {
+export function DashboardScreen({ onMenuPress, onInvestmentProject, onChangePassword, onLogout, onMyApplications }: Props) {
   const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
   const [showMenu, setShowMenu] = useState(false);
@@ -262,6 +263,9 @@ export function DashboardScreen({ onMenuPress, onChangePassword, onLogout, onMyA
                 <Pressable
                   key={i}
                   onPress={() => {
+                    if (item.titleKey === "dashboard.card.investmentProject.title") {
+                      onInvestmentProject?.();
+                    }
                     if (item.titleKey === "dashboard.card.myApplications.title") {
                       onMyApplications?.();
                     }

@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
-import { Platform, View, ScrollView, TextInput, Pressable, Image } from "react-native";
+import { View, ScrollView, TextInput, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
+import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { ThemedText } from "../components/ThemedText";
@@ -14,11 +15,13 @@ type Props = {
 
 export function LoginScreen({ onBack, onLoginSuccess }: Props) {
   const theme = useTheme();
-  const { t } = useI18n();
+  const { t, language, setLanguage } = useI18n();
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   type ProjectTypeId = "industries" | "housing" | "startup";
   const [projectType, setProjectType] = useState<ProjectTypeId>("industries");
   const [showPassword, setShowPassword] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
 
   return (
     <>
@@ -39,23 +42,17 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
               paddingHorizontal: 24
             }}
           >
-            <View style={{ paddingTop: 18, paddingBottom: 14, flexDirection: "row", alignItems: "center" }}>
-              {Platform.OS === "web" ? (
-                <Image
-                  source={require("../assets/images/govt logo.svg")}
-                  style={{ width: 62, height: 62, resizeMode: "contain", marginRight: 10 }}
-                />
-              ) : null}
-
-              <Image
-                source={require("../assets/images/ip-logo.png")}
-                style={{ width: 95, height: 62, resizeMode: "contain" }}
-              />
-
-              <View style={{ flex: 1 }} />
-
+            <View
+              style={{
+                paddingTop: 18 + STATUS_BAR_HEIGHT,
+                paddingBottom: 14,
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
               <Pressable
                 onPress={onBack}
+                hitSlop={10}
                 style={{
                   width: 48,
                   height: 48,
@@ -67,7 +64,68 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
               >
                 <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
               </Pressable>
+
+              <View style={{ flex: 1 }} />
+
+              <Pressable
+                onPress={() => setShowLangMenu((v) => !v)}
+                hitSlop={10}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingHorizontal: 12,
+                  height: 40,
+                  borderRadius: 20,
+                  backgroundColor: "rgba(255,255,255,0.8)"
+                }}
+              >
+                <ThemedText style={{ fontSize: 12, fontWeight: "800", color: "#0f172a" }}>
+                  {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+                </ThemedText>
+                <MaterialIcons name="expand-more" size={18} color="#64748b" />
+              </Pressable>
             </View>
+
+            {showLangMenu ? (
+              <View
+                style={{
+                  position: "absolute",
+                  right: 24,
+                  top: 66 + STATUS_BAR_HEIGHT,
+                  width: 170,
+                  borderRadius: 14,
+                  overflow: "hidden",
+                  backgroundColor: "rgba(255,255,255,0.92)",
+                  borderWidth: 1,
+                  borderColor: theme.colors.border.hairline,
+                  zIndex: 999,
+                  elevation: 999
+                }}
+              >
+                {["en", "pa", "hi"].map((code) => (
+                  <Pressable
+                    key={code}
+                    onPress={() => {
+                      setLanguage(code as any);
+                      setShowLangMenu(false);
+                    }}
+                    style={{
+                      paddingHorizontal: 14,
+                      paddingVertical: 12,
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                    }}
+                  >
+                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>
+                      {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
+                    </ThemedText>
+                    {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                  </Pressable>
+                ))}
+              </View>
+            ) : null}
 
             <ThemedText
               style={{
@@ -88,7 +146,8 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                   placeholder={t("login.usernameOrEmail")}
                   placeholderTextColor="#94a3b8"
                   style={{
-                    fontFamily: "Inter_500Medium",
+                    fontFamily: "Roboto",
+                    fontWeight: "500",
                     paddingLeft: 52,
                     paddingRight: 16,
                     paddingVertical: 16,
@@ -108,7 +167,8 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                   placeholderTextColor="#94a3b8"
                   secureTextEntry={!showPassword}
                   style={{
-                    fontFamily: "Inter_500Medium",
+                    fontFamily: "Roboto",
+                    fontWeight: "500",
                     paddingLeft: 52,
                     paddingRight: 52,
                     paddingVertical: 16,
@@ -136,7 +196,8 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                   placeholder={t("login.code")}
                   placeholderTextColor="#94a3b8"
                   style={{
-                    fontFamily: "Inter_500Medium",
+                    fontFamily: "Roboto",
+                    fontWeight: "500",
                     paddingLeft: 52,
                     paddingRight: 16,
                     paddingVertical: 16,

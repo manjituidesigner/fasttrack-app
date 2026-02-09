@@ -3,20 +3,22 @@ import { Image, Pressable, ScrollView, Switch, Text, TextInput, View } from "rea
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ReactNode } from "react";
- import Constants from "expo-constants";
+import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
+import { BlurView } from "expo-blur";
+import { AppHeader } from "../components/AppHeader";
 
 type Props = {
   onBack?: () => void;
+  onOpenDrawer?: () => void;
 };
 
-export function CafFormScreen({ onBack }: Props) {
+export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const [step, setStep] = useState<1 | 2 | 3>(1);
-  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
   const [investment, setInvestment] = useState({
     landCost: "",
     buildingCost: "",
@@ -40,24 +42,49 @@ export function CafFormScreen({ onBack }: Props) {
       <StatusBar style="dark" />
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
-        <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Pressable onPress={onBack} hitSlop={10}>
-              <MaterialIcons name="arrow-back-ios" size={20} color="#6b7280" />
-            </Pressable>
-            <Text style={styles.headerTitle}>{step === 1 ? t("cafForm.title") : "CAF Application"}</Text>
-          </View>
-
-          {step === 1 ? (
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>AK</Text>
-            </View>
-          ) : (
-            <Pressable hitSlop={10}>
-              <Text style={styles.saveDraft}>Save Draft</Text>
-            </Pressable>
-          )}
-        </View>
+        <BlurView intensity={40}>
+          <AppHeader
+            containerStyle={{ borderBottomWidth: 1, borderColor: theme.colors.border.hairline }}
+            contentStyle={{ paddingHorizontal: 20 }}
+            left={
+              <Pressable
+                onPress={onBack}
+                hitSlop={10}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
+              </Pressable>
+            }
+            center={
+              <Text style={{ fontSize: 18, fontWeight: "800", color: theme.colors.text.primary }}>
+                {step === 1 ? t("cafForm.title") : "CAF Application"}
+              </Text>
+            }
+            right={
+              <Pressable
+                onPress={onOpenDrawer}
+                hitSlop={10}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <MaterialIcons name="menu" size={22} color="#1f2937" />
+              </Pressable>
+            }
+          />
+        </BlurView>
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 160 }}>
           <View style={styles.container}>

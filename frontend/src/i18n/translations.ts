@@ -73,6 +73,8 @@ export type TranslationKey =
   | "drawer.knowYourApprovals"
   | "drawer.settings"
   | "drawer.logout"
+  | "drawer.language"
+  | "drawer.changePassword"
   | "drawer.profile.name"
   | "drawer.profile.company"
   | "chatbot.title"
@@ -243,6 +245,8 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.knowYourApprovals": "Know Your Approvals",
     "drawer.settings": "Settings",
     "drawer.logout": "Logout",
+    "drawer.language": "Language",
+    "drawer.changePassword": "Change Password",
     "drawer.profile.name": "Vikram Singh",
     "drawer.profile.company": "Tech Solutions Pvt Ltd",
     "chatbot.title": "Chat Support",
@@ -413,6 +417,8 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.knowYourApprovals": "अपने अनुमोदन जानें",
     "drawer.settings": "सेटिंग्स",
     "drawer.logout": "लॉगआउट",
+    "drawer.language": "भाषा",
+    "drawer.changePassword": "पासवर्ड बदलें",
     "drawer.profile.name": "विक्रम सिंह",
     "drawer.profile.company": "टेक सॉल्यूशंस प्रा. लि.",
     "chatbot.title": "चैट सहायता",
@@ -583,6 +589,8 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.knowYourApprovals": "ਆਪਣੀਆਂ ਮਨਜ਼ੂਰੀਆਂ ਜਾਣੋ",
     "drawer.settings": "ਸੈਟਿੰਗਜ਼",
     "drawer.logout": "ਲੌਗਆਉਟ",
+    "drawer.language": "ਭਾਸ਼ਾ",
+    "drawer.changePassword": "ਪਾਸਵਰਡ ਬਦਲੋ",
     "drawer.profile.name": "ਵਿਕਰਮ ਸਿੰਘ",
     "drawer.profile.company": "ਟੈਕ ਸੋਲੂਸ਼ਨਜ਼ ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟੇਡ",
     "chatbot.title": "ਚੈਟ ਸਹਾਇਤਾ",

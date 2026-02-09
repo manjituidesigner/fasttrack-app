@@ -3,19 +3,19 @@ import { View, ScrollView, TextInput, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { BlurView } from "expo-blur";
 import { MaterialIcons } from "@expo/vector-icons";
- import Constants from "expo-constants";
 import { useTheme } from "../theme/useTheme";
 import { ThemedText } from "../components/ThemedText";
 import { useI18n } from "../i18n/I18nProvider";
+import { AppHeader } from "../components/AppHeader";
 
 type Props = {
   onBack: () => void;
+  onOpenDrawer?: () => void;
 };
 
-export function ChangePasswordScreen({ onBack }: Props) {
+export function ChangePasswordScreen({ onBack, onOpenDrawer }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
-  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   return (
     <>
@@ -23,44 +23,43 @@ export function ChangePasswordScreen({ onBack }: Props) {
 
       <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
         <BlurView intensity={40}>
-          <View
-            style={{
-              height: 56 + STATUS_BAR_HEIGHT,
-              paddingTop: STATUS_BAR_HEIGHT,
-              paddingHorizontal: 20,
-              flexDirection: "row",
-              alignItems: "center",
-              borderBottomWidth: 1,
-              borderColor: theme.colors.border.hairline
-            }}
-          >
-            <Pressable
-              onPress={onBack}
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: 20,
-                backgroundColor: "rgba(255,255,255,0.6)",
-                alignItems: "center",
-                justifyContent: "center"
-              }}
-            >
-              <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
-            </Pressable>
-
-            <ThemedText
-              style={{
-                position: "absolute",
-                left: "50%",
-                transform: [{ translateX: -50 }],
-                fontSize: 18,
-                fontWeight: "800",
-                color: theme.colors.text.primary
-              }}
-            >
-              {t("changePassword.title")}
-            </ThemedText>
-          </View>
+          <AppHeader
+            containerStyle={{ borderBottomWidth: 1, borderColor: theme.colors.border.hairline }}
+            contentStyle={{ paddingHorizontal: 20 }}
+            left={
+              <Pressable
+                onPress={onBack}
+                hitSlop={10}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
+              </Pressable>
+            }
+            center={<ThemedText style={{ fontSize: 18, fontWeight: "800", color: theme.colors.text.primary }}>{t("changePassword.title")}</ThemedText>}
+            right={
+              <Pressable
+                onPress={onOpenDrawer}
+                hitSlop={10}
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
+                  backgroundColor: "rgba(255,255,255,0.6)",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <MaterialIcons name="menu" size={22} color="#1f2937" />
+              </Pressable>
+            }
+          />
         </BlurView>
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 40 }}>
@@ -79,7 +78,8 @@ export function ChangePasswordScreen({ onBack }: Props) {
                   placeholder={f.label}
                   placeholderTextColor="#94a3b8"
                   style={{
-                    fontFamily: "Inter_500Medium",
+                    fontFamily: "Roboto",
+                    fontWeight: "500",
                     paddingHorizontal: 16,
                     paddingVertical: 16,
                     borderRadius: 18,

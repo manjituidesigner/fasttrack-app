@@ -2,31 +2,6 @@ import { useEffect, useState } from "react";
 import { Dimensions, Image, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
-import {
-  useFonts,
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black
-} from "@expo-google-fonts/inter";
-import {
-  NotoSansDevanagari_400Regular,
-  NotoSansDevanagari_500Medium,
-  NotoSansDevanagari_600SemiBold,
-  NotoSansDevanagari_700Bold,
-  NotoSansDevanagari_800ExtraBold,
-  NotoSansDevanagari_900Black
-} from "@expo-google-fonts/noto-sans-devanagari";
-import {
-  NotoSansGurmukhi_400Regular,
-  NotoSansGurmukhi_500Medium,
-  NotoSansGurmukhi_600SemiBold,
-  NotoSansGurmukhi_700Bold,
-  NotoSansGurmukhi_800ExtraBold,
-  NotoSansGurmukhi_900Black
-} from "@expo-google-fonts/noto-sans-gurmukhi";
 import { ThemeProvider } from "./theme/ThemeProvider";
 import { I18nProvider } from "./i18n/I18nProvider";
 import { useI18n } from "./i18n/I18nProvider";
@@ -37,10 +12,19 @@ import { ChangePasswordScreen } from "./screens/ChangePasswordScreen";
 import { MyProjectsScreen } from "./screens/MyProjectsScreen";
 import { MyApplicationsScreen } from "./screens/MyApplicationsScreen";
 import { CafFormScreen } from "./screens/CafFormScreen";
+import { InvestmentProjectScreen } from "./screens/InvestmentProjectScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
-type RouteName = "home" | "login" | "dashboard" | "myProjects" | "myApplications" | "cafForm" | "changePassword";
+type RouteName =
+  | "home"
+  | "login"
+  | "dashboard"
+  | "myProjects"
+  | "myApplications"
+  | "cafForm"
+  | "investmentProject"
+  | "changePassword";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -95,29 +79,6 @@ function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
 }
 
 export function AppRoot() {
-  const [fontsLoaded] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
-    NotoSansDevanagari_400Regular,
-    NotoSansDevanagari_500Medium,
-    NotoSansDevanagari_600SemiBold,
-    NotoSansDevanagari_700Bold,
-    NotoSansDevanagari_800ExtraBold,
-    NotoSansDevanagari_900Black,
-    NotoSansGurmukhi_400Regular,
-    NotoSansGurmukhi_500Medium,
-    NotoSansGurmukhi_600SemiBold,
-    NotoSansGurmukhi_700Bold,
-    NotoSansGurmukhi_800ExtraBold,
-    NotoSansGurmukhi_900Black
-  });
-
-  if (!fontsLoaded) return null;
-
   return (
     <I18nProvider>
       <ThemeProvider>
@@ -136,19 +97,16 @@ export function AppRoot() {
 }
 
 function AppShell() {
-  const { t, language } = useI18n();
+  const { t, language, setLanguage } = useI18n();
   const [route, setRoute] = useState<RouteName>("home");
   const [showChat, setShowChat] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
   const [showDrawer, setShowDrawer] = useState(false);
+  const [showDrawerProfileMenu, setShowDrawerProfileMenu] = useState(false);
+  const [showDrawerLanguageMenu, setShowDrawerLanguageMenu] = useState(false);
 
   useEffect(() => {
-    const baseFontFamily =
-      language === "hi"
-        ? "NotoSansDevanagari_400Regular"
-        : language === "pa"
-          ? "NotoSansGurmukhi_400Regular"
-          : "Inter_400Regular";
+    const baseFontFamily = Platform.OS === "web" ? "Roboto, sans-serif" : "Roboto";
 
     const TextAny = Text as any;
     TextAny.defaultProps = TextAny.defaultProps ?? {};
@@ -162,20 +120,24 @@ function AppShell() {
     ) : route === "login" ? (
       <LoginScreen onBack={() => setRoute("home")} onLoginSuccess={() => setRoute("dashboard")} />
     ) : route === "changePassword" ? (
-      <ChangePasswordScreen onBack={() => setRoute("dashboard")} />
+      <ChangePasswordScreen onBack={() => setRoute("dashboard")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "myProjects" ? (
       <MyProjectsScreen
+        onBack={() => setRoute("dashboard")}
         onMenuPress={() => setShowDrawer(true)}
         onChatPress={() => setShowChat(true)}
         onAddPress={() => {}}
       />
+    ) : route === "investmentProject" ? (
+      <InvestmentProjectScreen onBack={() => setRoute("dashboard")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "cafForm" ? (
-      <CafFormScreen onBack={() => setRoute("myApplications")} />
+      <CafFormScreen onBack={() => setRoute("myApplications")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "myApplications" ? (
-      <MyApplicationsScreen onMenuPress={() => setShowDrawer(true)} onFillCaf={() => setRoute("cafForm")} />
+      <MyApplicationsScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} onFillCaf={() => setRoute("cafForm")} />
     ) : (
       <DashboardScreen
         onMenuPress={() => setShowDrawer(true)}
+        onInvestmentProject={() => setRoute("investmentProject")}
         onMyApplications={() => setRoute("myApplications")}
         onChangePassword={() => setRoute("changePassword")}
         onLogout={() => setRoute("home")}
@@ -269,7 +231,8 @@ function AppShell() {
                         backgroundColor: "white",
                         borderWidth: 1,
                         borderColor: "rgba(203,213,225,0.9)",
-                        fontFamily: "Inter_500Medium",
+                        fontFamily: Platform.OS === "web" ? "Roboto, sans-serif" : "Roboto",
+                        fontWeight: "500",
                         fontSize: 14
                       }}
                     />
@@ -313,14 +276,26 @@ function AppShell() {
       ) : null}
 
       <Modal
-        visible={showDrawer && (route === "dashboard" || route === "myProjects" || route === "myApplications")}
+        visible={
+          showDrawer &&
+          (route === "dashboard" ||
+            route === "myProjects" ||
+            route === "myApplications" ||
+            route === "investmentProject" ||
+            route === "cafForm" ||
+            route === "changePassword")
+        }
         transparent
         animationType="fade"
         onRequestClose={() => setShowDrawer(false)}
       >
         <>
           <Pressable
-            onPress={() => setShowDrawer(false)}
+            onPress={() => {
+              setShowDrawerLanguageMenu(false);
+              setShowDrawerProfileMenu(false);
+              setShowDrawer(false);
+            }}
             style={{
               position: "absolute",
               inset: 0,
@@ -350,11 +325,17 @@ function AppShell() {
                   paddingBottom: 20,
                   paddingHorizontal: 20,
                   borderBottomWidth: 1,
-                  borderColor: "rgba(0,0,0,0.06)"
+                  borderColor: "rgba(0,0,0,0.06)",
+                  position: "relative",
+                  zIndex: 60
                 }}
               >
                 <Pressable
-                  onPress={() => setShowDrawer(false)}
+                  onPress={() => {
+                    setShowDrawerLanguageMenu(false);
+                    setShowDrawerProfileMenu(false);
+                    setShowDrawer(false);
+                  }}
                   style={{
                     position: "absolute",
                     top: 18,
@@ -403,11 +384,108 @@ function AppShell() {
                     />
                   </View>
 
-                  <View>
-                    <Text style={{ fontSize: 17, fontWeight: "800" }}>{t("drawer.profile.name")}</Text>
-                    <Text style={{ fontSize: 13, color: "#6b7280", fontWeight: "500" }}>{t("drawer.profile.company")}</Text>
-                  </View>
+                  <Pressable
+                    onPress={() => {
+                      setShowDrawerLanguageMenu(false);
+                      setShowDrawerProfileMenu((v) => !v);
+                    }}
+                    hitSlop={10}
+                    style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                  >
+                    <View>
+                      <Text style={{ fontSize: 17, fontWeight: "800" }}>{t("drawer.profile.name")}</Text>
+                      <Text style={{ fontSize: 13, color: "#6b7280", fontWeight: "500" }}>{t("drawer.profile.company")}</Text>
+                    </View>
+
+                    <MaterialIcons name={showDrawerProfileMenu ? "keyboard-arrow-up" : "keyboard-arrow-down"} size={24} color="#94a3b8" />
+                  </Pressable>
                 </View>
+
+                {showDrawerProfileMenu ? (
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: 110,
+                      right: 18,
+                      width: 220,
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      backgroundColor: "rgba(255,255,255,0.98)",
+                      borderWidth: 1,
+                      borderColor: "rgba(203,213,225,0.9)",
+                      zIndex: 999,
+                      elevation: 999
+                    }}
+                  >
+                    <Pressable
+                      onPress={() => setShowDrawerLanguageMenu((v) => !v)}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <MaterialIcons name="language" size={18} color="#0f172a" />
+                        <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("drawer.language")}</Text>
+                      </View>
+                      <MaterialIcons name={showDrawerLanguageMenu ? "expand-less" : "expand-more"} size={20} color="#94a3b8" />
+                    </Pressable>
+
+                    {showDrawerLanguageMenu ? (
+                      <View style={{ borderTopWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}>
+                        {[
+                          { code: "en", label: t("language.english") },
+                          { code: "pa", label: t("language.punjabi") },
+                          { code: "hi", label: t("language.hindi") }
+                        ].map((opt) => (
+                          <Pressable
+                            key={opt.code}
+                            onPress={() => {
+                              setLanguage(opt.code as any);
+                              setShowDrawerLanguageMenu(false);
+                              setShowDrawerProfileMenu(false);
+                              setShowDrawer(false);
+                            }}
+                            style={{
+                              paddingHorizontal: 14,
+                              paddingVertical: 10,
+                              flexDirection: "row",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              backgroundColor: language === opt.code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                            }}
+                          >
+                            <Text style={{ fontSize: 13, fontWeight: "600", color: "#0f172a" }}>{opt.label}</Text>
+                            {language === opt.code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                          </Pressable>
+                        ))}
+                      </View>
+                    ) : null}
+
+                    <Pressable
+                      onPress={() => {
+                        setShowDrawerLanguageMenu(false);
+                        setShowDrawerProfileMenu(false);
+                        setShowDrawer(false);
+                        setRoute("changePassword");
+                      }}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10, borderTopWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}
+                    >
+                      <MaterialIcons name="lock" size={18} color="#0f172a" />
+                      <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("drawer.changePassword")}</Text>
+                    </Pressable>
+
+                    <Pressable
+                      onPress={() => {
+                        setShowDrawerLanguageMenu(false);
+                        setShowDrawerProfileMenu(false);
+                        setShowDrawer(false);
+                        setRoute("home");
+                      }}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10, borderTopWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}
+                    >
+                      <MaterialIcons name="logout" size={18} color="#ef4444" />
+                      <Text style={{ fontSize: 14, fontWeight: "700", color: "#ef4444" }}>{t("drawer.logout")}</Text>
+                    </Pressable>
+                  </View>
+                ) : null}
               </View>
 
               <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingVertical: 12 }}>
@@ -454,15 +532,6 @@ function AppShell() {
                 }}
               >
                 <MenuItem icon="settings" label={t("drawer.settings")} muted onPress={() => setShowDrawer(false)} />
-                <MenuItem
-                  icon="logout"
-                  label={t("drawer.logout")}
-                  danger
-                  onPress={() => {
-                    setShowDrawer(false);
-                    setRoute("home");
-                  }}
-                />
               </View>
             </View>
           </BlurView>
