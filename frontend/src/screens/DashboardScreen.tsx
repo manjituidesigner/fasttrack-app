@@ -14,10 +14,20 @@ type Props = {
   onInvestmentProject?: () => void;
   onChangePassword?: () => void;
   onLogout?: () => void;
+  onManageApplications?: () => void;
   onMyApplications?: () => void;
+  onKnowYourApprovals?: () => void;
 };
 
-export function DashboardScreen({ onMenuPress, onInvestmentProject, onChangePassword, onLogout, onMyApplications }: Props) {
+export function DashboardScreen({
+  onMenuPress,
+  onInvestmentProject,
+  onChangePassword,
+  onLogout,
+  onManageApplications,
+  onMyApplications,
+  onKnowYourApprovals
+}: Props) {
   const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
   const [showMenu, setShowMenu] = useState(false);
@@ -266,8 +276,14 @@ export function DashboardScreen({ onMenuPress, onInvestmentProject, onChangePass
                     if (item.titleKey === "dashboard.card.investmentProject.title") {
                       onInvestmentProject?.();
                     }
+                    if (item.titleKey === "dashboard.card.manageApplications.title") {
+                      onManageApplications?.();
+                    }
                     if (item.titleKey === "dashboard.card.myApplications.title") {
                       onMyApplications?.();
+                    }
+                    if (item.titleKey === "dashboard.card.knowYourApprovals.title") {
+                      onKnowYourApprovals?.();
                     }
                   }}
                   style={{

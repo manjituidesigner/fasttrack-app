@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ComponentType } from "react";
 import { View, Image, Pressable, FlatList, Dimensions, Text } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Constants from "expo-constants";
 import GovtLogo from "../assets/images/govt logo.svg";
 import GetGuidance from "../assets/images/get_guidance.svg";
 
@@ -16,6 +17,8 @@ export function HomeScreen({ onLoginPress }: Props) {
   type SlideItem =
     | { id: string; titleTop: string; titleBottom: string; image: any }
     | { id: string; titleTop: string; titleBottom: string; Svg: ComponentType<any> };
+
+  const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const slides = useMemo(
     (): SlideItem[] => [
@@ -107,7 +110,13 @@ export function HomeScreen({ onLoginPress }: Props) {
         colors={["#8CD2F2", "#A8D5E5", "#C8D4F3", "#CDEED1"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
-        style={{ flex: 1, paddingHorizontal: 20, paddingVertical: 28, justifyContent: "center" }}
+        style={{
+          flex: 1,
+          paddingHorizontal: 20,
+          paddingTop: 28 + STATUS_BAR_HEIGHT,
+          paddingBottom: 28,
+          justifyContent: "center"
+        }}
       >
         <View
           style={{

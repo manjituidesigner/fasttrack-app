@@ -13,6 +13,8 @@ import { MyProjectsScreen } from "./screens/MyProjectsScreen";
 import { MyApplicationsScreen } from "./screens/MyApplicationsScreen";
 import { CafFormScreen } from "./screens/CafFormScreen";
 import { InvestmentProjectScreen } from "./screens/InvestmentProjectScreen";
+import { RegulatoryClearancesScreen } from "./screens/RegulatoryClearancesScreen";
+import { ListOfApprovalsScreen } from "./screens/ListOfApprovalsScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
@@ -24,7 +26,9 @@ type RouteName =
   | "myApplications"
   | "cafForm"
   | "investmentProject"
-  | "changePassword";
+  | "changePassword"
+  | "regulatoryClearances"
+  | "listOfApprovals";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -134,18 +138,30 @@ function AppShell() {
       <CafFormScreen onBack={() => setRoute("myApplications")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "myApplications" ? (
       <MyApplicationsScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} onFillCaf={() => setRoute("cafForm")} />
+    ) : route === "regulatoryClearances" ? (
+      <RegulatoryClearancesScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} />
+    ) : route === "listOfApprovals" ? (
+      <ListOfApprovalsScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} />
     ) : (
       <DashboardScreen
         onMenuPress={() => setShowDrawer(true)}
         onInvestmentProject={() => setRoute("investmentProject")}
+        onManageApplications={() => setRoute("regulatoryClearances")}
         onMyApplications={() => setRoute("myApplications")}
+        onKnowYourApprovals={() => setRoute("listOfApprovals")}
         onChangePassword={() => setRoute("changePassword")}
         onLogout={() => setRoute("home")}
       />
     );
 
-  const shouldRenderChatModal = route === "dashboard" || route === "myProjects" || route === "myApplications";
-  const shouldRenderChatFab = route === "dashboard" || route === "myApplications";
+  const shouldRenderChatModal =
+    route === "dashboard" ||
+    route === "myProjects" ||
+    route === "myApplications" ||
+    route === "regulatoryClearances" ||
+    route === "listOfApprovals";
+  const shouldRenderChatFab =
+    route === "dashboard" || route === "myApplications" || route === "regulatoryClearances" || route === "listOfApprovals";
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const DRAWER_WIDTH = Math.min(windowWidth * 0.85, 360);
@@ -281,9 +297,11 @@ function AppShell() {
           (route === "dashboard" ||
             route === "myProjects" ||
             route === "myApplications" ||
+            route === "regulatoryClearances" ||
             route === "investmentProject" ||
             route === "cafForm" ||
-            route === "changePassword")
+            route === "changePassword" ||
+            route === "listOfApprovals")
         }
         transparent
         animationType="fade"
