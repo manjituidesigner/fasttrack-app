@@ -19,7 +19,7 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const tt = t as any;
-  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9>(1);
   const [multipleUnitsUnderSamePan, setMultipleUnitsUnderSamePan] = useState(false);
   const [projectSameAsBusinessEntity, setProjectSameAsBusinessEntity] = useState(false);
   const [gstApplicable, setGstApplicable] = useState<"yes" | "no">("no");
@@ -29,6 +29,50 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
   const [migrationFromFiipToIbdp, setMigrationFromFiipToIbdp] = useState<"yes" | "no">("no");
   const [protectedMonument, setProtectedMonument] = useState<"yes" | "no">("no");
   const [nmaNocAvailable, setNmaNocAvailable] = useState<"yes" | "no">("no");
+  const [investment6, setInvestment6] = useState({
+    landCost: "",
+    buildingCost: "",
+    plantMachineryCost: "",
+    fci: "",
+    otherCost: "",
+    commercialProduction: "no" as "yes" | "no",
+    industryType: ""
+  });
+  const totalProjectCost6 =
+    (Number(investment6.landCost || 0) || 0) +
+    (Number(investment6.buildingCost || 0) || 0) +
+    (Number(investment6.plantMachineryCost || 0) || 0) +
+    (Number(investment6.fci || 0) || 0) +
+    (Number(investment6.otherCost || 0) || 0);
+
+  const [phases7, setPhases7] = useState<Array<{ name: string; fci: string; investDate: string; prodDate: string }>>([]);
+  const [phaseDraft7, setPhaseDraft7] = useState({ name: "", fci: "", investDate: "", prodDate: "" });
+  const [fdiInvolved7, setFdiInvolved7] = useState<"yes" | "no">("no");
+
+  const [employmentDraft8, setEmploymentDraft8] = useState({
+    financialYear: "",
+    skill: "",
+    directMale: "",
+    directFemale: "",
+    indirectMale: "",
+    indirectFemale: ""
+  });
+  const [employmentEntries8, setEmploymentEntries8] = useState<
+    Array<{ financialYear: string; skill: string; directMale: string; directFemale: string; indirectMale: string; indirectFemale: string }>
+  >([]);
+  const totals8 = employmentEntries8.reduce(
+    (acc, e) => {
+      acc.directMale += Number(e.directMale || 0) || 0;
+      acc.directFemale += Number(e.directFemale || 0) || 0;
+      acc.indirectMale += Number(e.indirectMale || 0) || 0;
+      acc.indirectFemale += Number(e.indirectFemale || 0) || 0;
+      return acc;
+    },
+    { directMale: 0, directFemale: 0, indirectMale: 0, indirectFemale: 0 }
+  );
+
+  const [fiscalIncentive9, setFiscalIncentive9] = useState<"yes" | "no">("no");
+  const [croReport9, setCroReport9] = useState<"yes" | "no">("no");
   const scrollRef = useRef<ScrollView | null>(null);
 
   useEffect(() => {
@@ -148,11 +192,11 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
               <>
                 <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
-                    <Text style={styles.stepText}>Step 2 of 5</Text>
-                    <Text style={styles.progressText}>40% Completed</Text>
+                    <Text style={styles.stepText}>Step 2 of 9</Text>
+                    <Text style={styles.progressText}>22% Completed</Text>
                   </View>
                   <View style={styles.progressTrack}>
-                    <View style={[styles.progressFill, { width: "40%" }]} />
+                    <View style={[styles.progressFill, { width: "22%" }]} />
                   </View>
                 </View>
 
@@ -190,11 +234,11 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
               <>
                 <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
-                    <Text style={styles.stepText}>Step 3 of 5</Text>
-                    <Text style={styles.progressText}>60% Completed</Text>
+                    <Text style={styles.stepText}>Step 3 of 9</Text>
+                    <Text style={styles.progressText}>33% Completed</Text>
                   </View>
                   <View style={styles.progressTrack}>
-                    <View style={[styles.progressFill, { width: "60%" }]} />
+                    <View style={[styles.progressFill, { width: "33%" }]} />
                   </View>
                 </View>
 
@@ -238,11 +282,11 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
               <>
                 <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
-                    <Text style={styles.stepText}>Step 4 of 5</Text>
-                    <Text style={styles.progressText}>80% Completed</Text>
+                    <Text style={styles.stepText}>Step 4 of 9</Text>
+                    <Text style={styles.progressText}>44% Completed</Text>
                   </View>
                   <View style={styles.progressTrack}>
-                    <View style={[styles.progressFill, { width: "80%" }]} />
+                    <View style={[styles.progressFill, { width: "44%" }]} />
                   </View>
                 </View>
 
@@ -251,15 +295,15 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                   <Upload label={tt("cafForm.step4.field.certificateIncorporationUpload")} />
                 </Card>
               </>
-            ) : (
+            ) : step === 5 ? (
               <>
                 <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
-                    <Text style={styles.stepText}>Step 5 of 5</Text>
-                    <Text style={styles.progressText}>100% Completed</Text>
+                    <Text style={styles.stepText}>Step 5 of 9</Text>
+                    <Text style={styles.progressText}>56% Completed</Text>
                   </View>
                   <View style={styles.progressTrack}>
-                    <View style={[styles.progressFill, { width: "100%" }]} />
+                    <View style={[styles.progressFill, { width: "56%" }]} />
                   </View>
                 </View>
 
@@ -324,6 +368,214 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                   </View>
                 </Card>
               </>
+            ) : step === 6 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 6 of 9</Text>
+                    <Text style={styles.progressText}>67% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "67%" }]} />
+                  </View>
+                </View>
+
+                <SectionHeader number="6" title={tt("cafForm.step6.title")} />
+                <Card>
+                  <Text style={{ color: "#64748b", fontSize: 12, marginBottom: 10, lineHeight: 16 }}>
+                    {tt("cafForm.step6.note")}
+                  </Text>
+
+                  <TwoCol>
+                    <MoneyInput
+                      label={tt("cafForm.step6.field.landCost")}
+                      value={investment6.landCost}
+                      onChangeText={(v) => setInvestment6((s) => ({ ...s, landCost: v }))}
+                    />
+                    <MoneyInput
+                      label={tt("cafForm.step6.field.buildingCost")}
+                      value={investment6.buildingCost}
+                      onChangeText={(v) => setInvestment6((s) => ({ ...s, buildingCost: v }))}
+                    />
+                  </TwoCol>
+
+                  <MoneyInput
+                    label={tt("cafForm.step6.field.plantMachineryCost")}
+                    value={investment6.plantMachineryCost}
+                    onChangeText={(v) => setInvestment6((s) => ({ ...s, plantMachineryCost: v }))}
+                  />
+
+                  <TwoCol>
+                    <MoneyInput
+                      label={tt("cafForm.step6.field.fci")}
+                      value={investment6.fci}
+                      onChangeText={(v) => setInvestment6((s) => ({ ...s, fci: v }))}
+                    />
+                    <MoneyInput
+                      label={tt("cafForm.step6.field.otherCost")}
+                      value={investment6.otherCost}
+                      onChangeText={(v) => setInvestment6((s) => ({ ...s, otherCost: v }))}
+                    />
+                  </TwoCol>
+
+                  <MoneyInput label={tt("cafForm.step6.field.totalProjectCost")} value={String(totalProjectCost6)} readOnly helper={tt("cafForm.step6.field.totalProjectCostHelp")} />
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step6.field.commercialProduction")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={investment6.commercialProduction === "yes"} onPress={() => setInvestment6((s) => ({ ...s, commercialProduction: "yes" }))} />
+                      <Radio label={tt("cafForm.common.no")} checked={investment6.commercialProduction === "no"} onPress={() => setInvestment6((s) => ({ ...s, commercialProduction: "no" }))} />
+                    </View>
+                  </View>
+
+                  <Input label={tt("cafForm.step6.field.industryType")} placeholder={tt("cafForm.common.select")} value={investment6.industryType} onChangeText={(v) => setInvestment6((s) => ({ ...s, industryType: v }))} />
+                </Card>
+              </>
+            ) : step === 7 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 7 of 9</Text>
+                    <Text style={styles.progressText}>78% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "78%" }]} />
+                  </View>
+                </View>
+
+                <SectionHeader number="7" title={tt("cafForm.step7.title")} />
+                <Card>
+                  <Input label={tt("cafForm.step7.field.phaseName")} value={phaseDraft7.name} onChangeText={(v) => setPhaseDraft7((s) => ({ ...s, name: v }))} />
+                  <MoneyInput label={tt("cafForm.step7.field.fci")} value={phaseDraft7.fci} onChangeText={(v) => setPhaseDraft7((s) => ({ ...s, fci: v }))} />
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step7.field.investDate")} value={phaseDraft7.investDate} onChangeText={(v) => setPhaseDraft7((s) => ({ ...s, investDate: v }))} placeholder={tt("cafForm.common.datePlaceholder")} />
+                    <Input label={tt("cafForm.step7.field.productionDate")} value={phaseDraft7.prodDate} onChangeText={(v) => setPhaseDraft7((s) => ({ ...s, prodDate: v }))} placeholder={tt("cafForm.common.datePlaceholder")} />
+                  </TwoCol>
+
+                  <Pressable
+                    onPress={() => {
+                      if (!phaseDraft7.name && !phaseDraft7.fci && !phaseDraft7.investDate && !phaseDraft7.prodDate) return;
+                      setPhases7((s) => [...s, phaseDraft7]);
+                      setPhaseDraft7({ name: "", fci: "", investDate: "", prodDate: "" });
+                    }}
+                    style={styles.addBtn}
+                  >
+                    <Text style={styles.addBtnText}>+Add</Text>
+                  </Pressable>
+
+                  {phases7.length ? (
+                    <View style={{ marginTop: 10, gap: 10 }}>
+                      {phases7.map((p, idx) => (
+                        <View key={idx} style={styles.listRow}>
+                          <Text style={styles.listRowTitle}>{p.name || `Phase ${idx + 1}`}</Text>
+                          <Text style={styles.listRowSub}>{`${tt("cafForm.step7.field.fci")} ${p.fci || "0"}`}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  ) : null}
+
+                  <View style={[styles.radioBlock, { marginTop: 12 }]}>
+                    <Text style={styles.label}>{tt("cafForm.step7.field.fdiInvolved")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={fdiInvolved7 === "yes"} onPress={() => setFdiInvolved7("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={fdiInvolved7 === "no"} onPress={() => setFdiInvolved7("no")} />
+                    </View>
+                  </View>
+                </Card>
+              </>
+            ) : step === 8 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 8 of 9</Text>
+                    <Text style={styles.progressText}>89% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "89%" }]} />
+                  </View>
+                </View>
+
+                <SectionHeader number="8" title={tt("cafForm.step8.title")} />
+                <Card>
+                  <Input label={tt("cafForm.step8.field.financialYear")} value={employmentDraft8.financialYear} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, financialYear: v }))} />
+                  <Input label={tt("cafForm.step8.field.selectSkill")} placeholder={tt("cafForm.common.select")} value={employmentDraft8.skill} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, skill: v }))} />
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step8.field.directMale")} keyboard="numeric" value={employmentDraft8.directMale} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, directMale: v }))} />
+                    <Input label={tt("cafForm.step8.field.directFemale")} keyboard="numeric" value={employmentDraft8.directFemale} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, directFemale: v }))} />
+                    <Input label={tt("cafForm.step8.field.indirectMale")} keyboard="numeric" value={employmentDraft8.indirectMale} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, indirectMale: v }))} />
+                    <Input label={tt("cafForm.step8.field.indirectFemale")} keyboard="numeric" value={employmentDraft8.indirectFemale} onChangeText={(v) => setEmploymentDraft8((s) => ({ ...s, indirectFemale: v }))} />
+                  </TwoCol>
+
+                  <Pressable
+                    onPress={() => {
+                      if (!employmentDraft8.financialYear && !employmentDraft8.skill) return;
+                      setEmploymentEntries8((s) => [...s, employmentDraft8]);
+                      setEmploymentDraft8({ financialYear: "", skill: "", directMale: "", directFemale: "", indirectMale: "", indirectFemale: "" });
+                    }}
+                    style={styles.addBtn}
+                  >
+                    <Text style={styles.addBtnText}>+Add</Text>
+                  </Pressable>
+
+                  {employmentEntries8.length ? (
+                    <View style={{ marginTop: 10, gap: 10 }}>
+                      {employmentEntries8.map((e, idx) => (
+                        <View key={idx} style={styles.listRow}>
+                          <Text style={styles.listRowTitle}>{e.financialYear || `Row ${idx + 1}`}</Text>
+                          <Text style={styles.listRowSub}>{e.skill}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  ) : null}
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step8.field.totalDirectMale")} value={String(totals8.directMale)} keyboard="numeric" editable={false} />
+                    <Input label={tt("cafForm.step8.field.totalDirectFemale")} value={String(totals8.directFemale)} keyboard="numeric" editable={false} />
+                    <Input label={tt("cafForm.step8.field.totalIndirectMale")} value={String(totals8.indirectMale)} keyboard="numeric" editable={false} />
+                    <Input label={tt("cafForm.step8.field.totalIndirectFemale")} value={String(totals8.indirectFemale)} keyboard="numeric" editable={false} />
+                  </TwoCol>
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step8.field.totalMale")} value={String(totals8.directMale + totals8.indirectMale)} keyboard="numeric" editable={false} />
+                    <Input label={tt("cafForm.step8.field.totalFemale")} value={String(totals8.directFemale + totals8.indirectFemale)} keyboard="numeric" editable={false} />
+                  </TwoCol>
+                </Card>
+              </>
+            ) : (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 9 of 9</Text>
+                    <Text style={styles.progressText}>100% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "100%" }]} />
+                  </View>
+                </View>
+
+                <SectionHeader number="9" title={tt("cafForm.step9.title")} />
+                <Card>
+                  <Input label={tt("cafForm.step9.field.regulatoryClearance")} />
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step9.field.fiscalIncentive")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={fiscalIncentive9 === "yes"} onPress={() => setFiscalIncentive9("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={fiscalIncentive9 === "no"} onPress={() => setFiscalIncentive9("no")} />
+                    </View>
+                  </View>
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step9.field.croReport")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={croReport9 === "yes"} onPress={() => setCroReport9("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={croReport9 === "no"} onPress={() => setCroReport9("no")} />
+                    </View>
+                  </View>
+                </Card>
+              </>
             )}
           </View>
         </ScrollView>
@@ -336,13 +588,13 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                 <Text style={styles.cancelText}>{t("cafForm.action.cancel")}</Text>
               </Pressable>
             ) : (
-              <Pressable style={styles.backBtn} onPress={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3 | 4 | 5) : 1))}>
+              <Pressable style={styles.backBtn} onPress={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9) : 1))}>
                 <Text style={styles.backText}>Back</Text>
               </Pressable>
             )}
 
-            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 5 ? ((s + 1) as 1 | 2 | 3 | 4 | 5) : 5))}>
-              <Text style={styles.nextText}>{step === 5 ? "Next" : t("cafForm.action.nextStep")}</Text>
+            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 9 ? ((s + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9) : 9))}>
+              <Text style={styles.nextText}>{step === 9 ? "Next" : t("cafForm.action.nextStep")}</Text>
               <MaterialIcons name="arrow-forward" size={18} color="white" />
             </Pressable>
           </View>
@@ -380,6 +632,7 @@ function Input({
   multiline,
   prefix,
   keyboard,
+  editable,
   onChangeText
 }: {
   label: string;
@@ -389,6 +642,7 @@ function Input({
   multiline?: boolean;
   prefix?: string;
   keyboard?: "default" | "email-address" | "phone-pad" | "numeric";
+  editable?: boolean;
   onChangeText?: (text: string) => void;
 }) {
   return (
@@ -401,6 +655,7 @@ function Input({
           placeholder={placeholder}
           keyboardType={keyboard}
           multiline={multiline}
+          editable={editable ?? true}
           onChangeText={onChangeText}
           style={[
             styles.input,
@@ -656,7 +911,42 @@ const styles = {
   checkboxRow: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 },
   checkboxText: { fontSize: 14 },
   radioBlock: { marginBottom: 12 },
-  radioRow: { flexDirection: "row", gap: 24, marginTop: 6 },
+  radioRow: {
+    flexDirection: "row",
+    gap: 18,
+    marginTop: 8,
+    flexWrap: "wrap"
+  },
+  addBtn: {
+    alignSelf: "flex-start",
+    backgroundColor: "#2563eb",
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 4
+  },
+  addBtnText: {
+    color: "#ffffff",
+    fontWeight: "800",
+    fontSize: 13
+  },
+  listRow: {
+    backgroundColor: "rgba(255,255,255,0.7)",
+    borderWidth: 1,
+    borderColor: "#e2e8f0",
+    borderRadius: 12,
+    padding: 12
+  },
+  listRowTitle: {
+    fontSize: 13,
+    fontWeight: "900",
+    color: "#0f172a"
+  },
+  listRowSub: {
+    fontSize: 12,
+    color: "#475569",
+    marginTop: 2
+  },
   radio: { flexDirection: "row", alignItems: "center", gap: 6 },
   radioOuter: {
     width: 18,

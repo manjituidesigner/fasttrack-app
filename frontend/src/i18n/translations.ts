@@ -249,7 +249,41 @@ export type TranslationKey =
   | "cafForm.step5.field.migrationFromFiipToIbdp"
   | "cafForm.step5.field.policyChapter"
   | "cafForm.step5.field.protectedMonument"
-  | "cafForm.step5.field.nmaNocAvailable";
+  | "cafForm.step5.field.nmaNocAvailable"
+  | "cafForm.step6.title"
+  | "cafForm.step6.note"
+  | "cafForm.step6.field.landCost"
+  | "cafForm.step6.field.buildingCost"
+  | "cafForm.step6.field.plantMachineryCost"
+  | "cafForm.step6.field.fci"
+  | "cafForm.step6.field.otherCost"
+  | "cafForm.step6.field.totalProjectCost"
+  | "cafForm.step6.field.totalProjectCostHelp"
+  | "cafForm.step6.field.commercialProduction"
+  | "cafForm.step6.field.industryType"
+  | "cafForm.step7.title"
+  | "cafForm.step7.field.phaseName"
+  | "cafForm.step7.field.fci"
+  | "cafForm.step7.field.investDate"
+  | "cafForm.step7.field.productionDate"
+  | "cafForm.step7.field.fdiInvolved"
+  | "cafForm.step8.title"
+  | "cafForm.step8.field.financialYear"
+  | "cafForm.step8.field.selectSkill"
+  | "cafForm.step8.field.directMale"
+  | "cafForm.step8.field.directFemale"
+  | "cafForm.step8.field.indirectMale"
+  | "cafForm.step8.field.indirectFemale"
+  | "cafForm.step8.field.totalDirectMale"
+  | "cafForm.step8.field.totalDirectFemale"
+  | "cafForm.step8.field.totalIndirectMale"
+  | "cafForm.step8.field.totalIndirectFemale"
+  | "cafForm.step8.field.totalMale"
+  | "cafForm.step8.field.totalFemale"
+  | "cafForm.step9.title"
+  | "cafForm.step9.field.regulatoryClearance"
+  | "cafForm.step9.field.fiscalIncentive"
+  | "cafForm.step9.field.croReport";
 
 type Dictionary = Record<TranslationKey, string>;
 
@@ -510,6 +544,40 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.step5.field.policyChapter": "5.9 Policy Chapter",
     "cafForm.step5.field.protectedMonument": "5.10 Is proposed construction site falling within the limit of any centrally protected monument?",
     "cafForm.step5.field.nmaNocAvailable": "5.11 Whether NMA NOC is available with you for the proposed construction site?",
+    "cafForm.step6.title": "Investment Details",
+    "cafForm.step6.note": "* FCI (as per Policy 2013) Building Cost and Plant & Machinery Cost,\n* FCI (as per Policy 2017) Land Cost, Building Cost and Plant & Machinery Cost.",
+    "cafForm.step6.field.landCost": "6.1 Land Cost (in Lakhs) *",
+    "cafForm.step6.field.buildingCost": "6.2 Building Cost (in Lakhs) *",
+    "cafForm.step6.field.plantMachineryCost": "6.3 Plant and Machinery Cost (in Lakhs) *",
+    "cafForm.step6.field.fci": "6.4 FCI (in Lakhs) *",
+    "cafForm.step6.field.otherCost": "6.5 Other Cost (in Lakhs) *",
+    "cafForm.step6.field.totalProjectCost": "6.6 Total Project Cost (in Lakhs) *",
+    "cafForm.step6.field.totalProjectCostHelp": "Auto-calculated based on inputs above",
+    "cafForm.step6.field.commercialProduction": "6.7 Is Unit in Commercial Production",
+    "cafForm.step6.field.industryType": "6.8 Type of Industry *",
+    "cafForm.step7.title": "Phase wise Investment as per Detailed Project Report (If Applicable)",
+    "cafForm.step7.field.phaseName": "7.1 Name of the Phase",
+    "cafForm.step7.field.fci": "7.2 FCI (in Lakhs)",
+    "cafForm.step7.field.investDate": "7.3 Proposed date of Investment",
+    "cafForm.step7.field.productionDate": "7.4 Proposed date of Production",
+    "cafForm.step7.field.fdiInvolved": "7.5 Is FDI Involved",
+    "cafForm.step8.title": "Proposed Employment Details",
+    "cafForm.step8.field.financialYear": "Financial Year",
+    "cafForm.step8.field.selectSkill": "Select Skill",
+    "cafForm.step8.field.directMale": "Direct Male Employees",
+    "cafForm.step8.field.directFemale": "Direct Female Employees",
+    "cafForm.step8.field.indirectMale": "InDirect Male Employees",
+    "cafForm.step8.field.indirectFemale": "InDirect Female Employees",
+    "cafForm.step8.field.totalDirectMale": "8.1 Direct Male Employees *",
+    "cafForm.step8.field.totalDirectFemale": "8.2 Direct Female Employees *",
+    "cafForm.step8.field.totalIndirectMale": "8.3 Indirect Male Employees *",
+    "cafForm.step8.field.totalIndirectFemale": "8.4 Indirect Female Employees *",
+    "cafForm.step8.field.totalMale": "8.5 Total Male Employees *",
+    "cafForm.step8.field.totalFemale": "8.6 Total Female Employees *",
+    "cafForm.step9.title": "Already Obtained Clearances/Approvals",
+    "cafForm.step9.field.regulatoryClearance": "9.1 Already have any Regulatory Clearance ?",
+    "cafForm.step9.field.fiscalIncentive": "9.2 Already have any Fiscal Incentive ?",
+    "cafForm.step9.field.croReport": "9.3 Do you have CRO Report ? *",
   },
 
   hi: {
@@ -768,6 +836,40 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.step5.field.policyChapter": "5.9 नीति अध्याय",
     "cafForm.step5.field.protectedMonument": "5.10 क्या प्रस्तावित निर्माण स्थल किसी केंद्रीय संरक्षित स्मारक की सीमा में आता है?",
     "cafForm.step5.field.nmaNocAvailable": "5.11 क्या प्रस्तावित निर्माण स्थल के लिए आपके पास NMA NOC उपलब्ध है?",
+    "cafForm.step6.title": "6. निवेश विवरण",
+    "cafForm.step6.note": "* FCI (नीति 2013 के अनुसार) भवन लागत और संयंत्र व मशीनरी लागत,\n* FCI (नीति 2017 के अनुसार) भूमि लागत, भवन लागत और संयंत्र व मशीनरी लागत।",
+    "cafForm.step6.field.landCost": "6.1 भूमि लागत (लाख में) *",
+    "cafForm.step6.field.buildingCost": "6.2 भवन लागत (लाख में) *",
+    "cafForm.step6.field.plantMachineryCost": "6.3 संयंत्र और मशीनरी लागत (लाख में) *",
+    "cafForm.step6.field.fci": "6.4 FCI (लाख में) *",
+    "cafForm.step6.field.otherCost": "6.5 अन्य लागत (लाख में) *",
+    "cafForm.step6.field.totalProjectCost": "6.6 कुल परियोजना लागत (लाख में) *",
+    "cafForm.step6.field.totalProjectCostHelp": "ऊपर दिए इनपुट के आधार पर स्वचालित गणना",
+    "cafForm.step6.field.commercialProduction": "6.7 क्या यूनिट वाणिज्यिक उत्पादन में है",
+    "cafForm.step6.field.industryType": "6.8 उद्योग का प्रकार *",
+    "cafForm.step7.title": "7. DPR के अनुसार चरणवार निवेश (यदि लागू हो)",
+    "cafForm.step7.field.phaseName": "7.1 चरण का नाम",
+    "cafForm.step7.field.fci": "7.2 FCI (लाख में)",
+    "cafForm.step7.field.investDate": "7.3 निवेश की प्रस्तावित तिथि",
+    "cafForm.step7.field.productionDate": "7.4 उत्पादन की प्रस्तावित तिथि",
+    "cafForm.step7.field.fdiInvolved": "7.5 क्या FDI शामिल है",
+    "cafForm.step8.title": "8. प्रस्तावित रोजगार विवरण",
+    "cafForm.step8.field.financialYear": "वित्तीय वर्ष",
+    "cafForm.step8.field.selectSkill": "कौशल चुनें",
+    "cafForm.step8.field.directMale": "प्रत्यक्ष पुरुष कर्मचारी",
+    "cafForm.step8.field.directFemale": "प्रत्यक्ष महिला कर्मचारी",
+    "cafForm.step8.field.indirectMale": "अप्रत्यक्ष पुरुष कर्मचारी",
+    "cafForm.step8.field.indirectFemale": "अप्रत्यक्ष महिला कर्मचारी",
+    "cafForm.step8.field.totalDirectMale": "8.1 प्रत्यक्ष पुरुष कर्मचारी *",
+    "cafForm.step8.field.totalDirectFemale": "8.2 प्रत्यक्ष महिला कर्मचारी *",
+    "cafForm.step8.field.totalIndirectMale": "8.3 अप्रत्यक्ष पुरुष कर्मचारी *",
+    "cafForm.step8.field.totalIndirectFemale": "8.4 अप्रत्यक्ष महिला कर्मचारी *",
+    "cafForm.step8.field.totalMale": "8.5 कुल पुरुष कर्मचारी *",
+    "cafForm.step8.field.totalFemale": "8.6 कुल महिला कर्मचारी *",
+    "cafForm.step9.title": "9. पहले से प्राप्त क्लीयरेंस/अनुमोदन",
+    "cafForm.step9.field.regulatoryClearance": "9.1 क्या कोई नियामक क्लीयरेंस पहले से है?",
+    "cafForm.step9.field.fiscalIncentive": "9.2 क्या कोई वित्तीय प्रोत्साहन पहले से है?",
+    "cafForm.step9.field.croReport": "9.3 क्या आपके पास CRO रिपोर्ट है? *",
   },
 
   pa: {
@@ -1026,5 +1128,39 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.step5.field.policyChapter": "5.9 ਪਾਲਿਸੀ ਚੈਪਟਰ",
     "cafForm.step5.field.protectedMonument": "5.10 ਕੀ ਪ੍ਰਸਤਾਵਿਤ ਨਿਰਮਾਣ ਸਾਈਟ ਕਿਸੇ ਕੇਂਦਰੀ ਸੁਰੱਖਿਅਤ ਸਮਾਰਕ ਦੀ ਸੀਮਾ ਵਿੱਚ ਆਉਂਦੀ ਹੈ?",
     "cafForm.step5.field.nmaNocAvailable": "5.11 ਕੀ ਪ੍ਰਸਤਾਵਿਤ ਨਿਰਮਾਣ ਸਾਈਟ ਲਈ ਤੁਹਾਡੇ ਕੋਲ NMA NOC ਉਪਲਬਧ ਹੈ?",
+    "cafForm.step6.title": "6. ਨਿਵੇਸ਼ ਵੇਰਵੇ",
+    "cafForm.step6.note": "* FCI (ਪਾਲਿਸੀ 2013 ਅਨੁਸਾਰ) ਬਿਲਡਿੰਗ ਲਾਗਤ ਅਤੇ ਪਲਾਂਟ ਤੇ ਮਸ਼ੀਨਰੀ ਲਾਗਤ,\n* FCI (ਪਾਲਿਸੀ 2017 ਅਨੁਸਾਰ) ਜ਼ਮੀਨ ਲਾਗਤ, ਬਿਲਡਿੰਗ ਲਾਗਤ ਅਤੇ ਪਲਾਂਟ ਤੇ ਮਸ਼ੀਨਰੀ ਲਾਗਤ।",
+    "cafForm.step6.field.landCost": "6.1 ਜ਼ਮੀਨ ਲਾਗਤ (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.buildingCost": "6.2 ਬਿਲਡਿੰਗ ਲਾਗਤ (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.plantMachineryCost": "6.3 ਪਲਾਂਟ ਅਤੇ ਮਸ਼ੀਨਰੀ ਲਾਗਤ (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.fci": "6.4 FCI (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.otherCost": "6.5 ਹੋਰ ਲਾਗਤ (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.totalProjectCost": "6.6 ਕੁੱਲ ਪ੍ਰੋਜੈਕਟ ਲਾਗਤ (ਲੱਖ ਵਿੱਚ) *",
+    "cafForm.step6.field.totalProjectCostHelp": "ਉਪਰਲੇ ਇਨਪੁੱਟ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਗਣਨਾ",
+    "cafForm.step6.field.commercialProduction": "6.7 ਕੀ ਯੂਨਿਟ ਵਪਾਰਕ ਉਤਪਾਦਨ ਵਿੱਚ ਹੈ",
+    "cafForm.step6.field.industryType": "6.8 ਉਦਯੋਗ ਦੀ ਕਿਸਮ *",
+    "cafForm.step7.title": "7. DPR ਅਨੁਸਾਰ ਚਰਣ-ਵਾਰ ਨਿਵੇਸ਼ (ਜੇ ਲਾਗੂ ਹੋਵੇ)",
+    "cafForm.step7.field.phaseName": "7.1 ਚਰਣ ਦਾ ਨਾਂ",
+    "cafForm.step7.field.fci": "7.2 FCI (ਲੱਖ ਵਿੱਚ)",
+    "cafForm.step7.field.investDate": "7.3 ਨਿਵੇਸ਼ ਦੀ ਪ੍ਰਸਤਾਵਿਤ ਤਾਰੀਖ",
+    "cafForm.step7.field.productionDate": "7.4 ਉਤਪਾਦਨ ਦੀ ਪ੍ਰਸਤਾਵਿਤ ਤਾਰੀਖ",
+    "cafForm.step7.field.fdiInvolved": "7.5 ਕੀ FDI ਸ਼ਾਮਲ ਹੈ",
+    "cafForm.step8.title": "8. ਪ੍ਰਸਤਾਵਿਤ ਰੁਜ਼ਗਾਰ ਵੇਰਵੇ",
+    "cafForm.step8.field.financialYear": "ਵਿੱਤੀ ਸਾਲ",
+    "cafForm.step8.field.selectSkill": "ਸਕਿਲ ਚੁਣੋ",
+    "cafForm.step8.field.directMale": "ਸਿੱਧੇ ਪੁਰਸ਼ ਕਰਮਚਾਰੀ",
+    "cafForm.step8.field.directFemale": "ਸਿੱਧੀਆਂ ਮਹਿਲਾ ਕਰਮਚਾਰੀ",
+    "cafForm.step8.field.indirectMale": "ਅਪਰੋক্ষ ਪੁਰਸ਼ ਕਰਮਚਾਰੀ",
+    "cafForm.step8.field.indirectFemale": "ਅਪਰੋক্ষ ਮਹਿਲਾ ਕਰਮਚਾਰੀ",
+    "cafForm.step8.field.totalDirectMale": "8.1 ਸਿੱਧੇ ਪੁਰਸ਼ ਕਰਮਚਾਰੀ *",
+    "cafForm.step8.field.totalDirectFemale": "8.2 ਸਿੱਧੀਆਂ ਮਹਿਲਾ ਕਰਮਚਾਰੀ *",
+    "cafForm.step8.field.totalIndirectMale": "8.3 ਅਪਰੋক্ষ ਪੁਰਸ਼ ਕਰਮਚਾਰੀ *",
+    "cafForm.step8.field.totalIndirectFemale": "8.4 ਅਪਰੋক্ষ ਮਹਿਲਾ ਕਰਮਚਾਰੀ *",
+    "cafForm.step8.field.totalMale": "8.5 ਕੁੱਲ ਪੁਰਸ਼ ਕਰਮਚਾਰੀ *",
+    "cafForm.step8.field.totalFemale": "8.6 ਕੁੱਲ ਮਹਿਲਾ ਕਰਮਚਾਰੀ *",
+    "cafForm.step9.title": "9. ਪਹਿਲਾਂ ਤੋਂ ਪ੍ਰਾਪਤ ਕਲੀਅਰੈਂਸ/ਮਨਜ਼ੂਰੀਆਂ",
+    "cafForm.step9.field.regulatoryClearance": "9.1 ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਰੈਗੂਲਟਰੀ ਕਲੀਅਰੈਂਸ ਪਹਿਲਾਂ ਤੋਂ ਹੈ?",
+    "cafForm.step9.field.fiscalIncentive": "9.2 ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਕੋਈ ਫਿਸਕਲ ਇਨਸੈਂਟਿਵ ਪਹਿਲਾਂ ਤੋਂ ਹੈ?",
+    "cafForm.step9.field.croReport": "9.3 ਕੀ ਤੁਹਾਡੇ ਕੋਲ CRO ਰਿਪੋਰਟ ਹੈ? *",
   },
 };
