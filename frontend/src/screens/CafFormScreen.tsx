@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ReactNode } from "react";
 import Constants from "expo-constants";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../theme/useTheme";
 import { useI18n } from "../i18n/I18nProvider";
 import { BlurView } from "expo-blur";
@@ -18,24 +18,22 @@ type Props = {
 export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [investment, setInvestment] = useState({
-    landCost: "",
-    buildingCost: "",
-    plantMachineryCost: "",
-    fci: "",
-    otherCost: "",
-    proposedDate: "",
-    industryType: "",
-    fdiInvolved: false
-  });
+  const tt = t as any;
+  const [step, setStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [multipleUnitsUnderSamePan, setMultipleUnitsUnderSamePan] = useState(false);
+  const [projectSameAsBusinessEntity, setProjectSameAsBusinessEntity] = useState(false);
+  const [gstApplicable, setGstApplicable] = useState<"yes" | "no">("no");
+  const [multipleCityInvolved, setMultipleCityInvolved] = useState<"yes" | "no">("no");
+  const [mcLimit, setMcLimit] = useState<"yes" | "no">("no");
+  const [mcDistanceKm, setMcDistanceKm] = useState("");
+  const [migrationFromFiipToIbdp, setMigrationFromFiipToIbdp] = useState<"yes" | "no">("no");
+  const [protectedMonument, setProtectedMonument] = useState<"yes" | "no">("no");
+  const [nmaNocAvailable, setNmaNocAvailable] = useState<"yes" | "no">("no");
+  const scrollRef = useRef<ScrollView | null>(null);
 
-  const totalProjectCost =
-    (Number(investment.landCost || 0) || 0) +
-    (Number(investment.buildingCost || 0) || 0) +
-    (Number(investment.plantMachineryCost || 0) || 0) +
-    (Number(investment.fci || 0) || 0) +
-    (Number(investment.otherCost || 0) || 0);
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [step]);
 
   return (
     <>
@@ -64,7 +62,7 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
             }
             center={
               <Text style={{ fontSize: 18, fontWeight: "800", color: theme.colors.text.primary }}>
-                {step === 1 ? t("cafForm.title") : "CAF Application"}
+                {t("cafForm.title")}
               </Text>
             }
             right={
@@ -86,8 +84,8 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
           />
         </BlurView>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 160 }}>
-          <View style={styles.container}>
+        <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 140 }}>
+          <View style={{ paddingTop: 12 }}>
             {step === 1 ? (
               <>
                 <View style={styles.progressWrap}>
@@ -100,83 +98,55 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                   </View>
                 </View>
 
-                <Text style={styles.sectionTitle}>{t("cafForm.section.applicantDetails")}</Text>
-
+                <SectionHeader number="1" title={tt("cafForm.step1.title")} />
                 <Card>
-                  <View style={styles.profileUpload}>
-                    <View style={{ position: "relative" }}>
-                      <Image
-                        source={{
-                          uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuB2oogmzKIX3XrJBsKjb3YbxojaKn4re0jvxm0vkr-2l_4rP_-iTW1TNvbGw-qS5XWddpRmXVYEtp-7Rmo6iA4FQIUebdzBbIkoDRWwmHyRgK23tMMSBkmf0dcZlgv0utNROi0exNH6fwMNhHZ6pjgKh2tdIMEtsvplMjZOBeu0CWe_NZJ4IGSfxuGVsBUucR23uYMuZkrwVkyqnDWJgukW_2tE2EivCtOYXL8d47hmkNGQHLeZdRzP5Q8NSj2Bft8JxLT2z0hLTRk2"
-                        }}
-                        style={styles.profileImage}
-                      />
-                      <View style={styles.cameraIcon}>
-                        <MaterialIcons name="camera-alt" size={18} color="white" />
-                      </View>
-                    </View>
-                    <Text style={styles.uploadText}>Upload Profile Photo</Text>
-                  </View>
-
-                  <Input label={t("cafForm.field.name")} value="Mr. Ajay Kumar" />
-                  <Input label={t("cafForm.field.role")} value="Chief Executive Officer" />
-                </Card>
-
-                <Card title="Identity Proofs">
-                  <Input label={t("cafForm.field.aadhaar")} value="********9123" mono />
-                  <DropZone label="Upload Aadhar Card" />
-
-                  <Input label={t("cafForm.field.pan")} value="******567F" mono />
-                  <DropZone label="Upload PAN Card" />
-                </Card>
-
-                <Card title="Contact Details">
-                  <Input label={t("cafForm.field.mobile")} value="7894561235" prefix="+91" keyboard="phone-pad" />
-                  <Input label={t("cafForm.field.phone")} placeholder="STD - Number" />
-                  <Input label={t("cafForm.field.email")} value="xyz@gmail.com" keyboard="email-address" />
-                </Card>
-
-                <Card title={t("cafForm.section.addressDetails")}>
-                  <Input label={t("cafForm.field.country")} value={t("cafForm.value.india")} />
+                  <Input label={tt("cafForm.step1.field.title")} placeholder={tt("cafForm.common.select")} />
                   <TwoCol>
-                    <Input label={t("cafForm.field.state")} value={t("cafForm.value.punjab")} />
-                    <Input label={t("cafForm.field.district")} value="S.A.S Nagar" />
-                    <Input label={t("cafForm.field.tehsil")} value="Mohali" />
-                    <Input label={t("cafForm.field.pinCode")} value="123456" />
+                    <Input label={tt("cafForm.step1.field.firstName")} />
+                    <Input label={tt("cafForm.step1.field.middleName")} />
+                    <Input label={tt("cafForm.step1.field.lastName")} />
                   </TwoCol>
-                  <Input label={t("cafForm.field.villageTown")} value="Mohali" />
-                  <Input label={t("cafForm.field.address")} value="Mohali, Mohali, S.A.S Nagar" multiline />
+                  <Input label={tt("cafForm.step1.field.designation")} />
+                  <Input label={tt("cafForm.step1.field.dob")} placeholder={tt("cafForm.common.datePlaceholder")} />
+
+                  <Upload label={tt("cafForm.step1.field.photo")} />
+                  <Upload label={tt("cafForm.step1.field.signature")} />
+
+                  <Input label={tt("cafForm.step1.field.aadhaarNo")} mono />
+                  <Upload label={tt("cafForm.step1.field.aadhaarUpload")} />
+
+                  <Input label={tt("cafForm.step1.field.panNo")} mono />
+                  <Upload label={tt("cafForm.step1.field.panUpload")} />
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step1.field.phone")} keyboard="phone-pad" />
+                    <Input label={tt("cafForm.step1.field.fax")} />
+                  </TwoCol>
+
+                  <Input label={tt("cafForm.step1.field.mobile")} keyboard="phone-pad" />
+                  <Input label={tt("cafForm.step1.field.email")} keyboard="email-address" />
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step1.field.country")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step1.field.state")} placeholder={tt("cafForm.common.select")} />
+                  </TwoCol>
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step1.field.district")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step1.field.tehsil")} placeholder={tt("cafForm.common.select")} />
+                  </TwoCol>
+
+                  <Input label={tt("cafForm.step1.field.city")} />
+                  <Input label={tt("cafForm.step1.field.address1")} />
+                  <Input label={tt("cafForm.step1.field.address2")} />
+                  <Input label={tt("cafForm.step1.field.pinCode")} keyboard="numeric" />
+
+                  <Upload label={tt("cafForm.step1.field.authorizationLetter")} />
                 </Card>
-
-                <Card title="Documents">
-                  <DropZone
-                    label={`Click to upload ${t("cafForm.file.authorizationLetter")}`}
-                    sub={t("cafForm.file.meta")}
-                    large
-                  />
-                </Card>
-
-                <View style={styles.disabledCard}>
-                  <View style={styles.disabledHeader}>
-                    <Text style={styles.disabledTitle}>{t("cafForm.section.businessEntityInfo")}</Text>
-                    <MaterialIcons name="expand-more" size={22} color="#9ca3af" />
-                  </View>
-                  <Text style={styles.disabledText}>{t("cafForm.section.businessEntityInfo.sub")}</Text>
-                </View>
-
-                <View style={styles.signatureWrap}>
-                  <Image
-                    source={{
-                      uri: "https://lh3.googleusercontent.com/aida-public/AB6AXuCSjEJ1sSEanOxbsMYeQuRBVTMEiJdaTnaDIURIvFI0W8W80WmBdPzLNw_h3IuLdPKwo9IpXfKIPVb9Pl5fsYgUN2soB31hfTknseybnJ51yRmElEFb0sHyZEI42WUZioyOaCDN-GDc5wJfhUj8a0SeFbIP0upt584e-QCJKKL5FEG3Ny_QIuI_N_Vu8YfJp5jNBHdnru-0tsw-5hJXinVECuKeNBdQukCZKVU4kFRqdT-pQU3GKWXJd6ap1Ip_bA5iR7R5FguTg_iA"
-                    }}
-                    style={styles.signature}
-                  />
-                  <Text style={styles.signatureLabel}>{t("cafForm.signature.authorizedSignatory")}</Text>
-                </View>
               </>
             ) : step === 2 ? (
               <>
-                <View style={styles.progressCard}>
+                <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
                     <Text style={styles.stepText}>Step 2 of 5</Text>
                     <Text style={styles.progressText}>40% Completed</Text>
@@ -184,149 +154,173 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                   <View style={styles.progressTrack}>
                     <View style={[styles.progressFill, { width: "40%" }]} />
                   </View>
-                  <Text style={styles.pageTitle}>Business Entity & Project Details</Text>
-                  <Text style={styles.subText}>Fill in the details below to proceed with your application.</Text>
                 </View>
 
-                <SectionHeader number="2" title="Business Entity Information" />
+                <SectionHeader number="2" title={tt("cafForm.step2.title")} />
                 <Card>
-                  <Input label="2.1 Business Entity Name" />
-                  <Input label="2.2 Business Entity Type" placeholder="Select" />
+                  <Input label={tt("cafForm.step2.field.entityName")} />
+                  <Input label={tt("cafForm.step2.field.entityType")} placeholder={tt("cafForm.common.select")} />
 
                   <TwoCol>
-                    <Input label="2.3 Country" value="India" />
-                    <Input label="2.4 State" value="Punjab" />
+                    <Input label={tt("cafForm.step2.field.country")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step2.field.state")} placeholder={tt("cafForm.common.select")} />
                   </TwoCol>
 
                   <TwoCol>
-                    <Input label="2.5 District" />
-                    <Input label="2.6 Tehsil" />
+                    <Input label={tt("cafForm.step2.field.district")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step2.field.tehsil")} placeholder={tt("cafForm.common.select")} />
                   </TwoCol>
 
-                  <Input label="2.8 Business Entity Address" multiline />
-
-                  <Input label="2.11 Company PAN" placeholder="ABCDE1234F" mono />
-
-                  <Upload label="2.12 Company PAN Attachment" />
-                  <Upload label="2.13 Certificate / MoA / Partnership Deed" />
-                </Card>
-
-                <SectionHeader number="3" title="Project Details" />
-                <Card>
-                  <Input label="3.1 Project Name" />
-                  <Input label="3.2 Project Purpose" />
-                  <Input label="3.3 Project Type" placeholder="Select" />
-                  <Input label="3.4 Sector" placeholder="Select" />
-
-                  <TwoCol>
-                    <Input label="3.5 State" value="Punjab" />
-                    <Input label="3.6 District" />
-                  </TwoCol>
-
-                  <TwoCol>
-                    <Input label="3.7 Tehsil" />
-                    <Input label="3.8 City / Village" />
-                  </TwoCol>
+                  <Input label={tt("cafForm.step2.field.villageTown")} />
+                  <Input label={tt("cafForm.step2.field.address1")} />
+                  <Input label={tt("cafForm.step2.field.address2")} />
+                  <Input label={tt("cafForm.step2.field.pinCode")} keyboard="numeric" />
 
                   <View style={styles.checkboxRow}>
-                    <Switch />
-                    <Text style={styles.checkboxText}>Multiple City/Town/Village Involved</Text>
+                    <Switch value={multipleUnitsUnderSamePan} onValueChange={setMultipleUnitsUnderSamePan} />
+                    <Text style={styles.checkboxText}>{tt("cafForm.step2.field.multiUnitsCheckbox")}</Text>
                   </View>
 
-                  <Input label="3.9 Project Address" multiline />
-                  <Input label="3.11 Pincode" keyboard="numeric" />
+                  <Input label={tt("cafForm.step2.field.companyPan")} placeholder="ABCDE1234F" mono />
+                  <Upload label={tt("cafForm.step2.field.companyPanUpload")} />
+                  <Input label={tt("cafForm.step2.field.udyamOptional")} />
+                </Card>
+              </>
+            ) : step === 3 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 3 of 5</Text>
+                    <Text style={styles.progressText}>60% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "60%" }]} />
+                  </View>
+                </View>
+
+                <SectionHeader number="3" title={tt("cafForm.step3.title")} />
+                <Card>
+                  <View style={styles.checkboxRow}>
+                    <Switch value={projectSameAsBusinessEntity} onValueChange={setProjectSameAsBusinessEntity} />
+                    <Text style={styles.checkboxText}>{tt("cafForm.step3.field.sameAsEntity")}</Text>
+                  </View>
+
+                  <Input label={tt("cafForm.step3.field.projectName")} />
+                  <Input label={tt("cafForm.step3.field.projectPurpose")} />
+                  <Input label={tt("cafForm.step3.field.projectType")} placeholder={tt("cafForm.common.select")} />
+                  <Input label={tt("cafForm.step3.field.unitLocation")} />
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step3.field.country")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step3.field.state")} placeholder={tt("cafForm.common.select")} />
+                  </TwoCol>
+
+                  <TwoCol>
+                    <Input label={tt("cafForm.step3.field.district")} placeholder={tt("cafForm.common.select")} />
+                    <Input label={tt("cafForm.step3.field.tehsil")} placeholder={tt("cafForm.common.select")} />
+                  </TwoCol>
+
+                  <Input label={tt("cafForm.step3.field.city")} />
+                  <Input label={tt("cafForm.step3.field.address1")} />
+                  <Input label={tt("cafForm.step3.field.address2")} />
+                  <Input label={tt("cafForm.step3.field.pinCode")} keyboard="numeric" />
 
                   <View style={styles.radioBlock}>
-                    <Text style={styles.label}>Does this site lies under MC Limit?</Text>
+                    <Text style={styles.label}>{tt("cafForm.step3.field.gstApplicable")}</Text>
                     <View style={styles.radioRow}>
-                      <Radio label="Yes" />
-                      <Radio label="No" checked />
+                      <Radio label={tt("cafForm.common.yes")} checked={gstApplicable === "yes"} onPress={() => setGstApplicable("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={gstApplicable === "no"} onPress={() => setGstApplicable("no")} />
                     </View>
                   </View>
+                </Card>
+              </>
+            ) : step === 4 ? (
+              <>
+                <View style={styles.progressWrap}>
+                  <View style={styles.progressTop}>
+                    <Text style={styles.stepText}>Step 4 of 5</Text>
+                    <Text style={styles.progressText}>80% Completed</Text>
+                  </View>
+                  <View style={styles.progressTrack}>
+                    <View style={[styles.progressFill, { width: "80%" }]} />
+                  </View>
+                </View>
 
-                  <Input label="Type of Lease Deed" placeholder="Select" />
-
-                  <Upload label="Copy of Registry / Allotment Letter" />
-                  <Upload label="Detailed Project Report" />
+                <SectionHeader number="4" title={tt("cafForm.step4.title")} />
+                <Card>
+                  <Upload label={tt("cafForm.step4.field.certificateIncorporationUpload")} />
                 </Card>
               </>
             ) : (
               <>
-                <View style={styles.progressCard}>
+                <View style={styles.progressWrap}>
                   <View style={styles.progressTop}>
-                    <Text style={styles.stepText}>Step 3 of 9</Text>
-                    <Text style={styles.progressText}>3/9 Completed</Text>
+                    <Text style={styles.stepText}>Step 5 of 5</Text>
+                    <Text style={styles.progressText}>100% Completed</Text>
                   </View>
                   <View style={styles.progressTrack}>
-                    <View style={[styles.progressFill, { width: "33%" }]} />
+                    <View style={[styles.progressFill, { width: "100%" }]} />
                   </View>
-                  <Text style={styles.pageTitle}>Investment Details</Text>
-                  <Text style={styles.subText}>Provide the cost breakdown and project timeline details.</Text>
                 </View>
 
-                <SectionHeader number="6" title="Investment Details" />
+                <SectionHeader number="5" title={tt("cafForm.step5.title")} />
                 <Card>
-                  <TwoCol>
-                    <MoneyInput
-                      label="6.1 Land Cost"
-                      value={investment.landCost}
-                      onChangeText={(v) => setInvestment((s) => ({ ...s, landCost: v }))}
-                    />
-                    <MoneyInput
-                      label="6.2 Building Cost"
-                      value={investment.buildingCost}
-                      onChangeText={(v) => setInvestment((s) => ({ ...s, buildingCost: v }))}
-                    />
-                  </TwoCol>
+                  <Input label={tt("cafForm.step5.field.landArea")} keyboard="numeric" />
+                  <Input label={tt("cafForm.step5.field.landRegistrationType")} placeholder={tt("cafForm.common.select")} />
+                  <Upload label={tt("cafForm.step5.field.landDocumentUpload")} />
 
-                  <MoneyInput
-                    label="6.3 Plant and Machinery Cost"
-                    value={investment.plantMachineryCost}
-                    onChangeText={(v) => setInvestment((s) => ({ ...s, plantMachineryCost: v }))}
-                  />
-
-                  <TwoCol>
-                    <MoneyInput
-                      label="6.4 FCI"
-                      value={investment.fci}
-                      onChangeText={(v) => setInvestment((s) => ({ ...s, fci: v }))}
-                    />
-                    <MoneyInput
-                      label="6.5 Other Cost"
-                      value={investment.otherCost}
-                      onChangeText={(v) => setInvestment((s) => ({ ...s, otherCost: v }))}
-                    />
-                  </TwoCol>
-
-                  <MoneyInput label="6.6 Total Project Cost" value={String(totalProjectCost)} readOnly helper="Auto-calculated based on inputs above" />
-
-                  <Input
-                    label="6.7 Proposed Date of Commercial Production"
-                    value={investment.proposedDate}
-                    placeholder="YYYY-MM-DD"
-                    keyboard="default"
-                    onChangeText={(v) => setInvestment((s) => ({ ...s, proposedDate: v }))}
-                  />
-                </Card>
-
-                <SectionHeader number="6.8" title="Type of Industry" />
-                <Card>
-                  <Input
-                    label="6.8.1 Type of Industry"
-                    value={investment.industryType}
-                    placeholder="Select Industry Category"
-                    onChangeText={(v) => setInvestment((s) => ({ ...s, industryType: v }))}
-                  />
-
-                  <View style={styles.toggleCard}>
-                    <View style={styles.toggleTop}>
-                      <Text style={styles.toggleLabel}>Is FDI Involved?</Text>
-                      <Switch
-                        value={investment.fdiInvolved}
-                        onValueChange={(v) => setInvestment((s) => ({ ...s, fdiInvolved: v }))}
-                      />
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step5.field.multipleCityInvolved")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={multipleCityInvolved === "yes"} onPress={() => setMultipleCityInvolved("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={multipleCityInvolved === "no"} onPress={() => setMultipleCityInvolved("no")} />
                     </View>
-                    <Text style={styles.toggleHelp}>Toggle if Foreign Direct Investment is involved in this project.</Text>
+                  </View>
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step5.field.mcLimit")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={mcLimit === "yes"} onPress={() => setMcLimit("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={mcLimit === "no"} onPress={() => setMcLimit("no")} />
+                    </View>
+                  </View>
+
+                  {mcLimit === "no" ? (
+                    <Input
+                      label={tt("cafForm.step5.field.mcDistanceKm")}
+                      value={mcDistanceKm}
+                      onChangeText={setMcDistanceKm}
+                      keyboard="numeric"
+                    />
+                  ) : null}
+
+                  <Input label={tt("cafForm.step5.field.sector")} placeholder={tt("cafForm.common.select")} />
+                  <Upload label={tt("cafForm.step5.field.dprUpload")} />
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step5.field.migrationFromFiipToIbdp")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={migrationFromFiipToIbdp === "yes"} onPress={() => setMigrationFromFiipToIbdp("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={migrationFromFiipToIbdp === "no"} onPress={() => setMigrationFromFiipToIbdp("no")} />
+                    </View>
+                  </View>
+
+                  <Input label={tt("cafForm.step5.field.policyChapter")} placeholder={tt("cafForm.common.select")} />
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step5.field.protectedMonument")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={protectedMonument === "yes"} onPress={() => setProtectedMonument("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={protectedMonument === "no"} onPress={() => setProtectedMonument("no")} />
+                    </View>
+                  </View>
+
+                  <View style={styles.radioBlock}>
+                    <Text style={styles.label}>{tt("cafForm.step5.field.nmaNocAvailable")}</Text>
+                    <View style={styles.radioRow}>
+                      <Radio label={tt("cafForm.common.yes")} checked={nmaNocAvailable === "yes"} onPress={() => setNmaNocAvailable("yes")} />
+                      <Radio label={tt("cafForm.common.no")} checked={nmaNocAvailable === "no"} onPress={() => setNmaNocAvailable("no")} />
+                    </View>
                   </View>
                 </Card>
               </>
@@ -342,13 +336,13 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
                 <Text style={styles.cancelText}>{t("cafForm.action.cancel")}</Text>
               </Pressable>
             ) : (
-              <Pressable style={styles.backBtn} onPress={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3) : 1))}>
+              <Pressable style={styles.backBtn} onPress={() => setStep((s) => (s > 1 ? ((s - 1) as 1 | 2 | 3 | 4 | 5) : 1))}>
                 <Text style={styles.backText}>Back</Text>
               </Pressable>
             )}
 
-            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 3 ? ((s + 1) as 1 | 2 | 3) : 3))}>
-              <Text style={styles.nextText}>{step === 3 ? "Next" : t("cafForm.action.nextStep")}</Text>
+            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 5 ? ((s + 1) as 1 | 2 | 3 | 4 | 5) : 5))}>
+              <Text style={styles.nextText}>{step === 5 ? "Next" : t("cafForm.action.nextStep")}</Text>
               <MaterialIcons name="arrow-forward" size={18} color="white" />
             </Pressable>
           </View>
@@ -478,14 +472,14 @@ function TwoCol({ children }: { children: ReactNode }) {
   return <View style={styles.twoCol}>{children}</View>;
 }
 
-function Radio({ label, checked }: { label: string; checked?: boolean }) {
+function Radio({ label, checked, onPress }: { label: string; checked?: boolean; onPress?: () => void }) {
   return (
-    <View style={styles.radio}>
+    <Pressable onPress={onPress} style={styles.radio}>
       <View style={[styles.radioOuter, checked ? styles.radioOuterActive : null]}>
         {checked ? <View style={styles.radioInner} /> : null}
       </View>
       <Text>{label}</Text>
-    </View>
+    </Pressable>
   );
 }
 

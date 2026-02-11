@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle, Modal } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
@@ -15,15 +15,28 @@ type Props = {
   onAddPress?: () => void;
 };
 
+type StatusType = "verified" | "filing" | "pending";
+
+function getStatusColor(statusType: StatusType) {
+  if (statusType === "verified") return "#10b981";
+  if (statusType === "filing") return "#f59e0b";
+  return "#3b82f6";
+}
+
 export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(false);
+  const [showAddOptions, setShowAddOptions] = useState(false);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const CHAT_ICON_SIZE = 72;
+
+  const closeAddOptions = () => {
+    setShowAddOptions(false);
+  };
 
   return (
     <>
@@ -82,75 +95,8 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{ zIndex: 1 }}
-          contentContainerStyle={{ paddingBottom: 180 }}
+          contentContainerStyle={{ paddingTop: 12, paddingBottom: 140 }}
         >
-          {/* ===== Quick Action Grid ===== */}
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              padding: 16
-            }}
-          >
-            {[
-              {
-                icon: "add-business",
-                title: t("myProjects.quickAction.addProjectWithCaf"),
-                bg: "#dbeafe",
-                color: "#1d4ed8"
-              },
-              {
-                icon: "post-add",
-                title: t("myProjects.quickAction.applyNewServices"),
-                bg: "#d1fae5",
-                color: "#059669"
-              },
-              {
-                icon: "verified-user",
-                title: t("myProjects.quickAction.knowYourApproval"),
-                bg: "#ffedd5",
-                color: "#d97706"
-              }
-            ].map((item, i) => (
-              <Pressable
-                key={i}
-                style={{
-                  width: "30%",
-                  height: 112,
-                  borderRadius: 14,
-                  backgroundColor: item.bg,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 10
-                }}
-              >
-                <View
-                  style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 18,
-                    backgroundColor: "#ffffffcc",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 6
-                  }}
-                >
-                  <MaterialIcons name={item.icon as any} size={22} color={item.color} />
-                </View>
-                <Text
-                  style={{
-                    fontSize: 11,
-                    fontWeight: "800",
-                    textAlign: "center",
-                    color: "#1e293b"
-                  }}
-                >
-                  {item.title}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-
           {/* ===== RTBA ===== */}
           <SectionHeader
             title={t("myProjects.section.rtbaCaf")}
@@ -159,10 +105,73 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
           />
 
           {rtbaExpanded ? (
-            <View style={cardContainer}>
-              <View style={{ padding: 16 }}>
-                <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>{t("myProjects.empty")}</Text>
-              </View>
+            <View style={[cardContainer, { marginBottom: 12 }]}>
+              {[
+                {
+                  pin: "251134461",
+                  date: "20-Nov-2025",
+                  name: "Test Staging Entity Project",
+                  sector: "IT & ITES",
+                  district: "S.A.S Nagar",
+                  applicant: "Mr Rahul Garg",
+                  mobile: "9898989899",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251188816",
+                  date: "03-Nov-2025",
+                  name: "Test BE Project Name 31125",
+                  sector: "Logistics",
+                  district: "Faridkot",
+                  applicant: "Mr Jaiveer Singh",
+                  mobile: "8787878788",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251088067",
+                  date: "31-Oct-2025",
+                  name: "Test name",
+                  sector: "Aerospace, MRO & Defense",
+                  district: "Barnala",
+                  applicant: "Mr Rahul Garg",
+                  mobile: "1111111111",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251020376",
+                  date: "30-Oct-2025",
+                  name: "test",
+                  sector: "Agri, Food Processing and Beverages",
+                  district: "Barnala",
+                  applicant: "Mr arnav kumar",
+                  mobile: "7894654564",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251031695",
+                  date: "30-Oct-2025",
+                  name: "test",
+                  sector: "Aerospace, MRO & Defense",
+                  district: "Barnala",
+                  applicant: "Mr Test test",
+                  mobile: "7894654152",
+                  statusType: "verified" as const
+                }
+              ].map((item, i) => (
+                <ProjectCard
+                  key={i}
+                  pin={item.pin}
+                  date={item.date}
+                  name={item.name}
+                  sector={item.sector}
+                  district={item.district}
+                  applicant={item.applicant}
+                  mobile={item.mobile}
+                  statusType={item.statusType}
+                  statusLabel={t("myProjects.status.verified")}
+                  color={getStatusColor(item.statusType)}
+                />
+              ))}
             </View>
           ) : null}
 
@@ -174,40 +183,74 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
           />
 
           {cafExpanded ? (
-            <View style={cardContainer}>
+            <View style={[cardContainer, { marginBottom: 12 }]}>
               {[
                 {
-                  pin: "250535096",
-                  name: "K A Demo New",
-                  status: t("myProjects.status.pendingVerification"),
-                  color: "#3b82f6",
-                  applicant: "Mr Sunny Kumar",
-                  date: "01-May-2025",
-                  sector: t("myProjects.sector.manufacturing"),
-                  district: "S.A.S Nagar"
+                  pin: "251161308",
+                  date: "",
+                  applicant: "Mr Test Qwerty",
+                  mobile: "2222222222",
+                  name: "Barnala",
+                  sector: "Other Service Projects",
+                  district: "Barnala",
+                  statusType: "filing" as const
                 },
                 {
-                  pin: "250535098",
-                  name: "Bond & Associates",
-                  status: t("myProjects.status.filingInProcess"),
-                  color: "#f59e0b",
-                  applicant: "Mr Ankit Kumar",
-                  date: "01-May-2025",
-                  sector: t("myProjects.sector.manufacturing"),
-                  district: "S.A.S Nagar"
+                  pin: "",
+                  date: "",
+                  applicant: "Mr Ajay Kumar",
+                  mobile: "8888888888",
+                  name: "ASD Company1",
+                  sector: "Other Service Projects",
+                  district: "Barnala",
+                  statusType: "filing" as const
                 },
                 {
-                  pin: "150535024",
-                  name: "New Demo Industries",
-                  status: t("myProjects.status.accepted"),
-                  color: "#10b981",
-                  applicant: "Mr Vikas Sharma",
-                  date: "01-May-2025",
-                  sector: t("myProjects.sector.otherService"),
-                  district: "S.A.S Nagar"
+                  pin: "250726621",
+                  date: "26-Jul-2025",
+                  applicant: "Mr Vinod Kumar",
+                  mobile: "7894561235",
+                  name: "BKJ Company/Paper",
+                  sector: "Manufacturing",
+                  district: "S.A.S Nagar",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "250796279",
+                  date: "23-Jul-2025",
+                  applicant: "",
+                  mobile: "2222222222",
+                  name: "dsdsad",
+                  sector: "Other Service Projects",
+                  district: "S.A.S Nagar",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "250742745",
+                  date: "18-Jul-2025",
+                  applicant: "Mr Ajay Kumar",
+                  mobile: "7894561235",
+                  name: "BKM Company",
+                  sector: "Manufacturing",
+                  district: "S.A.S Nagar",
+                  statusType: "verified" as const
                 }
               ].map((item, i) => (
-                <ProjectCard key={i} {...item} />
+                <ProjectCard
+                  key={i}
+                  pin={item.pin}
+                  date={item.date}
+                  name={item.name}
+                  sector={item.sector}
+                  district={item.district}
+                  applicant={item.applicant}
+                  mobile={item.mobile}
+                  statusType={item.statusType}
+                  statusLabel={
+                    item.statusType === "verified" ? t("myProjects.status.verified") : t("myProjects.status.filingInProcess")
+                  }
+                  color={getStatusColor(item.statusType)}
+                />
               ))}
             </View>
           ) : null}
@@ -220,10 +263,73 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
           />
 
           {scafExpanded ? (
-            <View style={cardContainer}>
-              <View style={{ padding: 16 }}>
-                <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>{t("myProjects.empty")}</Text>
-              </View>
+            <View style={[cardContainer, { marginBottom: 12 }]}>
+              {[
+                {
+                  pin: "251153185",
+                  date: "17-Nov-2025",
+                  applicant: "Mr sahil sharma",
+                  mobile: "8278776517",
+                  name: "twet",
+                  sector: "Other Service Projects",
+                  district: "Barnala",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251143741",
+                  date: "03-Nov-2025",
+                  applicant: "Mr Rahul Garg",
+                  mobile: "9898987879",
+                  name: "test test",
+                  sector: "Other Service Projects",
+                  district: "Amritsar",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "251035380",
+                  date: "17-Oct-2025",
+                  applicant: "Mr Suuny Kumar",
+                  mobile: "9875461325",
+                  name: "COmpany name",
+                  sector: "Other Service Projects",
+                  district: "Amritsar",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "250828148",
+                  date: "02-Aug-2025",
+                  applicant: "Mr SUNNY KUMAR",
+                  mobile: "7894561230",
+                  name: "JKB Company",
+                  sector: "Other Service Projects",
+                  district: "Patiala",
+                  statusType: "verified" as const
+                },
+                {
+                  pin: "250720617",
+                  date: "18-Jul-2025",
+                  applicant: "Mr Ajay Kumar",
+                  mobile: "7894561235",
+                  name: "BKM Company",
+                  sector: "Other Service Projects",
+                  district: "S.A.S Nagar",
+                  statusType: "verified" as const
+                }
+              ].map((item, i) => (
+                <ProjectCard
+                  key={i}
+                  pin={item.pin}
+                  date={item.date}
+                  name={item.name}
+                  sector={item.sector}
+                  district={item.district}
+                  applicant={item.applicant}
+                  mobile={item.mobile}
+                  statusType={item.statusType}
+                  statusLabel={t("myProjects.status.verified")}
+                  color={getStatusColor(item.statusType)}
+                />
+              ))}
             </View>
           ) : null}
         </ScrollView>
@@ -234,33 +340,60 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
             <ChatbotIcon width={CHAT_ICON_SIZE} height={CHAT_ICON_SIZE} />
           </Pressable>
 
-          <Pressable onPress={onAddPress} style={[fab, { marginTop: 12, backgroundColor: "#1d4ed8" }]}>
-            <MaterialIcons name="add" size={28} color="white" />
+          <Pressable
+            onPress={() => {
+              setShowAddOptions((v) => !v);
+            }}
+            style={[fab, { marginTop: 12, backgroundColor: "#1d4ed8" }]}
+          >
+            <MaterialIcons name={showAddOptions ? "close" : "add"} size={28} color="white" />
           </Pressable>
         </View>
 
-        {/* ===== Bottom Navigation ===== */}
-        <View style={bottomBar}>
-          {[
-            { icon: "dashboard", label: t("myProjects.bottomNav.projects"), active: true },
-            { icon: "business-center", label: t("myProjects.bottomNav.services") },
-            { icon: "payments", label: t("myProjects.bottomNav.payments") },
-            { icon: "person", label: t("myProjects.bottomNav.profile") }
-          ].map((item, i) => (
-            <View key={i} style={bottomItem}>
-              <MaterialIcons name={item.icon as any} size={22} color={item.active ? "#1d4ed8" : "#64748b"} />
-              <Text
-                style={{
-                  fontSize: 10,
-                  fontWeight: "600",
-                  color: item.active ? "#1d4ed8" : "#64748b"
+        {showAddOptions ? (
+          <>
+            <Pressable onPress={closeAddOptions} style={{ position: "absolute", inset: 0, backgroundColor: "transparent", zIndex: 4000 }} />
+            <View
+              style={{
+                position: "absolute",
+                right: 20,
+                bottom: 170,
+                width: 260,
+                borderRadius: 14,
+                overflow: "hidden",
+                backgroundColor: "rgba(255,255,255,0.96)",
+                borderWidth: 1,
+                borderColor: "rgba(203,213,225,0.9)",
+                zIndex: 5000,
+                elevation: 5000
+              }}
+            >
+              <Pressable
+                onPress={() => {
+                  closeAddOptions();
+                  onAddPress?.();
                 }}
+                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
               >
-                {item.label}
-              </Text>
+                <MaterialIcons name="add-business" size={18} color="#1d4ed8" />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.addProjectWithCaf")}</Text>
+              </Pressable>
+
+              <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
+
+              <Pressable
+                onPress={() => {
+                  closeAddOptions();
+                  onAddPress?.();
+                }}
+                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <MaterialIcons name="post-add" size={18} color="#059669" />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.applyForNewService")}</Text>
+              </Pressable>
             </View>
-          ))}
-        </View>
+          </>
+        ) : null}
       </LinearGradient>
     </>
   );
@@ -307,17 +440,27 @@ function SectionHeader({ title, faded, expanded, onPress, containerStyle }: Sect
 
 type ProjectCardProps = {
   pin: string;
+  date?: string;
   name: string;
-  status: string;
+  statusType: StatusType;
+  statusLabel: string;
   color: string;
   applicant: string;
-  date: string;
+  mobile: string;
   sector: string;
   district: string;
 };
 
-function ProjectCard({ pin, name, status, color, applicant, date, sector, district }: ProjectCardProps) {
+function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, sector, district }: ProjectCardProps) {
   const { t } = useI18n();
+  const [showActions, setShowActions] = useState(false);
+
+  const sectorLabel =
+    sector === "Manufacturing"
+      ? t("myProjects.sector.manufacturing")
+      : sector === "Other Service Projects"
+        ? t("myProjects.sector.otherServiceProjects" as any)
+        : sector;
 
   return (
     <View
@@ -328,74 +471,128 @@ function ProjectCard({ pin, name, status, color, applicant, date, sector, distri
         borderRadius: 12,
         borderWidth: 1,
         borderColor: "#e2e8f0",
-        shadowOpacity: 0.08
+        shadowOpacity: 0.08,
+        position: "relative"
       }}
     >
-      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-        <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.pin")}: {pin}</Text>
-
-        <View
+      {showActions ? (
+        <Pressable
+          onPress={() => setShowActions(false)}
           style={{
-            backgroundColor: color + "1F",
-            paddingHorizontal: 10,
-            paddingVertical: 6,
-            borderRadius: 999
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 98
           }}
-        >
-          <Text style={{ fontSize: 11, fontWeight: "800", color }}>{status}</Text>
+        />
+      ) : null}
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.pin")}:</Text>
+          <Text style={{ fontSize: 11, color: "#2563eb", fontWeight: "900" }}>{pin}</Text>
+          {date ? <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "900" }}>|</Text> : null}
+          {date ? <Text style={{ fontSize: 11, color: "#0f172a", fontWeight: "900" }}>{date}</Text> : null}
+        </View>
+
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+          <View
+            style={{
+              backgroundColor: color + "1F",
+              paddingHorizontal: 10,
+              paddingVertical: 6,
+              borderRadius: 999
+            }}
+          >
+            <Text style={{ fontSize: 11, fontWeight: "800", color }}>{statusLabel}</Text>
+          </View>
+
+          <Pressable
+            onPress={(e) => {
+              e.stopPropagation();
+              setShowActions((v) => !v);
+            }}
+            hitSlop={10}
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 16,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <MaterialIcons name="more-vert" size={18} color="#64748b" />
+          </Pressable>
         </View>
       </View>
 
       <Text style={{ marginTop: 6, fontSize: 17, fontWeight: "900", color: "#0f172a" }}>{name}</Text>
 
-      <View style={{ marginTop: 10, flexDirection: "row", justifyContent: "space-between", gap: 12 }}>
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.applicant")}</Text>
-          <Text style={{ fontSize: 12, color: "#334155", fontWeight: "700", marginTop: 2 }}>{applicant}</Text>
-
-          <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "800", marginTop: 10 }}>{t("myProjects.field.sector")}</Text>
-          <Text style={{ fontSize: 12, color: "#334155", fontWeight: "700", marginTop: 2 }}>{sector}</Text>
+      <View style={{ marginTop: 10, gap: 10 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.sector")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{sectorLabel}</Text>
         </View>
 
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.date")}</Text>
-          <Text style={{ fontSize: 12, color: "#334155", fontWeight: "700", marginTop: 2 }}>{date}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.applicant")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{applicant}</Text>
+        </View>
 
-          <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "800", marginTop: 10 }}>{t("myProjects.field.district")}</Text>
-          <Text style={{ fontSize: 12, color: "#334155", fontWeight: "700", marginTop: 2 }}>{district}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.mobile")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{mobile}</Text>
+        </View>
+
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.district")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{district}</Text>
         </View>
       </View>
 
-      <View style={{ height: 1, backgroundColor: "#e2e8f0", marginTop: 12 }} />
-
-      <View style={{ flexDirection: "row", justifyContent: "flex-end", alignItems: "center", marginTop: 10, gap: 12 }}>
-        <MaterialIcons name="chat-bubble-outline" size={20} color="#94a3b8" />
-        <Pressable
+      {showActions ? (
+        <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 6,
-            backgroundColor: "#1d4ed81A",
-            paddingHorizontal: 12,
-            paddingVertical: 8,
-            borderRadius: 10
+            position: "absolute",
+            top: 48,
+            right: 14,
+            width: 220,
+            borderRadius: 12,
+            overflow: "hidden",
+            borderWidth: 1,
+            borderColor: "#e2e8f0",
+            backgroundColor: "#ffffff",
+            zIndex: 99,
+            elevation: 99
           }}
         >
-          <View
-            style={{
-              width: 18,
-              height: 18,
-              borderRadius: 9,
-              backgroundColor: "#1d4ed8",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <MaterialIcons name="add" size={14} color="white" />
-          </View>
-          <Text style={{ fontWeight: "800", color: "#1d4ed8" }}>{t("myProjects.action")}</Text>
-        </Pressable>
-      </View>
+          {[
+            { icon: "add-circle-outline", label: t("myProjects.action.addClearance") },
+            { icon: "person-outline", label: t("myProjects.action.updateApplicant") },
+            { icon: "groups", label: t("myProjects.action.updatePartners") },
+            { icon: "badge", label: t("myProjects.action.updateCompanyPan") }
+          ].map((a, i, arr) => (
+            <Pressable
+              key={a.label}
+              onPress={() => setShowActions(false)}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                gap: 10,
+                paddingHorizontal: 12,
+                paddingVertical: 10,
+                borderBottomWidth: i === arr.length - 1 ? 0 : 1,
+                borderColor: "#e2e8f0"
+              }}
+            >
+              <MaterialIcons name={a.icon as any} size={20} color="#1d4ed8" />
+              <Text style={{ fontSize: 12, fontWeight: "800", color: "#0f172a" }}>{a.label}</Text>
+            </Pressable>
+          ))}
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -436,21 +633,4 @@ const chatFab = {
   justifyContent: "center"
 } as const;
 
-const bottomBar = {
-  position: "absolute",
-  bottom: 0,
-  width: "100%",
-  height: 64,
-  backgroundColor: "#ffffff",
-  borderTopWidth: 1,
-  borderColor: "#e2e8f0",
-  flexDirection: "row",
-  zIndex: 1000,
-  elevation: 1000
-} as const;
-
-const bottomItem = {
-  flex: 1,
-  alignItems: "center",
-  justifyContent: "center"
-} as const;
+ 

@@ -90,6 +90,7 @@ export type TranslationKey =
   | "myProjects.status.pendingVerification"
   | "myProjects.status.filingInProcess"
   | "myProjects.status.accepted"
+  | "myProjects.status.verified"
   | "myProjects.pin"
   | "myProjects.applicant"
   | "myProjects.action"
@@ -97,8 +98,16 @@ export type TranslationKey =
   | "myProjects.field.date"
   | "myProjects.field.sector"
   | "myProjects.field.district"
+  | "myProjects.field.mobile"
+  | "myProjects.fab.addProjectWithCaf"
+  | "myProjects.fab.applyForNewService"
+  | "myProjects.action.addClearance"
+  | "myProjects.action.updateApplicant"
+  | "myProjects.action.updatePartners"
+  | "myProjects.action.updateCompanyPan"
   | "myProjects.sector.manufacturing"
   | "myProjects.sector.otherService"
+  | "myProjects.sector.otherServiceProjects"
   | "myProjects.empty"
   | "myProjects.bottomNav.projects"
   | "myProjects.bottomNav.services"
@@ -163,7 +172,84 @@ export type TranslationKey =
   | "cafForm.signature.authorizedSignatory"
   | "cafForm.action.cancel"
   | "cafForm.action.nextStep"
-  | "cafForm.action.viewAttachment";
+  | "cafForm.action.viewAttachment"
+  | "cafForm.common.select"
+  | "cafForm.common.yes"
+  | "cafForm.common.no"
+  | "cafForm.common.datePlaceholder"
+  | "cafForm.step1.title"
+  | "cafForm.step1.field.title"
+  | "cafForm.step1.field.firstName"
+  | "cafForm.step1.field.middleName"
+  | "cafForm.step1.field.lastName"
+  | "cafForm.step1.field.designation"
+  | "cafForm.step1.field.dob"
+  | "cafForm.step1.field.photo"
+  | "cafForm.step1.field.signature"
+  | "cafForm.step1.field.aadhaarNo"
+  | "cafForm.step1.field.aadhaarUpload"
+  | "cafForm.step1.field.panNo"
+  | "cafForm.step1.field.panUpload"
+  | "cafForm.step1.field.phone"
+  | "cafForm.step1.field.fax"
+  | "cafForm.step1.field.mobile"
+  | "cafForm.step1.field.email"
+  | "cafForm.step1.field.country"
+  | "cafForm.step1.field.state"
+  | "cafForm.step1.field.district"
+  | "cafForm.step1.field.tehsil"
+  | "cafForm.step1.field.city"
+  | "cafForm.step1.field.address1"
+  | "cafForm.step1.field.address2"
+  | "cafForm.step1.field.pinCode"
+  | "cafForm.step1.field.authorizationLetter"
+  | "cafForm.step2.title"
+  | "cafForm.step2.field.entityName"
+  | "cafForm.step2.field.entityType"
+  | "cafForm.step2.field.country"
+  | "cafForm.step2.field.state"
+  | "cafForm.step2.field.district"
+  | "cafForm.step2.field.tehsil"
+  | "cafForm.step2.field.villageTown"
+  | "cafForm.step2.field.address1"
+  | "cafForm.step2.field.address2"
+  | "cafForm.step2.field.pinCode"
+  | "cafForm.step2.field.multiUnitsCheckbox"
+  | "cafForm.step2.field.companyPan"
+  | "cafForm.step2.field.companyPanUpload"
+  | "cafForm.step2.field.udyamOptional"
+  | "cafForm.step3.title"
+  | "cafForm.step3.pageTitle"
+  | "cafForm.step3.pageSub"
+  | "cafForm.step3.field.sameAsEntity"
+  | "cafForm.step3.field.projectName"
+  | "cafForm.step3.field.projectPurpose"
+  | "cafForm.step3.field.projectType"
+  | "cafForm.step3.field.unitLocation"
+  | "cafForm.step3.field.country"
+  | "cafForm.step3.field.state"
+  | "cafForm.step3.field.district"
+  | "cafForm.step3.field.tehsil"
+  | "cafForm.step3.field.city"
+  | "cafForm.step3.field.address1"
+  | "cafForm.step3.field.address2"
+  | "cafForm.step3.field.pinCode"
+  | "cafForm.step3.field.gstApplicable"
+  | "cafForm.step4.title"
+  | "cafForm.step4.field.certificateIncorporationUpload"
+  | "cafForm.step5.title"
+  | "cafForm.step5.field.landArea"
+  | "cafForm.step5.field.landRegistrationType"
+  | "cafForm.step5.field.landDocumentUpload"
+  | "cafForm.step5.field.multipleCityInvolved"
+  | "cafForm.step5.field.mcLimit"
+  | "cafForm.step5.field.mcDistanceKm"
+  | "cafForm.step5.field.sector"
+  | "cafForm.step5.field.dprUpload"
+  | "cafForm.step5.field.migrationFromFiipToIbdp"
+  | "cafForm.step5.field.policyChapter"
+  | "cafForm.step5.field.protectedMonument"
+  | "cafForm.step5.field.nmaNocAvailable";
 
 type Dictionary = Record<TranslationKey, string>;
 
@@ -263,6 +349,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.status.pendingVerification": "Pending Verification",
     "myProjects.status.filingInProcess": "Filing in Process",
     "myProjects.status.accepted": "Accepted",
+    "myProjects.status.verified": "Verified",
     "myProjects.pin": "PIN",
     "myProjects.applicant": "Applicant",
     "myProjects.action": "Action",
@@ -270,8 +357,16 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "DATE",
     "myProjects.field.sector": "SECTOR",
     "myProjects.field.district": "DISTRICT",
+    "myProjects.field.mobile": "Mobile No",
+    "myProjects.fab.addProjectWithCaf": "Add New Project with CAF",
+    "myProjects.fab.applyForNewService": "Apply For New Service",
+    "myProjects.action.addClearance": "Add Clearance",
+    "myProjects.action.updateApplicant": "Update Applicant",
+    "myProjects.action.updatePartners": "Update Partners",
+    "myProjects.action.updateCompanyPan": "Update Company PAN",
     "myProjects.sector.manufacturing": "Manufacturing",
     "myProjects.sector.otherService": "Other Service",
+    "myProjects.sector.otherServiceProjects": "Other Service Projects",
     "myProjects.empty": "No applications found.",
     "myProjects.bottomNav.projects": "Projects",
     "myProjects.bottomNav.services": "Services",
@@ -338,6 +433,83 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.action.cancel": "Cancel",
     "cafForm.action.nextStep": "Next Step",
     "cafForm.action.viewAttachment": "View Attachment",
+    "cafForm.common.select": "Select",
+    "cafForm.common.yes": "Yes",
+    "cafForm.common.no": "No",
+    "cafForm.common.datePlaceholder": "YYYY-MM-DD",
+    "cafForm.step1.title": "Applicant Details",
+    "cafForm.step1.field.title": "1.1 Title *",
+    "cafForm.step1.field.firstName": "1.2 First Name *",
+    "cafForm.step1.field.middleName": "1.3 Middle Name",
+    "cafForm.step1.field.lastName": "1.4 Last Name *",
+    "cafForm.step1.field.designation": "1.5 Designation *",
+    "cafForm.step1.field.dob": "1.6 Date of Birth *",
+    "cafForm.step1.field.photo": "1.7 Applicant Photo *",
+    "cafForm.step1.field.signature": "1.8 Applicant Signature *",
+    "cafForm.step1.field.aadhaarNo": "1.9 Aadhaar Document No. *",
+    "cafForm.step1.field.aadhaarUpload": "1.10 Upload Aadhaar Document *",
+    "cafForm.step1.field.panNo": "1.11 Pan Card No *",
+    "cafForm.step1.field.panUpload": "1.12 Upload Pan Card *",
+    "cafForm.step1.field.phone": "1.13 Applicant Phone Number",
+    "cafForm.step1.field.fax": "1.14 Applicant Fax No.",
+    "cafForm.step1.field.mobile": "1.15 Applicant Mobile No. *",
+    "cafForm.step1.field.email": "1.16 Applicant Email ID *",
+    "cafForm.step1.field.country": "1.17 Select Country *",
+    "cafForm.step1.field.state": "1.18 Select State/UT *",
+    "cafForm.step1.field.district": "1.19 Select District *",
+    "cafForm.step1.field.tehsil": "1.20 Select Tehsil *",
+    "cafForm.step1.field.city": "1.21 City/Town/Village *",
+    "cafForm.step1.field.address1": "1.22 Address Line 1 *",
+    "cafForm.step1.field.address2": "1.23 Address Line 2",
+    "cafForm.step1.field.pinCode": "1.24 Pin Code *",
+    "cafForm.step1.field.authorizationLetter": "1.25 Upload Authorization Letter *",
+    "cafForm.step2.title": "Business Entity Information",
+    "cafForm.step2.field.entityName": "2.1 Business Entity Name *",
+    "cafForm.step2.field.entityType": "2.2 Business Entity Type *",
+    "cafForm.step2.field.country": "2.3 Select Country *",
+    "cafForm.step2.field.state": "2.4 Select State/UT *",
+    "cafForm.step2.field.district": "2.5 Select District *",
+    "cafForm.step2.field.tehsil": "2.6 Select Tehsil *",
+    "cafForm.step2.field.villageTown": "2.7 Name of Village/Town *",
+    "cafForm.step2.field.address1": "2.8 Address Line 1 *",
+    "cafForm.step2.field.address2": "2.9 Address Line 2",
+    "cafForm.step2.field.pinCode": "2.10 Pin Code *",
+    "cafForm.step2.field.multiUnitsCheckbox": "If a business entity operates multiple units or projects under the same company PAN",
+    "cafForm.step2.field.companyPan": "2.11 Company Pan No *",
+    "cafForm.step2.field.companyPanUpload": "2.12 Upload Company Pan Card *",
+    "cafForm.step2.field.udyamOptional": "2.13 Udyam Registration (optional)",
+    "cafForm.step3.title": "Project Details",
+    "cafForm.step3.pageTitle": "Project Details",
+    "cafForm.step3.pageSub": "Fill in the details below to proceed with your application.",
+    "cafForm.step3.field.sameAsEntity": "Same as Business Entity Information",
+    "cafForm.step3.field.projectName": "3.1 Project Name *",
+    "cafForm.step3.field.projectPurpose": "3.2 Project Purpose *",
+    "cafForm.step3.field.projectType": "3.3 Project Type *",
+    "cafForm.step3.field.unitLocation": "3.4 Unit Location *",
+    "cafForm.step3.field.country": "3.5 Select Country *",
+    "cafForm.step3.field.state": "3.6 Select State/UT *",
+    "cafForm.step3.field.district": "3.7 Select District *",
+    "cafForm.step3.field.tehsil": "3.8 Select Tehsil *",
+    "cafForm.step3.field.city": "3.9 City/Town/Village *",
+    "cafForm.step3.field.address1": "3.10 Address Line 1 *",
+    "cafForm.step3.field.address2": "3.11 Address Line 2",
+    "cafForm.step3.field.pinCode": "3.12 Pin Code *",
+    "cafForm.step3.field.gstApplicable": "3.13 Whether GST Number applicable * :",
+    "cafForm.step4.title": "Proprietor / Partners / Directors Details",
+    "cafForm.step4.field.certificateIncorporationUpload": "4.1.16 Certificate Incorporation Registration Attachment *",
+    "cafForm.step5.title": "Project Details",
+    "cafForm.step5.field.landArea": "5.1 Land Area (in Acres) *",
+    "cafForm.step5.field.landRegistrationType": "5.2 Select Type of Land Registration *",
+    "cafForm.step5.field.landDocumentUpload": "5.3 Upload land related document *",
+    "cafForm.step5.field.multipleCityInvolved": "5.4 Multiple City/Town/Village Involved ?",
+    "cafForm.step5.field.mcLimit": "5.5 Does this site lies under MC Limit?",
+    "cafForm.step5.field.mcDistanceKm": "If No, please mention distance from MC limit (in KMs)",
+    "cafForm.step5.field.sector": "5.6 Sector *",
+    "cafForm.step5.field.dprUpload": "5.7 Upload Detailed Project Report (DPR) *",
+    "cafForm.step5.field.migrationFromFiipToIbdp": "5.8 Migration of Unit from FIIP (R) 2013 to IBDP 2017 *",
+    "cafForm.step5.field.policyChapter": "5.9 Policy Chapter",
+    "cafForm.step5.field.protectedMonument": "5.10 Is proposed construction site falling within the limit of any centrally protected monument?",
+    "cafForm.step5.field.nmaNocAvailable": "5.11 Whether NMA NOC is available with you for the proposed construction site?",
   },
 
   hi: {
@@ -435,6 +607,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.status.pendingVerification": "सत्यापन लंबित",
     "myProjects.status.filingInProcess": "फाइलिंग प्रक्रिया में",
     "myProjects.status.accepted": "स्वीकृत",
+    "myProjects.status.verified": "सत्यापित",
     "myProjects.pin": "पिन",
     "myProjects.applicant": "आवेदक",
     "myProjects.action": "एक्शन",
@@ -442,8 +615,16 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "तारीख",
     "myProjects.field.sector": "क्षेत्र",
     "myProjects.field.district": "जिला",
+    "myProjects.field.mobile": "मोबाइल नंबर",
+    "myProjects.fab.addProjectWithCaf": "CAF के साथ नया प्रोजेक्ट जोड़ें",
+    "myProjects.fab.applyForNewService": "नई सेवा के लिए आवेदन करें",
+    "myProjects.action.addClearance": "क्लीयरेंस जोड़ें",
+    "myProjects.action.updateApplicant": "आवेदक अपडेट करें",
+    "myProjects.action.updatePartners": "पार्टनर्स अपडेट करें",
+    "myProjects.action.updateCompanyPan": "कंपनी PAN अपडेट करें",
     "myProjects.sector.manufacturing": "विनिर्माण",
     "myProjects.sector.otherService": "अन्य सेवा",
+    "myProjects.sector.otherServiceProjects": "अन्य सेवा परियोजनाएं",
     "myProjects.empty": "कोई आवेदन नहीं मिला।",
     "myProjects.bottomNav.projects": "प्रोजेक्ट",
     "myProjects.bottomNav.services": "सेवाएं",
@@ -510,6 +691,83 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.action.cancel": "रद्द करें",
     "cafForm.action.nextStep": "अगला चरण",
     "cafForm.action.viewAttachment": "संलग्नक देखें",
+    "cafForm.common.select": "चुनें",
+    "cafForm.common.yes": "हाँ",
+    "cafForm.common.no": "नहीं",
+    "cafForm.common.datePlaceholder": "YYYY-MM-DD",
+    "cafForm.step1.title": "1. आवेदक विवरण",
+    "cafForm.step1.field.title": "1.1 शीर्षक *",
+    "cafForm.step1.field.firstName": "1.2 पहला नाम *",
+    "cafForm.step1.field.middleName": "1.3 मध्य नाम",
+    "cafForm.step1.field.lastName": "1.4 अंतिम नाम *",
+    "cafForm.step1.field.designation": "1.5 पदनाम *",
+    "cafForm.step1.field.dob": "1.6 जन्म तिथि *",
+    "cafForm.step1.field.photo": "1.7 आवेदक फोटो *",
+    "cafForm.step1.field.signature": "1.8 आवेदक हस्ताक्षर *",
+    "cafForm.step1.field.aadhaarNo": "1.9 आधार दस्तावेज़ नं. *",
+    "cafForm.step1.field.aadhaarUpload": "1.10 आधार दस्तावेज़ अपलोड करें *",
+    "cafForm.step1.field.panNo": "1.11 पैन कार्ड नं. *",
+    "cafForm.step1.field.panUpload": "1.12 पैन कार्ड अपलोड करें *",
+    "cafForm.step1.field.phone": "1.13 आवेदक फोन नंबर",
+    "cafForm.step1.field.fax": "1.14 आवेदक फैक्स नं.",
+    "cafForm.step1.field.mobile": "1.15 आवेदक मोबाइल नं. *",
+    "cafForm.step1.field.email": "1.16 आवेदक ईमेल आईडी *",
+    "cafForm.step1.field.country": "1.17 देश चुनें *",
+    "cafForm.step1.field.state": "1.18 राज्य/केंद्र शासित प्रदेश चुनें *",
+    "cafForm.step1.field.district": "1.19 जिला चुनें *",
+    "cafForm.step1.field.tehsil": "1.20 तहसील चुनें *",
+    "cafForm.step1.field.city": "1.21 शहर/कस्बा/गांव *",
+    "cafForm.step1.field.address1": "1.22 पता पंक्ति 1 *",
+    "cafForm.step1.field.address2": "1.23 पता पंक्ति 2",
+    "cafForm.step1.field.pinCode": "1.24 पिन कोड *",
+    "cafForm.step1.field.authorizationLetter": "1.25 प्राधिकरण पत्र अपलोड करें *",
+    "cafForm.step2.title": "2. व्यवसाय इकाई जानकारी",
+    "cafForm.step2.field.entityName": "2.1 व्यवसाय इकाई का नाम *",
+    "cafForm.step2.field.entityType": "2.2 व्यवसाय इकाई प्रकार *",
+    "cafForm.step2.field.country": "2.3 देश चुनें *",
+    "cafForm.step2.field.state": "2.4 राज्य/केंद्र शासित प्रदेश चुनें *",
+    "cafForm.step2.field.district": "2.5 जिला चुनें *",
+    "cafForm.step2.field.tehsil": "2.6 तहसील चुनें *",
+    "cafForm.step2.field.villageTown": "2.7 गांव/कस्बे का नाम *",
+    "cafForm.step2.field.address1": "2.8 पता पंक्ति 1 *",
+    "cafForm.step2.field.address2": "2.9 पता पंक्ति 2",
+    "cafForm.step2.field.pinCode": "2.10 पिन कोड *",
+    "cafForm.step2.field.multiUnitsCheckbox": "यदि एक व्यवसाय इकाई एक ही कंपनी PAN के तहत कई यूनिट/प्रोजेक्ट संचालित करती है",
+    "cafForm.step2.field.companyPan": "2.11 कंपनी PAN नं. *",
+    "cafForm.step2.field.companyPanUpload": "2.12 कंपनी PAN कार्ड अपलोड करें *",
+    "cafForm.step2.field.udyamOptional": "2.13 उद्यम पंजीकरण (वैकल्पिक)",
+    "cafForm.step3.title": "3. परियोजना विवरण",
+    "cafForm.step3.pageTitle": "परियोजना विवरण",
+    "cafForm.step3.pageSub": "अपना आवेदन आगे बढ़ाने के लिए नीचे विवरण भरें।",
+    "cafForm.step3.field.sameAsEntity": "व्यवसाय इकाई जानकारी के समान",
+    "cafForm.step3.field.projectName": "3.1 परियोजना नाम *",
+    "cafForm.step3.field.projectPurpose": "3.2 परियोजना उद्देश्य *",
+    "cafForm.step3.field.projectType": "3.3 परियोजना प्रकार *",
+    "cafForm.step3.field.unitLocation": "3.4 यूनिट स्थान *",
+    "cafForm.step3.field.country": "3.5 देश चुनें *",
+    "cafForm.step3.field.state": "3.6 राज्य/केंद्र शासित प्रदेश चुनें *",
+    "cafForm.step3.field.district": "3.7 जिला चुनें *",
+    "cafForm.step3.field.tehsil": "3.8 तहसील चुनें *",
+    "cafForm.step3.field.city": "3.9 शहर/कस्बा/गांव *",
+    "cafForm.step3.field.address1": "3.10 पता पंक्ति 1 *",
+    "cafForm.step3.field.address2": "3.11 पता पंक्ति 2",
+    "cafForm.step3.field.pinCode": "3.12 पिन कोड *",
+    "cafForm.step3.field.gstApplicable": "3.13 क्या GST नंबर लागू है * :",
+    "cafForm.step4.title": "4. स्वामी / साझेदार / निदेशक विवरण",
+    "cafForm.step4.field.certificateIncorporationUpload": "4.1.16 समावेशन/पंजीकरण प्रमाणपत्र संलग्नक *",
+    "cafForm.step5.title": "5. परियोजना विवरण",
+    "cafForm.step5.field.landArea": "5.1 भूमि क्षेत्र (एकड़ में) *",
+    "cafForm.step5.field.landRegistrationType": "5.2 भूमि पंजीकरण प्रकार चुनें *",
+    "cafForm.step5.field.landDocumentUpload": "5.3 भूमि संबंधी दस्तावेज़ अपलोड करें *",
+    "cafForm.step5.field.multipleCityInvolved": "5.4 क्या कई शहर/कस्बे/गांव शामिल हैं?",
+    "cafForm.step5.field.mcLimit": "5.5 क्या यह साइट MC सीमा के अंतर्गत आती है?",
+    "cafForm.step5.field.mcDistanceKm": "यदि नहीं, तो MC सीमा से दूरी (किमी में) लिखें",
+    "cafForm.step5.field.sector": "5.6 सेक्टर *",
+    "cafForm.step5.field.dprUpload": "5.7 विस्तृत परियोजना रिपोर्ट (DPR) अपलोड करें *",
+    "cafForm.step5.field.migrationFromFiipToIbdp": "5.8 यूनिट का FIIP (R) 2013 से IBDP 2017 में माइग्रेशन *",
+    "cafForm.step5.field.policyChapter": "5.9 नीति अध्याय",
+    "cafForm.step5.field.protectedMonument": "5.10 क्या प्रस्तावित निर्माण स्थल किसी केंद्रीय संरक्षित स्मारक की सीमा में आता है?",
+    "cafForm.step5.field.nmaNocAvailable": "5.11 क्या प्रस्तावित निर्माण स्थल के लिए आपके पास NMA NOC उपलब्ध है?",
   },
 
   pa: {
@@ -607,6 +865,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.status.pendingVerification": "ਤਸਦੀਕ ਬਾਕੀ",
     "myProjects.status.filingInProcess": "ਫਾਈਲਿੰਗ ਪ੍ਰਕਿਰਿਆ ਵਿੱਚ",
     "myProjects.status.accepted": "ਮਨਜ਼ੂਰ",
+    "myProjects.status.verified": "ਤਸਦੀਕ ਹੋਇਆ",
     "myProjects.pin": "ਪਿਨ",
     "myProjects.applicant": "ਆਵੇਦਕ",
     "myProjects.action": "ਐਕਸ਼ਨ",
@@ -614,8 +873,16 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "myProjects.field.date": "ਤਾਰੀਖ",
     "myProjects.field.sector": "ਸੈਕਟਰ",
     "myProjects.field.district": "ਜ਼ਿਲ੍ਹਾ",
+    "myProjects.field.mobile": "ਮੋਬਾਈਲ ਨੰਬਰ",
+    "myProjects.fab.addProjectWithCaf": "CAF ਨਾਲ ਨਵਾਂ ਪ੍ਰੋਜੈਕਟ ਜੋੜੋ",
+    "myProjects.fab.applyForNewService": "ਨਵੀਂ ਸੇਵਾ ਲਈ ਅਰਜ਼ੀ ਦਿਓ",
+    "myProjects.action.addClearance": "ਕਲੀਅਰੈਂਸ ਜੋੜੋ",
+    "myProjects.action.updateApplicant": "ਆਵੇਦਕ ਅਪਡੇਟ ਕਰੋ",
+    "myProjects.action.updatePartners": "ਭਾਗੀਦਾਰ ਅਪਡੇਟ ਕਰੋ",
+    "myProjects.action.updateCompanyPan": "ਕੰਪਨੀ PAN ਅਪਡੇਟ ਕਰੋ",
     "myProjects.sector.manufacturing": "ਮੈਨੂਫੈਕਚਰਿੰਗ",
     "myProjects.sector.otherService": "ਹੋਰ ਸੇਵਾ",
+    "myProjects.sector.otherServiceProjects": "ਹੋਰ ਸੇਵਾ ਪ੍ਰੋਜੈਕਟ",
     "myProjects.empty": "ਕੋਈ ਅਰਜ਼ੀ ਨਹੀਂ ਮਿਲੀ।",
     "myProjects.bottomNav.projects": "ਪ੍ਰੋਜੈਕਟ",
     "myProjects.bottomNav.services": "ਸੇਵਾਵਾਂ",
@@ -682,5 +949,82 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "cafForm.action.cancel": "ਰੱਦ ਕਰੋ",
     "cafForm.action.nextStep": "ਅਗਲਾ ਕਦਮ",
     "cafForm.action.viewAttachment": "ਅਟੈਚਮੈਂਟ ਵੇਖੋ",
+    "cafForm.common.select": "ਚੁਣੋ",
+    "cafForm.common.yes": "ਹਾਂ",
+    "cafForm.common.no": "ਨਹੀਂ",
+    "cafForm.common.datePlaceholder": "YYYY-MM-DD",
+    "cafForm.step1.title": "1. ਅਰਜ਼ੀਕਰਤਾ ਵੇਰਵੇ",
+    "cafForm.step1.field.title": "1.1 ਟਾਈਟਲ *",
+    "cafForm.step1.field.firstName": "1.2 ਪਹਿਲਾ ਨਾਂ *",
+    "cafForm.step1.field.middleName": "1.3 ਮੱਧਲਾ ਨਾਂ",
+    "cafForm.step1.field.lastName": "1.4 ਆਖਰੀ ਨਾਂ *",
+    "cafForm.step1.field.designation": "1.5 ਅਹੁਦਾ *",
+    "cafForm.step1.field.dob": "1.6 ਜਨਮ ਤਾਰੀਖ *",
+    "cafForm.step1.field.photo": "1.7 ਅਰਜ਼ੀਕਰਤਾ ਫੋਟੋ *",
+    "cafForm.step1.field.signature": "1.8 ਅਰਜ਼ੀਕਰਤਾ ਦਸਤਖ਼ਤ *",
+    "cafForm.step1.field.aadhaarNo": "1.9 ਆਧਾਰ ਦਸਤਾਵੇਜ਼ ਨੰ. *",
+    "cafForm.step1.field.aadhaarUpload": "1.10 ਆਧਾਰ ਦਸਤਾਵੇਜ਼ ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step1.field.panNo": "1.11 ਪੈਨ ਕਾਰਡ ਨੰ. *",
+    "cafForm.step1.field.panUpload": "1.12 ਪੈਨ ਕਾਰਡ ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step1.field.phone": "1.13 ਅਰਜ਼ੀਕਰਤਾ ਫੋਨ ਨੰਬਰ",
+    "cafForm.step1.field.fax": "1.14 ਅਰਜ਼ੀਕਰਤਾ ਫੈਕਸ ਨੰ.",
+    "cafForm.step1.field.mobile": "1.15 ਅਰਜ਼ੀਕਰਤਾ ਮੋਬਾਈਲ ਨੰ. *",
+    "cafForm.step1.field.email": "1.16 ਅਰਜ਼ੀਕਰਤਾ ਈਮੇਲ ਆਈਡੀ *",
+    "cafForm.step1.field.country": "1.17 ਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step1.field.state": "1.18 ਰਾਜ/ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step1.field.district": "1.19 ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ *",
+    "cafForm.step1.field.tehsil": "1.20 ਤਹਿਸੀਲ ਚੁਣੋ *",
+    "cafForm.step1.field.city": "1.21 ਸ਼ਹਿਰ/ਕਸਬਾ/ਪਿੰਡ *",
+    "cafForm.step1.field.address1": "1.22 ਪਤਾ ਲਾਈਨ 1 *",
+    "cafForm.step1.field.address2": "1.23 ਪਤਾ ਲਾਈਨ 2",
+    "cafForm.step1.field.pinCode": "1.24 ਪਿਨ ਕੋਡ *",
+    "cafForm.step1.field.authorizationLetter": "1.25 ਅਧਿਕਾਰ ਪੱਤਰ ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step2.title": "2. ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਜਾਣਕਾਰੀ",
+    "cafForm.step2.field.entityName": "2.1 ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਨਾਂ *",
+    "cafForm.step2.field.entityType": "2.2 ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਕਿਸਮ *",
+    "cafForm.step2.field.country": "2.3 ਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step2.field.state": "2.4 ਰਾਜ/ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step2.field.district": "2.5 ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ *",
+    "cafForm.step2.field.tehsil": "2.6 ਤਹਿਸੀਲ ਚੁਣੋ *",
+    "cafForm.step2.field.villageTown": "2.7 ਪਿੰਡ/ਕਸਬਾ ਨਾਂ *",
+    "cafForm.step2.field.address1": "2.8 ਪਤਾ ਲਾਈਨ 1 *",
+    "cafForm.step2.field.address2": "2.9 ਪਤਾ ਲਾਈਨ 2",
+    "cafForm.step2.field.pinCode": "2.10 ਪਿਨ ਕੋਡ *",
+    "cafForm.step2.field.multiUnitsCheckbox": "ਜੇ ਇੱਕ ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਇੱਕੋ ਕੰਪਨੀ PAN ਹੇਠ ਕਈ ਯੂਨਿਟ ਜਾਂ ਪ੍ਰੋਜੈਕਟ ਚਲਾਉਂਦੀ ਹੈ",
+    "cafForm.step2.field.companyPan": "2.11 ਕੰਪਨੀ PAN ਨੰ. *",
+    "cafForm.step2.field.companyPanUpload": "2.12 ਕੰਪਨੀ PAN ਕਾਰਡ ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step2.field.udyamOptional": "2.13 ਉਦਯਮ ਰਜਿਸਟ੍ਰੇਸ਼ਨ (ਚੋਣਵੀਂ)",
+    "cafForm.step3.title": "3. ਪ੍ਰੋਜੈਕਟ ਵੇਰਵੇ",
+    "cafForm.step3.pageTitle": "ਪ੍ਰੋਜੈਕਟ ਵੇਰਵੇ",
+    "cafForm.step3.pageSub": "ਆਪਣੀ ਅਰਜ਼ੀ ਅੱਗੇ ਵਧਾਉਣ ਲਈ ਹੇਠਾਂ ਵੇਰਵੇ ਭਰੋ।",
+    "cafForm.step3.field.sameAsEntity": "ਕਾਰੋਬਾਰੀ ਇਕਾਈ ਜਾਣਕਾਰੀ ਵਰਗਾ",
+    "cafForm.step3.field.projectName": "3.1 ਪ੍ਰੋਜੈਕਟ ਨਾਂ *",
+    "cafForm.step3.field.projectPurpose": "3.2 ਪ੍ਰੋਜੈਕਟ ਉਦੇਸ਼ *",
+    "cafForm.step3.field.projectType": "3.3 ਪ੍ਰੋਜੈਕਟ ਕਿਸਮ *",
+    "cafForm.step3.field.unitLocation": "3.4 ਯੂਨਿਟ ਸਥਾਨ *",
+    "cafForm.step3.field.country": "3.5 ਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step3.field.state": "3.6 ਰਾਜ/ਕੇਂਦਰ ਸ਼ਾਸਿਤ ਪ੍ਰਦੇਸ਼ ਚੁਣੋ *",
+    "cafForm.step3.field.district": "3.7 ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ *",
+    "cafForm.step3.field.tehsil": "3.8 ਤਹਿਸੀਲ ਚੁਣੋ *",
+    "cafForm.step3.field.city": "3.9 ਸ਼ਹਿਰ/ਕਸਬਾ/ਪਿੰਡ *",
+    "cafForm.step3.field.address1": "3.10 ਪਤਾ ਲਾਈਨ 1 *",
+    "cafForm.step3.field.address2": "3.11 ਪਤਾ ਲਾਈਨ 2",
+    "cafForm.step3.field.pinCode": "3.12 ਪਿਨ ਕੋਡ *",
+    "cafForm.step3.field.gstApplicable": "3.13 ਕੀ GST ਨੰਬਰ ਲਾਗੂ ਹੈ * :",
+    "cafForm.step4.title": "4. ਮਾਲਿਕ / ਭਾਗੀਦਾਰ / ਡਾਇਰੈਕਟਰ ਵੇਰਵੇ",
+    "cafForm.step4.field.certificateIncorporationUpload": "4.1.16 ਇੰਕਾਰਪੋਰੇਸ਼ਨ/ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਸਰਟੀਫਿਕੇਟ ਅਟੈਚਮੈਂਟ *",
+    "cafForm.step5.title": "5. ਪ੍ਰੋਜੈਕਟ ਵੇਰਵੇ",
+    "cafForm.step5.field.landArea": "5.1 ਜ਼ਮੀਨ ਖੇਤਰਫਲ (ਏਕੜ ਵਿੱਚ) *",
+    "cafForm.step5.field.landRegistrationType": "5.2 ਜ਼ਮੀਨ ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਦੀ ਕਿਸਮ ਚੁਣੋ *",
+    "cafForm.step5.field.landDocumentUpload": "5.3 ਜ਼ਮੀਨ ਸੰਬੰਧੀ ਦਸਤਾਵੇਜ਼ ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step5.field.multipleCityInvolved": "5.4 ਕਈ ਸ਼ਹਿਰ/ਕਸਬਾ/ਪਿੰਡ ਸ਼ਾਮਲ ਹਨ?",
+    "cafForm.step5.field.mcLimit": "5.5 ਕੀ ਇਹ ਸਾਈਟ MC ਸੀਮਾ ਅੰਦਰ ਆਉਂਦੀ ਹੈ?",
+    "cafForm.step5.field.mcDistanceKm": "ਜੇ ਨਹੀਂ, ਤਾਂ MC ਸੀਮਾ ਤੋਂ ਦੂਰੀ (ਕਿਮੀ ਵਿੱਚ) ਦੱਸੋ",
+    "cafForm.step5.field.sector": "5.6 ਸੈਕਟਰ *",
+    "cafForm.step5.field.dprUpload": "5.7 ਡੀਟੇਲਡ ਪ੍ਰੋਜੈਕਟ ਰਿਪੋਰਟ (DPR) ਅਪਲੋਡ ਕਰੋ *",
+    "cafForm.step5.field.migrationFromFiipToIbdp": "5.8 ਯੂਨਿਟ ਦਾ FIIP (R) 2013 ਤੋਂ IBDP 2017 ਵਿੱਚ ਮਾਈਗ੍ਰੇਸ਼ਨ *",
+    "cafForm.step5.field.policyChapter": "5.9 ਪਾਲਿਸੀ ਚੈਪਟਰ",
+    "cafForm.step5.field.protectedMonument": "5.10 ਕੀ ਪ੍ਰਸਤਾਵਿਤ ਨਿਰਮਾਣ ਸਾਈਟ ਕਿਸੇ ਕੇਂਦਰੀ ਸੁਰੱਖਿਅਤ ਸਮਾਰਕ ਦੀ ਸੀਮਾ ਵਿੱਚ ਆਉਂਦੀ ਹੈ?",
+    "cafForm.step5.field.nmaNocAvailable": "5.11 ਕੀ ਪ੍ਰਸਤਾਵਿਤ ਨਿਰਮਾਣ ਸਾਈਟ ਲਈ ਤੁਹਾਡੇ ਕੋਲ NMA NOC ਉਪਲਬਧ ਹੈ?",
   },
 };

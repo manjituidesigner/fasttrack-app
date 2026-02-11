@@ -223,7 +223,7 @@ export function DashboardScreen({
           </View>
         </BlurView>
 
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 220 }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 140 }}>
           <View style={{ padding: 20 }}>
             <View
               style={{
@@ -509,7 +509,7 @@ export function DashboardScreen({
         <Pressable
           style={{
             position: "absolute",
-            bottom: 110,
+            bottom: 30,
             right: 20,
             width: 56,
             height: 56,
@@ -521,46 +521,6 @@ export function DashboardScreen({
         >
           <MaterialIcons name="add" size={28} color="white" />
         </Pressable>
-
-        <BlurView
-          intensity={40}
-          style={{
-            position: "absolute",
-            bottom: 0,
-            width: "100%",
-            paddingVertical: 12,
-            paddingHorizontal: 24,
-            borderTopLeftRadius: 32,
-            borderTopRightRadius: 32
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between"
-            }}
-          >
-            {(["home", "grid-view", "description", "person"] as const).map((icon, i) => (
-              <View key={i} style={{ alignItems: "center", width: 60 }}>
-                <MaterialIcons name={icon} size={26} color={i === 0 ? "#4f46e5" : "#94a3b8"} />
-                <ThemedText
-                  style={{
-                    fontSize: 10,
-                    fontWeight: "800",
-                    color: i === 0 ? "#4f46e5" : "#94a3b8"
-                  }}
-                >
-                  {([
-                    t("dashboard.bottomNav.home"),
-                    t("dashboard.bottomNav.services"),
-                    t("dashboard.bottomNav.docs"),
-                    t("dashboard.bottomNav.profile")
-                  ] as const)[i]}
-                </ThemedText>
-              </View>
-            ))}
-          </View>
-        </BlurView>
       </LinearGradient>
     </>
   );
