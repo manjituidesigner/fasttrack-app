@@ -75,8 +75,31 @@ export type TranslationKey =
   | "drawer.logout"
   | "drawer.language"
   | "drawer.changePassword"
+  | "drawer.myProfile"
   | "drawer.profile.name"
   | "drawer.profile.company"
+  | "profile.title"
+  | "profile.verified"
+  | "profile.name"
+  | "profile.company"
+  | "profile.section.personalDetails"
+  | "profile.section.companyDetails"
+  | "profile.section.preferences"
+  | "profile.field.fullName"
+  | "profile.field.email"
+  | "profile.field.mobile"
+  | "profile.field.pan"
+  | "profile.field.gstin"
+  | "profile.field.registeredAddress"
+  | "profile.preference.language"
+  | "profile.preference.notifications"
+  | "profile.preference.biometric"
+  | "profile.logout"
+  | "profile.emailValue"
+  | "profile.mobileValue"
+  | "profile.panValue"
+  | "profile.gstinValue"
+  | "profile.addressValue"
   | "chatbot.title"
   | "chatbot.greeting"
   | "chatbot.placeholder"
@@ -357,6 +380,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.docs": "Docs",
     "dashboard.bottomNav.profile": "Profile",
     "drawer.home": "Home",
+    "drawer.myProfile": "My Profile",
     "drawer.myProjects": "My Projects",
     "drawer.myApplications": "My Applications",
     "drawer.fiscalIncentives": "Fiscal Incentives",
@@ -369,6 +393,28 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.changePassword": "Change Password",
     "drawer.profile.name": "Vikram Singh",
     "drawer.profile.company": "Tech Solutions Pvt Ltd",
+    "profile.title": "Investor Profile",
+    "profile.verified": "Verified",
+    "profile.name": "Sandeep Singh",
+    "profile.company": "Punjab Industrial Hub",
+    "profile.section.personalDetails": "Personal Details",
+    "profile.section.companyDetails": "Company Details",
+    "profile.section.preferences": "Preferences",
+    "profile.field.fullName": "Full Name",
+    "profile.field.email": "Email Address",
+    "profile.field.mobile": "Mobile Number",
+    "profile.field.pan": "PAN Number",
+    "profile.field.gstin": "GSTIN",
+    "profile.field.registeredAddress": "Registered Address",
+    "profile.preference.language": "Language",
+    "profile.preference.notifications": "Notifications",
+    "profile.preference.biometric": "Biometric Login",
+    "profile.logout": "Log Out",
+    "profile.emailValue": "sandeep.s@punjabihub.com",
+    "profile.mobileValue": "+91 98765 43210",
+    "profile.panValue": "ABCDE1234F",
+    "profile.gstinValue": "03ABCDE1234F1Z5",
+    "profile.addressValue": "Plot 45, Industrial Area Phase VIII, Mohali, Punjab 160071",
     "chatbot.title": "Chat Support",
     "chatbot.greeting": "Hi! How can I help you today?",
     "chatbot.placeholder": "Type a message…",
@@ -649,6 +695,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.docs": "दस्तावेज़",
     "dashboard.bottomNav.profile": "प्रोफ़ाइल",
     "drawer.home": "होम",
+    "drawer.myProfile": "मेरी प्रोफ़ाइल",
     "drawer.myProjects": "मेरे प्रोजेक्ट",
     "drawer.myApplications": "मेरे आवेदन",
     "drawer.fiscalIncentives": "वित्तीय प्रोत्साहन",
@@ -661,6 +708,28 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.changePassword": "पासवर्ड बदलें",
     "drawer.profile.name": "विक्रम सिंह",
     "drawer.profile.company": "टेक सॉल्यूशंस प्रा. लि.",
+    "profile.title": "निवेशक प्रोफ़ाइल",
+    "profile.verified": "सत्यापित",
+    "profile.name": "संदीप सिंह",
+    "profile.company": "पंजाब इंडस्ट्रियल हब",
+    "profile.section.personalDetails": "व्यक्तिगत विवरण",
+    "profile.section.companyDetails": "कंपनी विवरण",
+    "profile.section.preferences": "प्राथमिकताएँ",
+    "profile.field.fullName": "पूरा नाम",
+    "profile.field.email": "ईमेल पता",
+    "profile.field.mobile": "मोबाइल नंबर",
+    "profile.field.pan": "पैन नंबर",
+    "profile.field.gstin": "जीएसटीआईएन",
+    "profile.field.registeredAddress": "पंजीकृत पता",
+    "profile.preference.language": "भाषा",
+    "profile.preference.notifications": "सूचनाएँ",
+    "profile.preference.biometric": "बायोमेट्रिक लॉगिन",
+    "profile.logout": "लॉग आउट",
+    "profile.emailValue": "sandeep.s@punjabihub.com",
+    "profile.mobileValue": "+91 98765 43210",
+    "profile.panValue": "ABCDE1234F",
+    "profile.gstinValue": "03ABCDE1234F1Z5",
+    "profile.addressValue": "प्लॉट 45, इंडस्ट्रियल एरिया फेज VIII, मोहाली, पंजाब 160071",
     "chatbot.title": "चैट सहायता",
     "chatbot.greeting": "नमस्ते! मैं आज आपकी कैसे मदद कर सकता हूँ?",
     "chatbot.placeholder": "संदेश लिखें…",
@@ -941,6 +1010,7 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.docs": "ਦਸਤਾਵੇਜ਼",
     "dashboard.bottomNav.profile": "ਪ੍ਰੋਫਾਈਲ",
     "drawer.home": "ਹੋਮ",
+    "drawer.myProfile": "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ",
     "drawer.myProjects": "ਮੇਰੇ ਪ੍ਰੋਜੈਕਟ",
     "drawer.myApplications": "ਮੇਰੀਆਂ ਅਰਜ਼ੀਆਂ",
     "drawer.fiscalIncentives": "ਵਿੱਤੀ ਪ੍ਰੋਤਸਾਹਨ",
@@ -953,6 +1023,29 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "drawer.changePassword": "ਪਾਸਵਰਡ ਬਦਲੋ",
     "drawer.profile.name": "ਵਿਕਰਮ ਸਿੰਘ",
     "drawer.profile.company": "ਟੈਕ ਸੋਲੂਸ਼ਨਜ਼ ਪ੍ਰਾਈਵੇਟ ਲਿਮਿਟੇਡ",
+
+    "profile.title": "ਨਿਵੇਸ਼ਕ ਪ੍ਰੋਫਾਈਲ",
+    "profile.verified": "ਸত্যਾਪਿਤ",
+    "profile.name": "ਸੰਦੀਪ ਸਿੰਘ",
+    "profile.company": "ਪੰਜਾਬ ਇੰਡਸਟਰੀਅਲ ਹੱਬ",
+    "profile.section.personalDetails": "ਨਿੱਜੀ ਵੇਰਵੇ",
+    "profile.section.companyDetails": "ਕੰਪਨੀ ਵੇਰਵੇ",
+    "profile.section.preferences": "ਪਸੰਦਾਂ",
+    "profile.field.fullName": "ਪੂਰਾ ਨਾਮ",
+    "profile.field.email": "ਈਮੇਲ ਪਤਾ",
+    "profile.field.mobile": "ਮੋਬਾਈਲ ਨੰਬਰ",
+    "profile.field.pan": "ਪੈਨ ਨੰਬਰ",
+    "profile.field.gstin": "ਜੀਐਸਟੀਐਨ",
+    "profile.field.registeredAddress": "ਰਜਿਸਟਰਡ ਪਤਾ",
+    "profile.preference.language": "ਭਾਸ਼ਾ",
+    "profile.preference.notifications": "ਸੂਚਨਾਵਾਂ",
+    "profile.preference.biometric": "ਬਾਇਓਮੈਟ੍ਰਿਕ ਲੌਗਿਨ",
+    "profile.logout": "ਲੌਗ ਆਉਟ",
+    "profile.emailValue": "sandeep.s@punjabihub.com",
+    "profile.mobileValue": "+91 98765 43210",
+    "profile.panValue": "ABCDE1234F",
+    "profile.gstinValue": "03ABCDE1234F1Z5",
+    "profile.addressValue": "ਪਲਾਟ 45, ਇੰਡਸਟਰੀਅਲ ਏਰੀਆ ਫੇਜ਼ VIII, ਮੋਹਾਲੀ, ਪੰਜਾਬ 160071",
     "chatbot.title": "ਚੈਟ ਸਹਾਇਤਾ",
     "chatbot.greeting": "ਸਤ ਸ੍ਰੀ ਅਕਾਲ! ਮੈਂ ਅੱਜ ਤੁਹਾਡੀ ਕਿਵੇਂ ਮਦਦ ਕਰ ਸਕਦਾ ਹਾਂ?",
     "chatbot.placeholder": "ਸੁਨੇਹਾ ਲਿਖੋ…",

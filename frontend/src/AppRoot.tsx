@@ -15,6 +15,7 @@ import { CafFormScreen } from "./screens/CafFormScreen";
 import { InvestmentProjectScreen } from "./screens/InvestmentProjectScreen";
 import { RegulatoryClearancesScreen } from "./screens/RegulatoryClearancesScreen";
 import { ListOfApprovalsScreen } from "./screens/ListOfApprovalsScreen";
+import { MyProfileScreen } from "./screens/MyProfileScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
@@ -28,7 +29,8 @@ type RouteName =
   | "investmentProject"
   | "changePassword"
   | "regulatoryClearances"
-  | "listOfApprovals";
+  | "listOfApprovals"
+  | "myProfile";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -105,9 +107,15 @@ function AppShell() {
   const [route, setRoute] = useState<RouteName>("home");
   const [showChat, setShowChat] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
+  const [showGlobalAddMenu, setShowGlobalAddMenu] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDrawerProfileMenu, setShowDrawerProfileMenu] = useState(false);
   const [showDrawerLanguageMenu, setShowDrawerLanguageMenu] = useState(false);
+
+  useEffect(() => {
+    setShowGlobalAddMenu(false);
+    setShowChat(false);
+  }, [route]);
 
   useEffect(() => {
     const baseFontFamily = Platform.OS === "web" ? "Roboto, sans-serif" : "Roboto";
@@ -123,14 +131,14 @@ function AppShell() {
       <HomeScreen onLoginPress={() => setRoute("login")} />
     ) : route === "login" ? (
       <LoginScreen onBack={() => setRoute("home")} onLoginSuccess={() => setRoute("dashboard")} />
+    ) : route === "myProfile" ? (
+      <MyProfileScreen onBack={() => setRoute("dashboard")} onLogout={() => setRoute("home")} />
     ) : route === "changePassword" ? (
       <ChangePasswordScreen onBack={() => setRoute("dashboard")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "myProjects" ? (
       <MyProjectsScreen
         onBack={() => setRoute("dashboard")}
         onMenuPress={() => setShowDrawer(true)}
-        onChatPress={() => setShowChat(true)}
-        onAddPress={() => {}}
       />
     ) : route === "investmentProject" ? (
       <InvestmentProjectScreen onBack={() => setRoute("dashboard")} onOpenDrawer={() => setShowDrawer(true)} />
@@ -154,20 +162,19 @@ function AppShell() {
       />
     );
 
-  const shouldRenderChatModal =
-    route === "dashboard" ||
-    route === "myProjects" ||
-    route === "myApplications" ||
-    route === "regulatoryClearances" ||
-    route === "listOfApprovals";
-  const shouldRenderChatFab =
-    route === "dashboard" || route === "myApplications" || route === "regulatoryClearances" || route === "listOfApprovals";
+  const shouldRenderChatModal = route !== "home" && route !== "login";
+  const shouldRenderChatFab = route !== "home" && route !== "login";
+  const shouldRenderGlobalAddFab = route !== "home" && route !== "login";
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const DRAWER_WIDTH = Math.min(windowWidth * 0.85, 360);
+  const ADD_FAB_SIZE = 56;
+  const ADD_FAB_RIGHT = 20;
+  const ADD_FAB_BOTTOM = 30;
+  const ADD_MENU_GAP = 14;
   const CHAT_ICON_SIZE = 72;
   const CHAT_ICON_RIGHT = 20;
-  const CHAT_ICON_BOTTOM = 178;
+  const CHAT_ICON_BOTTOM = ADD_FAB_BOTTOM + ADD_FAB_SIZE + 12;
   const CHAT_GAP = 12;
   const CHAT_PANEL_MAX_WIDTH = 320;
   const chatPanelWidth = Math.min(CHAT_PANEL_MAX_WIDTH, windowWidth - 32);
@@ -178,6 +185,92 @@ function AppShell() {
   return (
     <View style={{ flex: 1 }}>
       {screen}
+
+      {shouldRenderGlobalAddFab ? (
+        <>
+          {showGlobalAddMenu ? (
+            <Pressable
+              onPress={() => setShowGlobalAddMenu(false)}
+              style={{ position: "absolute", inset: 0, backgroundColor: "transparent", zIndex: 9997, elevation: 9997 }}
+            />
+          ) : null}
+
+          {showGlobalAddMenu ? (
+            <View
+              style={{
+                position: "absolute",
+                right: ADD_FAB_RIGHT,
+                bottom: ADD_FAB_BOTTOM + ADD_FAB_SIZE + ADD_MENU_GAP,
+                width: 270,
+                borderRadius: 14,
+                overflow: "hidden",
+                backgroundColor: "rgba(255,255,255,0.96)",
+                borderWidth: 1,
+                borderColor: "rgba(203,213,225,0.9)",
+                zIndex: 9998,
+                elevation: 9998
+              }}
+            >
+              <Pressable
+                onPress={() => {
+                  setShowGlobalAddMenu(false);
+                  setRoute("cafForm");
+                }}
+                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <MaterialIcons name="description" size={18} color="#1d4ed8" />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myApplications.fab.fillCaf")}</Text>
+              </Pressable>
+
+              <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
+
+              <Pressable
+                onPress={() => {
+                  setShowGlobalAddMenu(false);
+                  setRoute("cafForm");
+                }}
+                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <MaterialIcons name="add-business" size={18} color="#1d4ed8" />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.addProjectWithCaf")}</Text>
+              </Pressable>
+
+              <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
+
+              <Pressable
+                onPress={() => {
+                  setShowGlobalAddMenu(false);
+                  setRoute("regulatoryClearances");
+                }}
+                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+              >
+                <MaterialIcons name="post-add" size={18} color="#059669" />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.applyForNewService")}</Text>
+              </Pressable>
+            </View>
+          ) : null}
+
+          <Pressable
+            onPress={() => setShowGlobalAddMenu((v) => !v)}
+            style={{
+              position: "absolute",
+              bottom: ADD_FAB_BOTTOM,
+              right: ADD_FAB_RIGHT,
+              width: ADD_FAB_SIZE,
+              height: ADD_FAB_SIZE,
+              borderRadius: ADD_FAB_SIZE / 2,
+              backgroundColor: "#2563eb",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 9996,
+              elevation: 9996
+            }}
+            hitSlop={10}
+          >
+            <MaterialIcons name={showGlobalAddMenu ? "close" : "add"} size={28} color="white" />
+          </Pressable>
+        </>
+      ) : null}
 
       {shouldRenderChatModal ? (
         <>
@@ -301,7 +394,8 @@ function AppShell() {
             route === "investmentProject" ||
             route === "cafForm" ||
             route === "changePassword" ||
-            route === "listOfApprovals")
+            route === "listOfApprovals" ||
+            route === "myProfile")
         }
         transparent
         animationType="fade"
@@ -514,6 +608,16 @@ function AppShell() {
                   onPress={() => {
                     setShowDrawer(false);
                     setRoute("dashboard");
+                  }}
+                />
+
+                <MenuItem
+                  icon="person"
+                  label={t("drawer.myProfile")}
+                  active={route === "myProfile"}
+                  onPress={() => {
+                    setShowDrawer(false);
+                    setRoute("myProfile");
                   }}
                 />
 

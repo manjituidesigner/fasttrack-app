@@ -1,18 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle, Modal } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useState } from "react";
 import { useI18n } from "../i18n/I18nProvider";
-import ChatbotIcon from "../assets/images/chatbot.svg";
 import { useTheme } from "../theme/useTheme";
 
 type Props = {
   onBack?: () => void;
   onMenuPress?: () => void;
-  onChatPress?: () => void;
-  onAddPress?: () => void;
 };
 
 type StatusType = "verified" | "filing" | "pending";
@@ -23,20 +20,13 @@ function getStatusColor(statusType: StatusType) {
   return "#3b82f6";
 }
 
-export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress }: Props) {
+export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(false);
-  const [showAddOptions, setShowAddOptions] = useState(false);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
-
-  const CHAT_ICON_SIZE = 72;
-
-  const closeAddOptions = () => {
-    setShowAddOptions(false);
-  };
 
   return (
     <>
@@ -333,67 +323,6 @@ export function MyProjectsScreen({ onBack, onMenuPress, onChatPress, onAddPress 
             </View>
           ) : null}
         </ScrollView>
-
-        {/* ===== Floating Buttons ===== */}
-        <View style={{ position: "absolute", right: 16, bottom: 90, zIndex: 2000, elevation: 2000 }}>
-          <Pressable onPress={onChatPress} style={chatFab}>
-            <ChatbotIcon width={CHAT_ICON_SIZE} height={CHAT_ICON_SIZE} />
-          </Pressable>
-
-          <Pressable
-            onPress={() => {
-              setShowAddOptions((v) => !v);
-            }}
-            style={[fab, { marginTop: 12, backgroundColor: "#1d4ed8" }]}
-          >
-            <MaterialIcons name={showAddOptions ? "close" : "add"} size={28} color="white" />
-          </Pressable>
-        </View>
-
-        {showAddOptions ? (
-          <>
-            <Pressable onPress={closeAddOptions} style={{ position: "absolute", inset: 0, backgroundColor: "transparent", zIndex: 4000 }} />
-            <View
-              style={{
-                position: "absolute",
-                right: 20,
-                bottom: 170,
-                width: 260,
-                borderRadius: 14,
-                overflow: "hidden",
-                backgroundColor: "rgba(255,255,255,0.96)",
-                borderWidth: 1,
-                borderColor: "rgba(203,213,225,0.9)",
-                zIndex: 5000,
-                elevation: 5000
-              }}
-            >
-              <Pressable
-                onPress={() => {
-                  closeAddOptions();
-                  onAddPress?.();
-                }}
-                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
-              >
-                <MaterialIcons name="add-business" size={18} color="#1d4ed8" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.addProjectWithCaf")}</Text>
-              </Pressable>
-
-              <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
-
-              <Pressable
-                onPress={() => {
-                  closeAddOptions();
-                  onAddPress?.();
-                }}
-                style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
-              >
-                <MaterialIcons name="post-add" size={18} color="#059669" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.applyForNewService")}</Text>
-              </Pressable>
-            </View>
-          </>
-        ) : null}
       </LinearGradient>
     </>
   );
@@ -625,12 +554,3 @@ const fab = {
   shadowOpacity: 0.3
 } as const;
 
-const chatFab = {
-  width: 72,
-  height: 72,
-  backgroundColor: "transparent",
-  alignItems: "center",
-  justifyContent: "center"
-} as const;
-
- 

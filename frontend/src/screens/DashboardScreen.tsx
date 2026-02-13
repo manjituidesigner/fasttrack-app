@@ -505,22 +505,6 @@ export function DashboardScreen({
             </View>
           </View>
         </ScrollView>
-
-        <Pressable
-          style={{
-            position: "absolute",
-            bottom: 30,
-            right: 20,
-            width: 56,
-            height: 56,
-            borderRadius: 28,
-            backgroundColor: "#2563eb",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <MaterialIcons name="add" size={28} color="white" />
-        </Pressable>
       </LinearGradient>
     </>
   );

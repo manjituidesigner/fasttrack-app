@@ -196,27 +196,6 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
             </AccordionSection>
           </View>
         </ScrollView>
-
-        <Pressable
-          onPress={() => {
-            setActiveTab("applyNew");
-            onAddPress?.();
-          }}
-          style={{
-            position: "absolute",
-            bottom: 110,
-            right: 20,
-            width: 56,
-            height: 56,
-            borderRadius: 28,
-            backgroundColor: "#2563eb",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-          hitSlop={10}
-        >
-          <MaterialIcons name="add" size={28} color="white" />
-        </Pressable>
       </LinearGradient>
     </>
   );
