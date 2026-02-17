@@ -28,7 +28,7 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
       <StatusBar style="dark" />
 
       <LinearGradient
-        colors={["#F9FAFB", "#EFF6FF"]}
+        colors={theme.colors.background.gradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ flex: 1 }}

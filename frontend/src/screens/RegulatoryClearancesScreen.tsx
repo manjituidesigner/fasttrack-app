@@ -212,9 +212,14 @@ function AccordionSection({ title, icon, iconBg, iconColor, expanded, onToggle, 
           justifyContent: "space-between",
           padding: 16,
           borderRadius: 18,
-          backgroundColor: "rgba(255,255,255,0.60)",
+          backgroundColor: "rgba(255,255,255,0.85)",
           borderWidth: 1,
-          borderColor: "rgba(226,232,240,0.95)"
+          borderColor: "rgba(226,232,240,0.95)",
+          shadowColor: "#000",
+          shadowOpacity: 0.04,
+          shadowRadius: 12,
+          shadowOffset: { width: 0, height: 8 },
+          elevation: 2
         }}
       >
         <View style={{ flexDirection: "row", alignItems: "center", gap: 12, flex: 1, paddingRight: 8 }}>
@@ -245,34 +250,74 @@ function ApplicationCard({ pin, date, applicantName, mobile, projectName, distri
         borderRadius: 18,
         backgroundColor: "#ffffff",
         borderWidth: 1,
-        borderColor: "rgba(241,245,249,1)",
+        borderColor: "rgba(226,232,240,0.9)",
+        shadowColor: "#000",
+        shadowOpacity: 0.05,
+        shadowRadius: 14,
+        shadowOffset: { width: 0, height: 10 },
+        elevation: 2,
         overflow: "hidden"
       }}
     >
-      <View style={{ padding: 20, gap: 12 }}>
-        <Row
-          label="PIN:"
-          value={pin}
-          valueColor="#1d4ed8"
-          valueUnderline
-          onValuePress={() => {
-            // TODO: Navigate / open details by PIN
-          }}
-        />
-        <Row label="Date:" value={date} />
-        <Row label="Applicant Name:" value={applicantName} />
-        <Row label="Mobile:" value={mobile} />
-        <Row label="Project Name:" value={projectName} />
-        <Row label="District:" value={district} />
-        <Row label="Project Sector:" value={sector} />
-        <Row label="Type:" value={type} valueColor={typeColor} />
+      <View style={{ paddingHorizontal: 16, paddingVertical: 14 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, flexShrink: 1 }}>
+            <View
+              style={{
+                paddingHorizontal: 10,
+                paddingVertical: 6,
+                borderRadius: 999,
+                backgroundColor: (typeColor ?? "#2563eb") + "1A",
+                borderWidth: 1,
+                borderColor: (typeColor ?? "#2563eb") + "33"
+              }}
+            >
+              <Text style={{ fontSize: 11, fontWeight: "700", letterSpacing: 0.6, color: typeColor ?? "#2563eb" }}>{type}</Text>
+            </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text style={{ width: "33%", fontSize: 14, fontWeight: "700", color: "#94a3b8" }}>Action:</Text>
-          <Pressable style={{ width: "67%", flexDirection: "row", alignItems: "center" }}>
-            <MaterialIcons name="visibility" size={20} color="#1d4ed8" />
+            <Text style={{ fontSize: 12, fontWeight: "600", color: "#64748b" }}>{date}</Text>
+          </View>
+
+          <Pressable
+            hitSlop={10}
+            style={{ width: 40, height: 40, borderRadius: 12, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(241,245,249,1)" }}
+          >
+            <MaterialIcons name="visibility" size={20} color="#0f766e" />
           </Pressable>
         </View>
+
+        <Text
+          style={{
+            marginTop: 10,
+            fontSize: 16,
+            fontWeight: "700",
+            color: "#0f172a",
+            lineHeight: 22
+          }}
+          numberOfLines={2}
+        >
+          {projectName}
+        </Text>
+
+        <Text style={{ marginTop: 6, fontSize: 13, fontWeight: "600", color: "#334155", lineHeight: 18 }}>
+          {applicantName}
+          {mobile ? `, ${mobile}` : ""}
+        </Text>
+
+        <View style={{ marginTop: 10, gap: 6 }}>
+          <Text style={{ fontSize: 13, fontWeight: "600", color: "#475569", lineHeight: 18 }}>{`District: ${district}`}</Text>
+          <Text style={{ fontSize: 13, fontWeight: "600", color: "#475569", lineHeight: 18 }}>{`Sector: ${sector}`}</Text>
+        </View>
+
+        <Pressable
+          hitSlop={6}
+          style={{ marginTop: 12, alignSelf: "flex-start" }}
+          onPress={() => {
+            // noop
+          }}
+        >
+          <Text style={{ fontSize: 14, fontWeight: "700", color: "#2563eb", lineHeight: 20 }}>{`PIN: ${pin}`}</Text>
+        </Pressable>
       </View>
     </View>
   );

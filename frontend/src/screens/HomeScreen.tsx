@@ -6,6 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Constants from "expo-constants";
 import GovtLogo from "../assets/images/govt logo.svg";
 import GetGuidance from "../assets/images/get_guidance.svg";
+import { useTheme } from "../theme/useTheme";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export function HomeScreen({ onLoginPress }: Props) {
+  const theme = useTheme();
   type SlideItem =
     | { id: string; titleTop: string; titleBottom: string; image: any }
     | { id: string; titleTop: string; titleBottom: string; Svg: ComponentType<any> };
@@ -103,21 +105,9 @@ export function HomeScreen({ onLoginPress }: Props) {
   }, [carouselWrapWidth, cardWidth]);
 
   return (
-    <>
+    <LinearGradient colors={theme.colors.background.gradient} style={{ flex: 1 }}>
       <StatusBar style="dark" />
-
-      <LinearGradient
-        colors={["#8CD2F2", "#A8D5E5", "#C8D4F3", "#CDEED1"]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{
-          flex: 1,
-          paddingHorizontal: 20,
-          paddingTop: 28 + STATUS_BAR_HEIGHT,
-          paddingBottom: 28,
-          justifyContent: "center"
-        }}
-      >
+      <View style={{ paddingTop: STATUS_BAR_HEIGHT, paddingHorizontal: 22, paddingBottom: 18, flex: 1 }}>
         <View
           style={{
             width: "100%",
@@ -266,7 +256,7 @@ export function HomeScreen({ onLoginPress }: Props) {
             <Text style={{ color: "#0f172a", fontSize: 13.5, fontWeight: "700" }}>New Investor Registration</Text>
           </Pressable>
         </View>
+        </View>
       </LinearGradient>
-    </>
   );
 }

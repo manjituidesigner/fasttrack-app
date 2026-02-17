@@ -16,6 +16,7 @@ import { InvestmentProjectScreen } from "./screens/InvestmentProjectScreen";
 import { RegulatoryClearancesScreen } from "./screens/RegulatoryClearancesScreen";
 import { ListOfApprovalsScreen } from "./screens/ListOfApprovalsScreen";
 import { MyProfileScreen } from "./screens/MyProfileScreen";
+import { NotificationsScreen } from "./screens/NotificationsScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
@@ -30,7 +31,8 @@ type RouteName =
   | "changePassword"
   | "regulatoryClearances"
   | "listOfApprovals"
-  | "myProfile";
+  | "myProfile"
+  | "notifications";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -105,6 +107,7 @@ export function AppRoot() {
 function AppShell() {
   const { t, language, setLanguage } = useI18n();
   const [route, setRoute] = useState<RouteName>("home");
+  const [prevRoute, setPrevRoute] = useState<RouteName>("dashboard");
   const [showChat, setShowChat] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
   const [showGlobalAddMenu, setShowGlobalAddMenu] = useState(false);
@@ -136,6 +139,8 @@ function AppShell() {
       <HomeScreen onLoginPress={() => setRoute("login")} />
     ) : route === "login" ? (
       <LoginScreen onBack={() => setRoute("home")} onLoginSuccess={() => setRoute("dashboard")} />
+    ) : route === "notifications" ? (
+      <NotificationsScreen onBack={() => setRoute(prevRoute ?? "dashboard")} />
     ) : route === "myProfile" ? (
       <MyProfileScreen onBack={() => setRoute("dashboard")} onLogout={() => setRoute("home")} />
     ) : route === "changePassword" ? (
@@ -393,6 +398,7 @@ function AppShell() {
         visible={
           showDrawer &&
           (route === "dashboard" ||
+            route === "notifications" ||
             route === "myProjects" ||
             route === "myApplications" ||
             route === "regulatoryClearances" ||
@@ -643,6 +649,16 @@ function AppShell() {
                   onPress={() => {
                     setShowDrawer(false);
                     setRoute("myApplications");
+                  }}
+                />
+                <MenuItem
+                  icon="notifications"
+                  label="Notification"
+                  active={route === "notifications"}
+                  onPress={() => {
+                    setShowDrawer(false);
+                    setPrevRoute(route);
+                    setRoute("notifications");
                   }}
                 />
                 <MenuItem icon="monetization-on" label={t("drawer.fiscalIncentives")} onPress={() => setShowDrawer(false)} />
