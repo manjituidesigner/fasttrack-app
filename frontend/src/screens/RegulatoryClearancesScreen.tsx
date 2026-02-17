@@ -74,7 +74,7 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
             <MaterialIcons name="arrow-back-ios" size={20} color="#1d4ed8" />
           </Pressable>
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#1f2937" }}>Investment Project Applications</Text>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1f2937" }}>Investment Project Applications</Text>
 
           <Pressable
             onPress={() => onMenuPress?.()}
@@ -115,7 +115,7 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
                   }}
                 >
                   <MaterialIcons name={t.icon as any} size={16} color={isActive ? "#ffffff" : "#64748b"} />
-                  <Text style={{ fontSize: 14, fontWeight: isActive ? "800" : "600", color: isActive ? "#ffffff" : "#475569" }}>
+                  <Text style={{ fontSize: 14, fontWeight: isActive ? "700" : "600", color: isActive ? "#ffffff" : "#475569" }}>
                     {t.label}
                   </Text>
 
@@ -128,7 +128,7 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
                         backgroundColor: isActive ? "rgba(255,255,255,0.18)" : "rgba(241,245,249,1)"
                       }}
                     >
-                      <Text style={{ fontSize: 12, fontWeight: "800", color: isActive ? "#ffffff" : "#1d4ed8" }}>{t.count}</Text>
+                      <Text style={{ fontSize: 12, fontWeight: "700", color: isActive ? "#ffffff" : "#1d4ed8" }}>{t.count}</Text>
                     </View>
                   ) : null}
                 </Pressable>
@@ -137,7 +137,7 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
           </ScrollView>
 
           <View style={{ paddingHorizontal: 16, paddingTop: 18 }}>
-            <Text style={{ fontSize: 22, fontWeight: "900", color: "#0f172a" }}>Regulatory Clearances</Text>
+            <Text style={{ fontSize: 22, fontWeight: "700", color: "#0f172a" }}>Regulatory Clearances</Text>
           </View>
 
           <View style={{ paddingHorizontal: 16, paddingTop: 18, gap: 16 }}>
@@ -221,7 +221,7 @@ function AccordionSection({ title, icon, iconBg, iconColor, expanded, onToggle, 
           <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: iconBg, alignItems: "center", justifyContent: "center" }}>
             <MaterialIcons name={icon} size={22} color={iconColor} />
           </View>
-          <Text style={{ fontSize: 16, fontWeight: "800", color: "#0f172a", flexShrink: 1 }}>{title}</Text>
+          <Text style={{ fontSize: 16, fontWeight: "700", color: "#0f172a", flexShrink: 1 }}>{title}</Text>
         </View>
 
         <MaterialIcons
@@ -288,13 +288,13 @@ function Row({ label, value, valueStrong, suffix, valueStrongColor, valueColor, 
         <Text
           style={{
             fontSize: 14,
-            fontWeight: "800",
+            fontWeight: "700",
             color: valueColor ?? "#334155",
             textDecorationLine: valueUnderline ? "underline" : "none"
           }}
         >
           {valueStrong ? (
-            <Text style={{ fontSize: 14, fontWeight: "900", color: valueStrongColor ?? "#1d4ed8" }}>{valueStrong}</Text>
+            <Text style={{ fontSize: 14, fontWeight: "700", color: valueStrongColor ?? "#1d4ed8" }}>{valueStrong}</Text>
           ) : null}
           {valueStrong ? suffix ?? "" : value}
         </Text>

@@ -29,7 +29,7 @@ export function ProfileMenuButton({ initials, imageUri, onOpenDrawer }: Props) {
       >
         {initials ? (
           <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: "#2563eb", alignItems: "center", justifyContent: "center" }}>
-            <Text style={{ color: "white", fontSize: 12, fontWeight: "800" }}>{initials}</Text>
+            <Text style={{ color: "white", fontSize: 12, fontWeight: "700" }}>{initials}</Text>
           </View>
         ) : (
           <Image

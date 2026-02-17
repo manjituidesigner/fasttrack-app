@@ -181,7 +181,7 @@ export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) 
                 style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <MaterialIcons name="description" size={18} color="#2563eb" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myApplications.fab.fillCaf")}</Text>
+                <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myApplications.fab.fillCaf")}</Text>
               </Pressable>
             </View>
           </>
@@ -253,7 +253,7 @@ function Section({ title, badge, badgeColor, items, expanded, onToggle }: any) {
                       borderRadius: 999
                     }}
                   >
-                    <Text style={{ fontSize: 10, fontWeight: "800", color: badgeColor }}>{badge}</Text>
+                    <Text style={{ fontSize: 10, fontWeight: "700", color: badgeColor }}>{badge}</Text>
                   </View>
                   <Text style={styles.muted}>{item.date}</Text>
                 </View>
@@ -300,7 +300,7 @@ const styles = {
     elevation: 50
   },
   iconBtn: { width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" },
-  headerTitle: { fontSize: 20, fontWeight: "800" },
+  headerTitle: { fontSize: 20, fontWeight: "700" },
   avatar: { width: 36, height: 36, borderRadius: 18 },
   onlineDot: {
     position: "absolute",
@@ -340,7 +340,7 @@ const styles = {
     borderBottomWidth: 1,
     borderColor: "#e5e7eb"
   },
-  sectionTitle: { fontSize: 14, fontWeight: "800", textTransform: "uppercase" },
+  sectionTitle: { fontSize: 14, fontWeight: "700", textTransform: "uppercase" },
   card: {
     padding: 14,
     borderBottomWidth: 1,
@@ -351,10 +351,10 @@ const styles = {
     justifyContent: "space-between",
     marginBottom: 6
   },
-  cardTitle: { fontSize: 16, fontWeight: "800" },
+  cardTitle: { fontSize: 16, fontWeight: "700" },
   muted: { fontSize: 12, color: "#6b7280" },
   detail: { fontSize: 13, color: "#374151" },
-  pin: { fontSize: 14, fontWeight: "800", color: "#2563eb", marginTop: 4 },
+  pin: { fontSize: 14, fontWeight: "700", color: "#2563eb", marginTop: 4 },
   plusFab: {
     position: "absolute",
     bottom: 32,

@@ -86,7 +86,7 @@ export function DashboardScreen({
               <ThemedText
                 style={{
                   fontSize: 20,
-                  fontWeight: "900",
+                  fontWeight: "700",
                   color: "#0f172a"
                 }}
               >
@@ -310,7 +310,7 @@ export function DashboardScreen({
                   <ThemedText
                     style={{
                       fontSize: 14,
-                      fontWeight: "900",
+                      fontWeight: "700",
                       textTransform: "uppercase"
                     }}
                   >
@@ -380,7 +380,7 @@ export function DashboardScreen({
                   style={{
                     marginTop: 14,
                     fontSize: 13,
-                    fontWeight: "900",
+                    fontWeight: "700",
                     color: "white",
                     letterSpacing: 1,
                     textTransform: "uppercase"
@@ -397,7 +397,7 @@ export function DashboardScreen({
               <ThemedText
                 style={{
                   fontSize: 20,
-                  fontWeight: "900"
+                  fontWeight: "700"
                 }}
               >
                 {t("dashboard.recentActivity")}
@@ -414,7 +414,7 @@ export function DashboardScreen({
                   borderColor: "rgba(203,213,225,0.7)"
                 }}
               >
-                <ThemedText style={{ fontSize: 12, fontWeight: "800", color: "#4f46e5" }}>{t("dashboard.viewLogs")}</ThemedText>
+                <ThemedText style={{ fontSize: 12, fontWeight: "700", color: "#4f46e5" }}>{t("dashboard.viewLogs")}</ThemedText>
               </Pressable>
             </View>
 
@@ -457,7 +457,7 @@ export function DashboardScreen({
                 </View>
 
                 <View style={{ flex: 1 }}>
-                  <ThemedText style={{ fontSize: 14, fontWeight: "800" }}>{t(item.titleKey)}</ThemedText>
+                  <ThemedText style={{ fontSize: 14, fontWeight: "700" }}>{t(item.titleKey)}</ThemedText>
                   <ThemedText
                     style={{
                       fontSize: 12,
@@ -496,10 +496,10 @@ export function DashboardScreen({
               </View>
 
               <View style={{ flex: 1 }}>
-                <ThemedText style={{ fontSize: 12, fontWeight: "900", color: "#64748b", textTransform: "uppercase" }}>
+                <ThemedText style={{ fontSize: 12, fontWeight: "700", color: "#64748b", textTransform: "uppercase" }}>
                   {t("dashboard.helpLine.label")}
                 </ThemedText>
-                <ThemedText style={{ fontSize: 16, fontWeight: "900", color: "#0f172a" }}>{t("dashboard.helpLine.number")}</ThemedText>
+                <ThemedText style={{ fontSize: 16, fontWeight: "700", color: "#0f172a" }}>{t("dashboard.helpLine.number")}</ThemedText>
                 <ThemedText style={{ fontSize: 11, fontWeight: "700", color: "#64748b" }}>{t("dashboard.helpLine.hours")}</ThemedText>
               </View>
             </View>

@@ -12,10 +12,14 @@ export function ThemedText({ variant = "primary", style, ...rest }: Props) {
   const theme = useTheme();
 
   const flattenedStyle = StyleSheet.flatten(style);
-  const weight = flattenedStyle?.fontWeight;
-  const defaultFontFamily = Platform.OS === "web" ? "Roboto, sans-serif" : "Roboto";
+  const baseFontFamily = Platform.select({
+    web: "Roboto, sans-serif",
+    android: "Roboto",
+    ios: "System",
+    default: "System"
+  });
 
-  const fontFamily = flattenedStyle?.fontFamily ?? defaultFontFamily;
+  const fontFamily = flattenedStyle?.fontFamily ?? baseFontFamily;
 
   const color =
     variant === "primary"

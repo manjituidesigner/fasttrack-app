@@ -77,7 +77,7 @@ function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
             justifyContent: "center"
           }}
         >
-          <Text style={{ fontSize: 10, fontWeight: "800", color: "white" }}>{badge}</Text>
+          <Text style={{ fontSize: 10, fontWeight: "700", color: "white" }}>{badge}</Text>
         </View>
       )}
     </Pressable>
@@ -118,7 +118,12 @@ function AppShell() {
   }, [route]);
 
   useEffect(() => {
-    const baseFontFamily = Platform.OS === "web" ? "Roboto, sans-serif" : "Roboto";
+    const baseFontFamily = Platform.select({
+      web: "Roboto, sans-serif",
+      android: "Roboto",
+      ios: "System",
+      default: "System"
+    });
 
     const TextAny = Text as any;
     TextAny.defaultProps = TextAny.defaultProps ?? {};
@@ -219,7 +224,7 @@ function AppShell() {
                 style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <MaterialIcons name="description" size={18} color="#1d4ed8" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myApplications.fab.fillCaf")}</Text>
+                <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myApplications.fab.fillCaf")}</Text>
               </Pressable>
 
               <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
@@ -232,7 +237,7 @@ function AppShell() {
                 style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <MaterialIcons name="add-business" size={18} color="#1d4ed8" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.addProjectWithCaf")}</Text>
+                <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myProjects.fab.addProjectWithCaf")}</Text>
               </Pressable>
 
               <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.9)" }} />
@@ -245,7 +250,7 @@ function AppShell() {
                 style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
               >
                 <MaterialIcons name="post-add" size={18} color="#059669" />
-                <Text style={{ fontSize: 14, fontWeight: "800", color: "#0f172a" }}>{t("myProjects.fab.applyForNewService")}</Text>
+                <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("myProjects.fab.applyForNewService")}</Text>
               </Pressable>
             </View>
           ) : null}
@@ -303,7 +308,7 @@ function AppShell() {
                 >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <ChatbotIcon width={26} height={26} />
-                    <ThemedText style={{ fontSize: 14, fontWeight: "900", color: "#0f172a" }}>{t("chatbot.title")}</ThemedText>
+                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("chatbot.title")}</ThemedText>
                   </View>
 
                   <Pressable
@@ -505,7 +510,7 @@ function AppShell() {
                     style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
                   >
                     <View>
-                      <Text style={{ fontSize: 17, fontWeight: "800" }}>{t("drawer.profile.name")}</Text>
+                      <Text style={{ fontSize: 17, fontWeight: "700" }}>{t("drawer.profile.name")}</Text>
                       <Text style={{ fontSize: 13, color: "#6b7280", fontWeight: "500" }}>{t("drawer.profile.company")}</Text>
                     </View>
 

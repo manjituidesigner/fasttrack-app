@@ -46,7 +46,7 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
             <MaterialIcons name="arrow-back-ios" size={20} color="#1d4ed8" />
           </Pressable>
 
-          <Text style={{ fontSize: 18, fontWeight: "900", color: "#0f172a" }}>{t("profile.title")}</Text>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: "#111827" }}>{t("profile.title")}</Text>
 
           <View style={{ width: 44, height: 44 }} />
         </View>
@@ -99,12 +99,12 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
                 }}
               >
                 <MaterialIcons name="verified" size={14} color="#ffffff" />
-                <Text style={{ fontSize: 10, fontWeight: "900", color: "#ffffff" }}>{t("profile.verified")}</Text>
+                <Text style={{ fontSize: 10, fontWeight: "700", color: "#ffffff" }}>{t("profile.verified")}</Text>
               </View>
             </View>
 
-            <Text style={{ fontSize: 24, fontWeight: "900", color: "#0f172a", textAlign: "center" }}>{t("profile.name")}</Text>
-            <Text style={{ marginTop: 2, fontSize: 13, fontWeight: "800", color: "#64748b", textAlign: "center" }}>
+            <Text style={{ fontSize: 24, fontWeight: "700", color: "#111827", textAlign: "center" }}>{t("profile.name")}</Text>
+            <Text style={{ marginTop: 2, fontSize: 13, fontWeight: "600", color: "#6b7280", textAlign: "center" }}>
               {t("profile.company")}
             </Text>
           </View>
@@ -133,17 +133,17 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
                 >
                   <View style={{ flex: 1 }}>
                     <SmallLabel>{t("profile.field.pan")}</SmallLabel>
-                    <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{t("profile.panValue")}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a" }}>{t("profile.panValue")}</Text>
                   </View>
                   <View style={{ flex: 1 }}>
                     <SmallLabel>{t("profile.field.gstin")}</SmallLabel>
-                    <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{t("profile.gstinValue")}</Text>
+                    <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a" }}>{t("profile.gstinValue")}</Text>
                   </View>
                 </View>
 
                 <View>
                   <SmallLabel>{t("profile.field.registeredAddress")}</SmallLabel>
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a", lineHeight: 20 }}>{t("profile.addressValue")}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a", lineHeight: 20 }}>{t("profile.addressValue")}</Text>
                 </View>
               </View>
             </Card>
@@ -169,11 +169,11 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                   <MaterialIcons name="language" size={20} color="#94a3b8" />
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{t("profile.preference.language")}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a" }}>{t("profile.preference.language")}</Text>
                 </View>
 
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-                  <Text style={{ fontSize: 13, fontWeight: "700", color: "#64748b" }}>
+                  <Text style={{ fontSize: 13, fontWeight: "600", color: "#64748b" }}>
                     {language === "en" ? "English" : language === "hi" ? "Hindi" : "Punjabi"}
                   </Text>
                   <MaterialIcons name="arrow-forward-ios" size={14} color="#94a3b8" />
@@ -196,7 +196,7 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
               >
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                   <MaterialIcons name="notifications" size={20} color="#94a3b8" />
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{t("profile.preference.notifications")}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a" }}>{t("profile.preference.notifications")}</Text>
                 </View>
                 <MaterialIcons name="arrow-forward-ios" size={14} color="#94a3b8" />
               </Pressable>
@@ -204,7 +204,7 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
               <View style={{ paddingHorizontal: 12, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                   <MaterialIcons name="fingerprint" size={20} color="#94a3b8" />
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{t("profile.preference.biometric")}</Text>
+                  <Text style={{ fontSize: 15, fontWeight: "700", color: "#0f172a" }}>{t("profile.preference.biometric")}</Text>
                 </View>
                 <Switch value={biometricLogin} onValueChange={setBiometricLogin} />
               </View>
@@ -228,7 +228,7 @@ export function MyProfileScreen({ onBack, onLogout }: Props) {
               })}
             >
               <MaterialIcons name="logout" size={20} color="#ffffff" />
-              <Text style={{ color: "#ffffff", fontSize: 16, fontWeight: "900" }}>{t("profile.logout")}</Text>
+              <Text style={{ color: "#ffffff", fontSize: 16, fontWeight: "700" }}>{t("profile.logout")}</Text>
             </Pressable>
 
             <View style={{ height: 10 }} />
@@ -272,20 +272,33 @@ function CardHeader({ icon, title, noMargin }: { icon: any; title: string; noMar
       >
         <MaterialIcons name={icon} size={18} color="#1152d4" />
       </View>
-      <Text style={{ fontSize: 16, fontWeight: "900", color: "#0f172a" }}>{title}</Text>
+      <Text style={{ fontSize: 18, fontWeight: "700", color: "#111827" }}>{title}</Text>
     </View>
   );
 }
 
 function SmallLabel({ children }: { children: any }) {
-  return <Text style={{ fontSize: 11, fontWeight: "900", color: "#94a3b8", textTransform: "uppercase", marginBottom: 6 }}>{children}</Text>;
+  return (
+    <Text
+      style={{
+        fontSize: 12,
+        fontWeight: "700",
+        color: "#9ca3af",
+        textTransform: "uppercase",
+        letterSpacing: 0.8,
+        marginBottom: 6
+      }}
+    >
+      {children}
+    </Text>
+  );
 }
 
 function InfoRow({ label, value, noDivider }: { label: string; value: string; noDivider?: boolean }) {
   return (
     <View style={{ paddingBottom: noDivider ? 0 : 12, borderBottomWidth: noDivider ? 0 : 1, borderColor: "rgba(226,232,240,0.9)" }}>
       <SmallLabel>{label}</SmallLabel>
-      <Text style={{ fontSize: 15, fontWeight: "800", color: "#0f172a" }}>{value}</Text>
+      <Text style={{ fontSize: 16, fontWeight: "700", color: "#111827" }}>{value}</Text>
     </View>
   );
 }

@@ -141,7 +141,7 @@ export function HomeScreen({ onLoginPress }: Props) {
             <Image source={require("../assets/images/ip-logo.png")} style={{ width: 110, height: 40, resizeMode: "contain" }} />
           </View>
 
-          <Text style={{ textAlign: "center", fontSize: 26, fontWeight: "900", marginTop: 6 }}>
+          <Text style={{ textAlign: "center", fontSize: 26, fontWeight: "700", marginTop: 6 }}>
             <Text style={{ color: "#1565D8" }}>Invest.</Text> <Text style={{ color: "#F59E0B" }}>Build.</Text>{" "}
             <Text style={{ color: "#22C55E" }}>Grow.</Text>
           </Text>
@@ -220,8 +220,8 @@ export function HomeScreen({ onLoginPress }: Props) {
                     )}
                   </View>
 
-                  <Text style={{ fontSize: 12, fontWeight: "900", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleTop}</Text>
-                  <Text style={{ fontSize: 12, fontWeight: "900", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleBottom}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: "700", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleTop}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: "700", letterSpacing: 0.3, color: "#0f172a" }}>{item.titleBottom}</Text>
                 </View>
               )}
             />
@@ -256,7 +256,7 @@ export function HomeScreen({ onLoginPress }: Props) {
               justifyContent: "center"
             }}
           >
-            <Text style={{ color: "white", fontSize: 15, fontWeight: "800" }}>Login to Portal</Text>
+            <Text style={{ color: "white", fontSize: 15, fontWeight: "700" }}>Login to Portal</Text>
           </Pressable>
 
           <Pressable

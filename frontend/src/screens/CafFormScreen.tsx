@@ -105,7 +105,7 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
               </Pressable>
             }
             center={
-              <Text style={{ fontSize: 18, fontWeight: "800", color: theme.colors.text.primary }}>
+              <Text style={{ fontSize: 18, fontWeight: "700", color: theme.colors.text.primary }}>
                 {t("cafForm.title")}
               </Text>
             }
@@ -129,7 +129,7 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
         </BlurView>
 
         <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 140 }}>
-          <View style={{ paddingTop: 12 }}>
+          <View style={[styles.container, { paddingTop: 12, paddingBottom: 20 }]}> 
             {step === 1 ? (
               <>
                 <View style={styles.progressWrap}>
@@ -661,7 +661,7 @@ function Input({
             styles.input,
             mono ? { fontFamily: "monospace" } : null,
             prefix ? { paddingLeft: 40 } : null,
-            multiline ? { height: 80, textAlignVertical: "top" } : null
+            multiline ? { height: 90, textAlignVertical: "top" } : null
           ]}
         />
       </View>
@@ -751,7 +751,7 @@ const styles = {
     justifyContent: "space-between"
   },
   headerLeft: { flexDirection: "row", alignItems: "center", gap: 8 },
-  headerTitle: { fontSize: 18, fontWeight: "800", color: "#2563eb" },
+  headerTitle: { fontSize: 18, fontWeight: "700", color: "#2563eb" },
   saveDraft: { color: "#2563eb", fontWeight: "700" },
   avatar: {
     width: 32,
@@ -761,8 +761,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
-  avatarText: { fontWeight: "800", color: "#2563eb" },
-  container: { maxWidth: 420, alignSelf: "center", padding: 16 },
+  avatarText: { fontWeight: "700", color: "#2563eb" },
+  container: { maxWidth: 420, width: "100%", alignSelf: "center", paddingHorizontal: 20 },
   progressWrap: { marginBottom: 24 },
   progressCard: {
     backgroundColor: "#ffffff",
@@ -774,7 +774,7 @@ const styles = {
   },
   progressTop: { flexDirection: "row", justifyContent: "space-between" },
   stepText: { fontSize: 11, fontWeight: "700", color: "#6b7280" },
-  progressText: { fontSize: 13, fontWeight: "800", color: "#2563eb" },
+  progressText: { fontSize: 13, fontWeight: "700", color: "#2563eb" },
   progressTrack: {
     height: 10,
     backgroundColor: "#e5e7eb",
@@ -787,9 +787,9 @@ const styles = {
     backgroundColor: "#2563eb",
     borderRadius: 999
   },
-  pageTitle: { fontSize: 18, fontWeight: "800" },
+  pageTitle: { fontSize: 18, fontWeight: "700" },
   subText: { fontSize: 13, color: "#6b7280", marginTop: 4 },
-  sectionTitle: { fontSize: 20, fontWeight: "800", marginBottom: 10 },
+  sectionTitle: { fontSize: 20, fontWeight: "700", marginBottom: 10 },
   sectionHeader: { flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 },
   sectionCircle: {
     width: 32,
@@ -799,7 +799,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center"
   },
-  sectionCircleText: { color: "#2563eb", fontWeight: "800" },
+  sectionCircleText: { color: "#2563eb", fontWeight: "700" },
   sectionHeaderTitle: { fontSize: 18, fontWeight: "700" },
   card: {
     backgroundColor: "#ffffff",
@@ -811,7 +811,7 @@ const styles = {
   },
   cardTitle: {
     fontSize: 18,
-    fontWeight: "800",
+    fontWeight: "700",
     color: "#2563eb",
     marginBottom: 12,
     borderBottomWidth: 1,
@@ -850,23 +850,24 @@ const styles = {
   prefix: {
     position: "absolute",
     left: 12,
-    top: 14,
+    top: 15,
     fontWeight: "700",
     color: "#6b7280"
   },
   moneyPrefix: {
     position: "absolute",
     left: 12,
-    top: 14,
+    top: 15,
     fontWeight: "700",
     color: "#6b7280",
     zIndex: 1
   },
   input: {
-    backgroundColor: "#f9fafb",
+    backgroundColor: "#ffffff",
     borderWidth: 1,
-    borderColor: "#d1d5db",
-    borderRadius: 12,
+    borderColor: "#cbd5e1",
+    borderRadius: 50,
+    height: 50,
     paddingVertical: 12,
     paddingHorizontal: 14,
     fontSize: 16
@@ -927,7 +928,7 @@ const styles = {
   },
   addBtnText: {
     color: "#ffffff",
-    fontWeight: "800",
+    fontWeight: "700",
     fontSize: 13
   },
   listRow: {
@@ -939,7 +940,7 @@ const styles = {
   },
   listRowTitle: {
     fontSize: 13,
-    fontWeight: "900",
+    fontWeight: "700",
     color: "#0f172a"
   },
   listRowSub: {
@@ -972,7 +973,7 @@ const styles = {
     padding: 14
   },
   toggleTop: { flexDirection: "row", alignItems: "center", justifyContent: "space-between" },
-  toggleLabel: { fontSize: 14, fontWeight: "800" },
+  toggleLabel: { fontSize: 14, fontWeight: "700" },
   toggleHelp: { fontSize: 12, color: "#6b7280", marginTop: 6 },
   disabledCard: {
     opacity: 0.6,
@@ -987,7 +988,7 @@ const styles = {
     flexDirection: "row",
     justifyContent: "space-between"
   },
-  disabledTitle: { fontSize: 16, fontWeight: "800" },
+  disabledTitle: { fontSize: 16, fontWeight: "700" },
   disabledText: { fontSize: 12, color: "#6b7280", marginTop: 4 },
   signatureWrap: { alignItems: "flex-end", marginBottom: 32 },
   signature: { width: 120, height: 40, resizeMode: "contain" },
@@ -1005,9 +1006,10 @@ const styles = {
     backgroundColor: "#ffffff",
     borderTopWidth: 1,
     borderColor: "#e5e7eb",
-    padding: 16
+    paddingVertical: 16,
+    paddingHorizontal: 20
   },
-  bottomGrid: { flexDirection: "row", gap: 16 },
+  bottomGrid: { flexDirection: "row", gap: 16, maxWidth: 420, width: "100%", alignSelf: "center" },
   backBtn: {
     flex: 1,
     borderWidth: 1,
@@ -1029,7 +1031,7 @@ const styles = {
     borderWidth: 1,
     borderColor: "#fecaca"
   },
-  cancelText: { fontWeight: "800", color: "#dc2626" },
+  cancelText: { fontWeight: "700", color: "#dc2626" },
   nextBtn: {
     flex: 1,
     flexDirection: "row",
@@ -1040,5 +1042,5 @@ const styles = {
     borderRadius: 14,
     backgroundColor: "#2563eb"
   },
-  nextText: { fontWeight: "800", color: "white" }
+  nextText: { fontWeight: "700", color: "white" }
 } as const;

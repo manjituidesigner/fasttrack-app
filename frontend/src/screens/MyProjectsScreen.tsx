@@ -65,7 +65,7 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
             <MaterialIcons name="arrow-back" size={24} color="#1e293b" />
           </Pressable>
 
-          <Text style={{ fontSize: 18, fontWeight: "800", color: "#1d4ed8" }}>{t("myProjects.title")}</Text>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1d4ed8" }}>{t("myProjects.title")}</Text>
 
           <Pressable
             onPress={onMenuPress}
@@ -420,10 +420,10 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
 
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.pin")}:</Text>
-          <Text style={{ fontSize: 11, color: "#2563eb", fontWeight: "900" }}>{pin}</Text>
-          {date ? <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "900" }}>|</Text> : null}
-          {date ? <Text style={{ fontSize: 11, color: "#0f172a", fontWeight: "900" }}>{date}</Text> : null}
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.pin")}:</Text>
+          <Text style={{ fontSize: 11, color: "#2563eb", fontWeight: "700" }}>{pin}</Text>
+          {date ? <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>|</Text> : null}
+          {date ? <Text style={{ fontSize: 11, color: "#0f172a", fontWeight: "700" }}>{date}</Text> : null}
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
@@ -435,7 +435,7 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
               borderRadius: 999
             }}
           >
-            <Text style={{ fontSize: 11, fontWeight: "800", color }}>{statusLabel}</Text>
+            <Text style={{ fontSize: 11, fontWeight: "700", color }}>{statusLabel}</Text>
           </View>
 
           <Pressable
@@ -457,27 +457,27 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
         </View>
       </View>
 
-      <Text style={{ marginTop: 6, fontSize: 17, fontWeight: "900", color: "#0f172a" }}>{name}</Text>
+      <Text style={{ marginTop: 6, fontSize: 17, fontWeight: "700", color: "#0f172a" }}>{name}</Text>
 
       <View style={{ marginTop: 10, gap: 10 }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.sector")}</Text>
-          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{sectorLabel}</Text>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.field.sector")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "700", flexShrink: 1, textAlign: "right" }}>{sectorLabel}</Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.applicant")}</Text>
-          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{applicant}</Text>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.field.applicant")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "700", flexShrink: 1, textAlign: "right" }}>{applicant}</Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.mobile")}</Text>
-          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{mobile}</Text>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.field.mobile")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "700", flexShrink: 1, textAlign: "right" }}>{mobile}</Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "800" }}>{t("myProjects.field.district")}</Text>
-          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "800", flexShrink: 1, textAlign: "right" }}>{district}</Text>
+          <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.field.district")}</Text>
+          <Text style={{ fontSize: 12, color: "#0f172a", fontWeight: "700", flexShrink: 1, textAlign: "right" }}>{district}</Text>
         </View>
       </View>
 
@@ -517,7 +517,7 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
               }}
             >
               <MaterialIcons name={a.icon as any} size={20} color="#1d4ed8" />
-              <Text style={{ fontSize: 12, fontWeight: "800", color: "#0f172a" }}>{a.label}</Text>
+              <Text style={{ fontSize: 12, fontWeight: "700", color: "#0f172a" }}>{a.label}</Text>
             </Pressable>
           ))}
         </View>

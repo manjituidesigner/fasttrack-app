@@ -306,7 +306,7 @@ export function ListOfApprovalsScreen({ onBack, onMenuPress }: Props) {
             <MaterialIcons name="arrow-back-ios" size={20} color="#0f172a" />
           </Pressable>
 
-          <ThemedText style={{ fontSize: 18, fontWeight: "800", color: "#0f172a" }}>List of Approvals</ThemedText>
+          <ThemedText style={{ fontSize: 18, fontWeight: "700", color: "#0f172a" }}>List of Approvals</ThemedText>
 
           <Pressable
             onPress={() => onMenuPress?.()}
@@ -345,7 +345,7 @@ export function ListOfApprovalsScreen({ onBack, onMenuPress }: Props) {
                   }}
                 >
                   <MaterialIcons name={c.icon as any} size={20} color={active ? "white" : "#334155"} />
-                  <ThemedText style={{ fontSize: 14, fontWeight: "800", color: active ? "white" : "#334155" }}>{c.label}</ThemedText>
+                  <ThemedText style={{ fontSize: 14, fontWeight: "700", color: active ? "white" : "#334155" }}>{c.label}</ThemedText>
                 </Pressable>
               );
             })}
@@ -396,7 +396,7 @@ function Section({ title, countLabel, accentColor, items }: any) {
       <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 4, marginBottom: 12 }}>
         <View style={{ flexDirection: "row", alignItems: "center", flex: 1, paddingRight: 10 }}>
           <View style={{ width: 8, height: 26, borderRadius: 99, backgroundColor: accentColor, marginRight: 10 }} />
-          <ThemedText style={{ fontSize: 20, fontWeight: "900", color: "#0f172a" }}>{title}</ThemedText>
+          <ThemedText style={{ fontSize: 20, fontWeight: "700", color: "#0f172a" }}>{title}</ThemedText>
         </View>
         <View style={{ paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, backgroundColor: "rgba(255,255,255,0.45)", borderWidth: 1, borderColor: "rgba(226,232,240,0.7)" }}>
           <ThemedText style={{ fontSize: 12, fontWeight: "700", color: "#334155" }}>{countLabel}</ThemedText>
@@ -429,24 +429,24 @@ function ApprovalCard({ title, rating, department, type, actionIcon }: any) {
       }}
     >
       <View style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", gap: 12, marginBottom: 12 }}>
-        <ThemedText style={{ flex: 1, fontSize: 17, fontWeight: "900", color: "#0f172a" }}>{title}</ThemedText>
+        <ThemedText style={{ flex: 1, fontSize: 17, fontWeight: "700", color: "#0f172a" }}>{title}</ThemedText>
         <RatingStars value={rating} />
       </View>
 
       <View style={{ gap: 12 }}>
         <View>
-          <ThemedText style={{ fontSize: 11, letterSpacing: 0.8, textTransform: "uppercase", fontWeight: "900", color: "#94a3b8" }}>
+          <ThemedText style={{ fontSize: 11, letterSpacing: 0.8, textTransform: "uppercase", fontWeight: "700", color: "#94a3b8" }}>
             Department Name
           </ThemedText>
-          <ThemedText style={{ fontSize: 14, fontWeight: "800", color: "#334155", marginTop: 4 }}>{department}</ThemedText>
+          <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#334155", marginTop: 4 }}>{department}</ThemedText>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" }}>
           <View>
-            <ThemedText style={{ fontSize: 11, letterSpacing: 0.8, textTransform: "uppercase", fontWeight: "900", color: "#94a3b8" }}>
+            <ThemedText style={{ fontSize: 11, letterSpacing: 0.8, textTransform: "uppercase", fontWeight: "700", color: "#94a3b8" }}>
               Application Type
             </ThemedText>
-            <ThemedText style={{ fontSize: 14, fontWeight: "800", color: "#334155", marginTop: 4 }}>{type}</ThemedText>
+            <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#334155", marginTop: 4 }}>{type}</ThemedText>
           </View>
 
           <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
@@ -473,7 +473,7 @@ function ApprovalCard({ title, rating, department, type, actionIcon }: any) {
                 backgroundColor: "rgba(37,99,235,0.10)"
               }}
             >
-              <ThemedText style={{ fontSize: 12, fontWeight: "900", color: "#2563eb" }}>VIEW DETAILS</ThemedText>
+              <ThemedText style={{ fontSize: 12, fontWeight: "600", color: "#2563eb" }}>VIEW DETAILS</ThemedText>
               <MaterialIcons name="chevron-right" size={18} color="#2563eb" />
             </Pressable>
           </View>

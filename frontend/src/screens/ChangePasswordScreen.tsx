@@ -42,7 +42,7 @@ export function ChangePasswordScreen({ onBack, onOpenDrawer }: Props) {
                 <MaterialIcons name="arrow-back" size={22} color="#1f2937" />
               </Pressable>
             }
-            center={<ThemedText style={{ fontSize: 18, fontWeight: "800", color: theme.colors.text.primary }}>{t("changePassword.title")}</ThemedText>}
+            center={<ThemedText style={{ fontSize: 18, fontWeight: "700", color: theme.colors.text.primary }}>{t("changePassword.title")}</ThemedText>}
             right={
               <Pressable
                 onPress={onOpenDrawer}
@@ -70,7 +70,7 @@ export function ChangePasswordScreen({ onBack, onOpenDrawer }: Props) {
               { key: "confirm", label: t("changePassword.confirm") }
             ].map((f) => (
               <View key={f.key} style={{ marginTop: 12 }}>
-                <ThemedText style={{ fontSize: 12, fontWeight: "800", color: theme.colors.text.muted, marginBottom: 8, textTransform: "uppercase" }}>
+                <ThemedText style={{ fontSize: 12, fontWeight: "700", color: theme.colors.text.muted, marginBottom: 8, textTransform: "uppercase" }}>
                   {f.label}
                 </ThemedText>
                 <TextInput
@@ -78,7 +78,6 @@ export function ChangePasswordScreen({ onBack, onOpenDrawer }: Props) {
                   placeholder={f.label}
                   placeholderTextColor="#94a3b8"
                   style={{
-                    fontFamily: "Roboto",
                     fontWeight: "500",
                     paddingHorizontal: 16,
                     paddingVertical: 16,
@@ -99,7 +98,7 @@ export function ChangePasswordScreen({ onBack, onOpenDrawer }: Props) {
                 backgroundColor: "#4f46e5"
               }}
             >
-              <ThemedText style={{ color: "white", fontSize: 16, fontWeight: "800" }}>{t("changePassword.save")}</ThemedText>
+              <ThemedText style={{ color: "white", fontSize: 16, fontWeight: "700" }}>{t("changePassword.save")}</ThemedText>
             </Pressable>
           </View>
         </ScrollView>
