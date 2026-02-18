@@ -11,9 +11,10 @@ type Props = {
   onBack?: () => void;
   onMenuPress?: () => void;
   onFillCaf?: () => void;
+  onOpenDetails?: (item: any) => void;
 };
 
-export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) {
+export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf, onOpenDetails }: Props) {
   const theme = useTheme();
   const { t } = useI18n();
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
@@ -73,6 +74,7 @@ export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) 
             badgeColor="#2563eb"
             expanded={rtbaExpanded}
             onToggle={() => setRtbaExpanded((v) => !v)}
+            onOpenDetails={onOpenDetails}
             items={[
               {
                 name: "P S INFRACORP PRIVATE LIMITED",
@@ -101,6 +103,7 @@ export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) 
             badgeColor="#7c3aed"
             expanded={cafExpanded}
             onToggle={() => setCafExpanded((v) => !v)}
+            onOpenDetails={onOpenDetails}
             items={[
               {
                 name: "ASD Company 2",
@@ -129,6 +132,7 @@ export function MyApplicationsScreen({ onBack, onMenuPress, onFillCaf }: Props) 
             badgeColor="#d97706"
             expanded={scafExpanded}
             onToggle={() => setScafExpanded((v) => !v)}
+            onOpenDetails={onOpenDetails}
             items={[
               {
                 name: "Test Project",
@@ -231,7 +235,7 @@ function Tab({ label, icon, active, bg, color }: any) {
   );
 }
 
-function Section({ title, badge, badgeColor, items, expanded, onToggle }: any) {
+function Section({ title, badge, badgeColor, items, expanded, onToggle, onOpenDetails }: any) {
   const { t } = useI18n();
   return (
     <View style={styles.section}>
@@ -257,7 +261,9 @@ function Section({ title, badge, badgeColor, items, expanded, onToggle }: any) {
                   </View>
                   <Text style={styles.muted}>{item.date}</Text>
                 </View>
-                <MaterialIcons name="visibility" size={20} color="#0D9488" />
+                <Pressable hitSlop={10} onPress={() => onOpenDetails?.(item)}>
+                  <MaterialIcons name="visibility" size={20} color="#0D9488" />
+                </Pressable>
               </View>
 
               <Text style={styles.cardTitle}>{item.name}</Text>
@@ -272,9 +278,11 @@ function Section({ title, badge, badgeColor, items, expanded, onToggle }: any) {
               <Text style={styles.detail}>
                 {t("myApplications.field.sector")}: {item.sector}
               </Text>
-              <Text style={styles.pin}>
-                {t("myApplications.field.pin")}: {item.pin}
-              </Text>
+              <Pressable hitSlop={6} onPress={() => onOpenDetails?.(item)} style={{ alignSelf: "flex-start" }}>
+                <Text style={styles.pin}>
+                  {t("myApplications.field.pin")}: {item.pin}
+                </Text>
+              </Pressable>
             </View>
           ))
         : null}

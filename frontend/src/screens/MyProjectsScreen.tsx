@@ -26,6 +26,7 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
   const [rtbaExpanded, setRtbaExpanded] = useState(true);
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(false);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   return (
@@ -81,6 +82,13 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
             <MaterialIcons name="menu" size={24} color="#1e293b" />
           </Pressable>
         </View>
+
+        {openMenuId ? (
+          <Pressable
+            onPress={() => setOpenMenuId(null)}
+            style={{ position: "absolute", inset: 0, backgroundColor: "transparent", zIndex: 900, elevation: 900 }}
+          />
+        ) : null}
 
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -160,6 +168,9 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                   statusType={item.statusType}
                   statusLabel={t("myProjects.status.verified")}
                   color={getStatusColor(item.statusType)}
+                  isMenuOpen={openMenuId === item.pin}
+                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
+                  onCloseMenu={() => setOpenMenuId(null)}
                 />
               ))}
             </View>
@@ -240,6 +251,9 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                     item.statusType === "verified" ? t("myProjects.status.verified") : t("myProjects.status.filingInProcess")
                   }
                   color={getStatusColor(item.statusType)}
+                  isMenuOpen={openMenuId === item.pin}
+                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
+                  onCloseMenu={() => setOpenMenuId(null)}
                 />
               ))}
             </View>
@@ -318,6 +332,9 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                   statusType={item.statusType}
                   statusLabel={t("myProjects.status.verified")}
                   color={getStatusColor(item.statusType)}
+                  isMenuOpen={openMenuId === item.pin}
+                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
+                  onCloseMenu={() => setOpenMenuId(null)}
                 />
               ))}
             </View>
@@ -378,11 +395,13 @@ type ProjectCardProps = {
   mobile: string;
   sector: string;
   district: string;
+  isMenuOpen?: boolean;
+  onToggleMenu?: () => void;
+  onCloseMenu?: () => void;
 };
 
-function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, sector, district }: ProjectCardProps) {
+function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, sector, district, isMenuOpen, onToggleMenu, onCloseMenu }: ProjectCardProps) {
   const { t } = useI18n();
-  const [showActions, setShowActions] = useState(false);
 
   const sectorLabel =
     sector === "Manufacturing"
@@ -401,12 +420,15 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
         borderWidth: 1,
         borderColor: "#e2e8f0",
         shadowOpacity: 0.08,
-        position: "relative"
+        position: "relative",
+        overflow: "visible",
+        zIndex: isMenuOpen ? 1000 : 1,
+        elevation: isMenuOpen ? 1000 : 1
       }}
     >
-      {showActions ? (
+      {isMenuOpen ? (
         <Pressable
-          onPress={() => setShowActions(false)}
+          onPress={onCloseMenu}
           style={{
             position: "absolute",
             top: 0,
@@ -441,7 +463,7 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
           <Pressable
             onPress={(e) => {
               e.stopPropagation();
-              setShowActions((v) => !v);
+              onToggleMenu?.();
             }}
             hitSlop={10}
             style={{
@@ -481,7 +503,7 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
         </View>
       </View>
 
-      {showActions ? (
+      {isMenuOpen ? (
         <View
           style={{
             position: "absolute",
@@ -498,14 +520,18 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
           }}
         >
           {[
-            { icon: "add-circle-outline", label: t("myProjects.action.addClearance") },
-            { icon: "person-outline", label: t("myProjects.action.updateApplicant") },
-            { icon: "groups", label: t("myProjects.action.updatePartners") },
-            { icon: "badge", label: t("myProjects.action.updateCompanyPan") }
+            { icon: "assignment", label: "Know Your Approvals" },
+            { icon: "add-circle-outline", label: "Add Clearence" },
+            { icon: "person-outline", label: "Update Applicant" },
+            { icon: "receipt-long", label: "Update GST" },
+            { icon: "groups", label: "Update Partners" },
+            { icon: "badge", label: "Update Company Pan Details" },
+            { icon: "edit-note", label: "CAF Amandment" },
+            { icon: "history", label: "Application Log" }
           ].map((a, i, arr) => (
             <Pressable
               key={a.label}
-              onPress={() => setShowActions(false)}
+              onPress={onCloseMenu}
               style={{
                 flexDirection: "row",
                 alignItems: "center",
@@ -532,7 +558,8 @@ const cardContainer = {
   marginHorizontal: 16,
   borderRadius: 12,
   borderWidth: 1,
-  borderColor: "#e2e8f0"
+  borderColor: "#e2e8f0",
+  overflow: "visible"
 } as const;
 
 const cardHeader = {

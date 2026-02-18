@@ -17,8 +17,11 @@ import { RegulatoryClearancesScreen } from "./screens/RegulatoryClearancesScreen
 import { ListOfApprovalsScreen } from "./screens/ListOfApprovalsScreen";
 import { MyProfileScreen } from "./screens/MyProfileScreen";
 import { NotificationsScreen } from "./screens/NotificationsScreen";
+import { ApplicationDetailsScreen } from "./screens/ApplicationDetailsScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
+
+type UserRole = "investor" | "officer";
 
 type RouteName =
   | "home"
@@ -26,6 +29,7 @@ type RouteName =
   | "dashboard"
   | "myProjects"
   | "myApplications"
+  | "applicationDetails"
   | "cafForm"
   | "investmentProject"
   | "changePassword"
@@ -108,6 +112,8 @@ function AppShell() {
   const { t, language, setLanguage } = useI18n();
   const [route, setRoute] = useState<RouteName>("home");
   const [prevRoute, setPrevRoute] = useState<RouteName>("dashboard");
+  const [selectedApplication, setSelectedApplication] = useState<any>(null);
+  const [userRole, setUserRole] = useState<UserRole>("investor");
   const [showChat, setShowChat] = useState(false);
   const [chatMessage, setChatMessage] = useState("");
   const [showGlobalAddMenu, setShowGlobalAddMenu] = useState(false);
@@ -139,6 +145,11 @@ function AppShell() {
       <HomeScreen onLoginPress={() => setRoute("login")} />
     ) : route === "login" ? (
       <LoginScreen onBack={() => setRoute("home")} onLoginSuccess={() => setRoute("dashboard")} />
+    ) : route === "applicationDetails" ? (
+      <ApplicationDetailsScreen
+        application={selectedApplication ?? undefined}
+        onBack={() => setRoute(prevRoute ?? "myApplications")}
+      />
     ) : route === "notifications" ? (
       <NotificationsScreen onBack={() => setRoute(prevRoute ?? "dashboard")} />
     ) : route === "myProfile" ? (
@@ -155,13 +166,31 @@ function AppShell() {
     ) : route === "cafForm" ? (
       <CafFormScreen onBack={() => setRoute("myApplications")} onOpenDrawer={() => setShowDrawer(true)} />
     ) : route === "myApplications" ? (
-      <MyApplicationsScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} onFillCaf={() => setRoute("cafForm")} />
+      <MyApplicationsScreen
+        onBack={() => setRoute("dashboard")}
+        onMenuPress={() => setShowDrawer(true)}
+        onFillCaf={() => setRoute("cafForm")}
+        onOpenDetails={(item) => {
+          setPrevRoute("myApplications");
+          setSelectedApplication({
+            pin: item?.pin,
+            date: item?.date,
+            businessEntity: item?.name,
+            applicantName: item?.person,
+            projectName: item?.name,
+            projectSector: item?.sector,
+            siteDetails: item?.district
+          });
+          setRoute("applicationDetails");
+        }}
+      />
     ) : route === "regulatoryClearances" ? (
       <RegulatoryClearancesScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} />
     ) : route === "listOfApprovals" ? (
       <ListOfApprovalsScreen onBack={() => setRoute("dashboard")} onMenuPress={() => setShowDrawer(true)} />
     ) : (
       <DashboardScreen
+        userRole={userRole}
         onMenuPress={() => setShowDrawer(true)}
         onInvestmentProject={() => setRoute("investmentProject")}
         onManageApplications={() => setRoute("regulatoryClearances")}
@@ -541,8 +570,42 @@ function AppShell() {
                     }}
                   >
                     <Pressable
-                      onPress={() => setShowDrawerLanguageMenu((v) => !v)}
+                      onPress={() => {
+                        setUserRole("investor");
+                        setShowDrawerLanguageMenu(false);
+                        setShowDrawerProfileMenu(false);
+                        setShowDrawer(false);
+                        setRoute("dashboard");
+                      }}
                       style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <MaterialIcons name="person" size={18} color="#0f172a" />
+                        <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Invester</Text>
+                      </View>
+                      {userRole === "investor" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                    </Pressable>
+
+                    <Pressable
+                      onPress={() => {
+                        setUserRole("officer");
+                        setShowDrawerLanguageMenu(false);
+                        setShowDrawerProfileMenu(false);
+                        setShowDrawer(false);
+                        setRoute("dashboard");
+                      }}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <MaterialIcons name="badge" size={18} color="#0f172a" />
+                        <Text style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Officer</Text>
+                      </View>
+                      {userRole === "officer" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                    </Pressable>
+
+                    <Pressable
+                      onPress={() => setShowDrawerLanguageMenu((v) => !v)}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(0,0,0,0.06)" }}
                     >
                       <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                         <MaterialIcons name="language" size={18} color="#0f172a" />
@@ -632,25 +695,50 @@ function AppShell() {
                   }}
                 />
 
-                <MenuItem
-                  icon="work"
-                  label={t("drawer.myProjects")}
-                  active={route === "myProjects"}
-                  onPress={() => {
-                    setShowDrawer(false);
-                    setRoute("myProjects");
-                  }}
-                />
-                <MenuItem
-                  icon="description"
-                  label={t("drawer.myApplications")}
-                  badge="3"
-                  active={route === "myApplications"}
-                  onPress={() => {
-                    setShowDrawer(false);
-                    setRoute("myApplications");
-                  }}
-                />
+                {userRole === "investor" ? (
+                  <>
+                    <MenuItem
+                      icon="work"
+                      label={t("drawer.myProjects")}
+                      active={route === "myProjects"}
+                      onPress={() => {
+                        setShowDrawer(false);
+                        setRoute("myProjects");
+                      }}
+                    />
+                    <MenuItem
+                      icon="description"
+                      label={t("drawer.myApplications")}
+                      badge="3"
+                      active={route === "myApplications"}
+                      onPress={() => {
+                        setShowDrawer(false);
+                        setRoute("myApplications");
+                      }}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <MenuItem
+                      icon="assignment"
+                      label={t("drawer.knowYourApprovals")}
+                      active={route === "listOfApprovals"}
+                      onPress={() => {
+                        setShowDrawer(false);
+                        setRoute("listOfApprovals");
+                      }}
+                    />
+                    <MenuItem
+                      icon="settings-applications"
+                      label={t("dashboard.card.manageApplications.title")}
+                      active={route === "regulatoryClearances"}
+                      onPress={() => {
+                        setShowDrawer(false);
+                        setRoute("regulatoryClearances");
+                      }}
+                    />
+                  </>
+                )}
                 <MenuItem
                   icon="notifications"
                   label="Notification"
