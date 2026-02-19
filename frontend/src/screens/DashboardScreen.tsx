@@ -11,6 +11,7 @@ import { useTheme } from "../theme/useTheme";
 
 type Props = {
   userRole?: "investor" | "officer";
+  onSetUserRole?: (role: "investor" | "officer") => void;
   onMenuPress?: () => void;
   onInvestmentProject?: () => void;
   onChangePassword?: () => void;
@@ -22,6 +23,7 @@ type Props = {
 
 export function DashboardScreen({
   userRole,
+  onSetUserRole,
   onMenuPress,
   onInvestmentProject,
   onChangePassword,
@@ -103,7 +105,7 @@ export function DashboardScreen({
                   color: "#0f172a"
                 }}
               >
-                {userRole === "officer" ? "Officer Dashboard" : t("dashboard.title")}
+                {t("dashboard.title")}
               </ThemedText>
             </View>
 
@@ -162,13 +164,43 @@ export function DashboardScreen({
                   }}
                 >
                   <Pressable
+                    onPress={() => {
+                      onSetUserRole?.("investor");
+                      closeMenu();
+                    }}
+                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                      <MaterialIcons name="person" size={18} color="#0f172a" />
+                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Invester</ThemedText>
+                    </View>
+                    <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" />
+                  </Pressable>
+
+                  <Pressable
+                    onPress={() => {
+                      onSetUserRole?.("officer");
+                      closeMenu();
+                    }}
+                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                      <MaterialIcons name="badge" size={18} color="#0f172a" />
+                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Officer</ThemedText>
+                    </View>
+                    {null}
+                  </Pressable>
+
+                  <Pressable
                     onPress={() => setShowLanguageMenu((v) => !v)}
                     style={{
                       paddingHorizontal: 14,
                       paddingVertical: 12,
                       flexDirection: "row",
                       alignItems: "center",
-                      justifyContent: "space-between"
+                      justifyContent: "space-between",
+                      borderTopWidth: 1,
+                      borderColor: "rgba(203,213,225,0.7)"
                     }}
                   >
                     <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("menu.language")}</ThemedText>
@@ -245,61 +277,44 @@ export function DashboardScreen({
                 gap: 16
               }}
             >
-              {(
-                userRole === "officer"
-                  ? [
-                      {
-                        icon: "settings-applications" as const,
-                        titleKey: "dashboard.card.manageApplications.title" as const,
-                        descKey: "dashboard.card.manageApplications.desc" as const,
-                        color: "#7c3aed"
-                      },
-                      {
-                        icon: "verified-user" as const,
-                        titleKey: "dashboard.card.knowYourApprovals.title" as const,
-                        descKey: "dashboard.card.knowYourApprovals.desc" as const,
-                        color: "#0d9488"
-                      }
-                    ]
-                  : [
-                      {
-                        icon: "currency-rupee" as const,
-                        titleKey: "dashboard.card.investmentProject.title" as const,
-                        descKey: "dashboard.card.investmentProject.desc" as const,
-                        color: "#4f46e5"
-                      },
-                      {
-                        icon: "settings-applications" as const,
-                        titleKey: "dashboard.card.manageApplications.title" as const,
-                        descKey: "dashboard.card.manageApplications.desc" as const,
-                        color: "#7c3aed"
-                      },
-                      {
-                        icon: "assignment" as const,
-                        titleKey: "dashboard.card.myApplications.title" as const,
-                        descKey: "dashboard.card.myApplications.desc" as const,
-                        color: "#2563eb"
-                      },
-                      {
-                        icon: "verified-user" as const,
-                        titleKey: "dashboard.card.knowYourApprovals.title" as const,
-                        descKey: "dashboard.card.knowYourApprovals.desc" as const,
-                        color: "#0d9488"
-                      },
-                      {
-                        icon: "lock" as const,
-                        titleKey: "dashboard.card.entityVault.title" as const,
-                        descKey: "dashboard.card.entityVault.desc" as const,
-                        color: "#e11d48"
-                      },
-                      {
-                        icon: "analytics" as const,
-                        titleKey: "dashboard.card.projectDashboard.title" as const,
-                        descKey: "dashboard.card.projectDashboard.desc" as const,
-                        color: "#d97706"
-                      }
-                    ]
-              ).map((item, i) => (
+              {[
+                {
+                  icon: "currency-rupee" as const,
+                  titleKey: "dashboard.card.investmentProject.title" as const,
+                  descKey: "dashboard.card.investmentProject.desc" as const,
+                  color: "#4f46e5"
+                },
+                {
+                  icon: "settings-applications" as const,
+                  titleKey: "dashboard.card.manageApplications.title" as const,
+                  descKey: "dashboard.card.manageApplications.desc" as const,
+                  color: "#7c3aed"
+                },
+                {
+                  icon: "assignment" as const,
+                  titleKey: "dashboard.card.myApplications.title" as const,
+                  descKey: "dashboard.card.myApplications.desc" as const,
+                  color: "#2563eb"
+                },
+                {
+                  icon: "verified-user" as const,
+                  titleKey: "dashboard.card.knowYourApprovals.title" as const,
+                  descKey: "dashboard.card.knowYourApprovals.desc" as const,
+                  color: "#0d9488"
+                },
+                {
+                  icon: "lock" as const,
+                  titleKey: "dashboard.card.entityVault.title" as const,
+                  descKey: "dashboard.card.entityVault.desc" as const,
+                  color: "#e11d48"
+                },
+                {
+                  icon: "analytics" as const,
+                  titleKey: "dashboard.card.projectDashboard.title" as const,
+                  descKey: "dashboard.card.projectDashboard.desc" as const,
+                  color: "#d97706"
+                }
+              ].map((item, i) => (
                 <Pressable
                   key={i}
                   onPress={() => {
@@ -567,13 +582,10 @@ function OfficerDashboard({
           }}
         >
           <View style={{ paddingHorizontal: 24, paddingVertical: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <View>
-              <Text style={{ fontSize: 12, fontWeight: "700", color: "#135bec", textTransform: "uppercase", letterSpacing: 1 }}>
-                FastTrack Punjab
-              </Text>
-              <Text style={{ marginTop: 4, fontSize: 28, fontWeight: "800", color: "#111827", lineHeight: 32 }}>Officer Portal</Text>
-              <Text style={{ marginTop: 4, fontSize: 14, fontWeight: "600", color: "#6b7280" }}>Department of Industries</Text>
-            </View>
+            <Image
+              source={require("../assets/images/fasttrack_dark_logo.png")}
+              style={{ width: 150, height: 44, resizeMode: "contain" }}
+            />
 
             <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
               <Pressable hitSlop={10} style={{ width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" }}>
@@ -714,33 +726,6 @@ function OfficerDashboard({
             </View>
           </View>
         </ScrollView>
-
-        <View
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "#ffffff",
-            borderTopWidth: 1,
-            borderTopColor: "#e5e7eb",
-            paddingTop: 10,
-            paddingHorizontal: 24,
-            paddingBottom: 18
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between" }}>
-            <OfficerNavItem icon="dashboard" label="Home" active />
-            <OfficerNavItem icon="folder-open" label="Apps" />
-
-            <View style={{ width: 56, height: 56, borderRadius: 28, backgroundColor: "#135bec", alignItems: "center", justifyContent: "center", marginBottom: 14, shadowColor: "#135bec", shadowOpacity: 0.28, shadowRadius: 16, shadowOffset: { width: 0, height: 10 }, elevation: 6 }}>
-              <MaterialIcons name="qr-code-scanner" size={28} color="#fff" />
-            </View>
-
-            <OfficerNavItem icon="bar-chart" label="Stats" />
-            <OfficerNavItem icon="person" label="Profile" />
-          </View>
-        </View>
       </View>
     </>
   );

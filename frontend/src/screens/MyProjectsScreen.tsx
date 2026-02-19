@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle } from "react-native";
+import { View, Text, ScrollView, Pressable, StyleProp, ViewStyle, Modal, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
@@ -27,7 +27,25 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
   const [cafExpanded, setCafExpanded] = useState(true);
   const [scafExpanded, setScafExpanded] = useState(false);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const [menuPos, setMenuPos] = useState<{ x: number; y: number } | null>(null);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
+  const windowWidth = Dimensions.get("window").width;
+
+  const actions = [
+    { icon: "assignment", label: "Know Your Approvals" },
+    { icon: "add-circle-outline", label: "Add Clearence" },
+    { icon: "person-outline", label: "Update Applicant" },
+    { icon: "receipt-long", label: "Update GST" },
+    { icon: "groups", label: "Update Partners" },
+    { icon: "badge", label: "Update Company Pan Details" },
+    { icon: "edit-note", label: "CAF Amandment" },
+    { icon: "history", label: "Application Log" }
+  ] as const;
+
+  const closeMenu = () => {
+    setOpenMenuId(null);
+    setMenuPos(null);
+  };
 
   return (
     <>
@@ -83,12 +101,46 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
           </Pressable>
         </View>
 
-        {openMenuId ? (
-          <Pressable
-            onPress={() => setOpenMenuId(null)}
-            style={{ position: "absolute", inset: 0, backgroundColor: "transparent", zIndex: 900, elevation: 900 }}
-          />
-        ) : null}
+        <Modal visible={!!openMenuId} transparent animationType="none" onRequestClose={closeMenu}>
+          <Pressable onPress={closeMenu} style={{ flex: 1, backgroundColor: "transparent" }}>
+            {menuPos ? (
+              <View
+                style={{
+                  position: "absolute",
+                  top: menuPos.y,
+                  left: Math.min(windowWidth - 220 - 16, Math.max(16, menuPos.x - 220 + 20)),
+                  width: 220,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  borderWidth: 1,
+                  borderColor: "#e2e8f0",
+                  backgroundColor: "#ffffff",
+                  zIndex: 9999,
+                  elevation: 9999
+                }}
+              >
+                {actions.map((a, i, arr) => (
+                  <Pressable
+                    key={a.label}
+                    onPress={closeMenu}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                      paddingHorizontal: 12,
+                      paddingVertical: 10,
+                      borderBottomWidth: i === arr.length - 1 ? 0 : 1,
+                      borderColor: "#e2e8f0"
+                    }}
+                  >
+                    <MaterialIcons name={a.icon as any} size={20} color="#1d4ed8" />
+                    <Text style={{ fontSize: 12, fontWeight: "700", color: "#0f172a" }}>{a.label}</Text>
+                  </Pressable>
+                ))}
+              </View>
+            ) : null}
+          </Pressable>
+        </Modal>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -169,8 +221,14 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                   statusLabel={t("myProjects.status.verified")}
                   color={getStatusColor(item.statusType)}
                   isMenuOpen={openMenuId === item.pin}
-                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
-                  onCloseMenu={() => setOpenMenuId(null)}
+                  onToggleMenu={(pos) => {
+                    setOpenMenuId((v) => {
+                      const next = v === item.pin ? null : item.pin;
+                      setMenuPos(next ? (pos ?? null) : null);
+                      return next;
+                    });
+                  }}
+                  onCloseMenu={closeMenu}
                 />
               ))}
             </View>
@@ -252,8 +310,14 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                   }
                   color={getStatusColor(item.statusType)}
                   isMenuOpen={openMenuId === item.pin}
-                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
-                  onCloseMenu={() => setOpenMenuId(null)}
+                  onToggleMenu={(pos) => {
+                    setOpenMenuId((v) => {
+                      const next = v === item.pin ? null : item.pin;
+                      setMenuPos(next ? (pos ?? null) : null);
+                      return next;
+                    });
+                  }}
+                  onCloseMenu={closeMenu}
                 />
               ))}
             </View>
@@ -333,8 +397,14 @@ export function MyProjectsScreen({ onBack, onMenuPress }: Props) {
                   statusLabel={t("myProjects.status.verified")}
                   color={getStatusColor(item.statusType)}
                   isMenuOpen={openMenuId === item.pin}
-                  onToggleMenu={() => setOpenMenuId((v) => (v === item.pin ? null : item.pin))}
-                  onCloseMenu={() => setOpenMenuId(null)}
+                  onToggleMenu={(pos) => {
+                    setOpenMenuId((v) => {
+                      const next = v === item.pin ? null : item.pin;
+                      setMenuPos(next ? (pos ?? null) : null);
+                      return next;
+                    });
+                  }}
+                  onCloseMenu={closeMenu}
                 />
               ))}
             </View>
@@ -396,7 +466,7 @@ type ProjectCardProps = {
   sector: string;
   district: string;
   isMenuOpen?: boolean;
-  onToggleMenu?: () => void;
+  onToggleMenu?: (pos?: { x: number; y: number }) => void;
   onCloseMenu?: () => void;
 };
 
@@ -426,20 +496,6 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
         elevation: isMenuOpen ? 1000 : 1
       }}
     >
-      {isMenuOpen ? (
-        <Pressable
-          onPress={onCloseMenu}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            zIndex: 98
-          }}
-        />
-      ) : null}
-
       <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
           <Text style={{ fontSize: 11, color: "#94a3b8", fontWeight: "700" }}>{t("myProjects.pin")}:</Text>
@@ -463,7 +519,7 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
           <Pressable
             onPress={(e) => {
               e.stopPropagation();
-              onToggleMenu?.();
+              onToggleMenu?.({ x: e.nativeEvent.pageX, y: e.nativeEvent.pageY + 10 });
             }}
             hitSlop={10}
             style={{
@@ -503,51 +559,6 @@ function ProjectCard({ pin, date, name, statusLabel, color, applicant, mobile, s
         </View>
       </View>
 
-      {isMenuOpen ? (
-        <View
-          style={{
-            position: "absolute",
-            top: 48,
-            right: 14,
-            width: 220,
-            borderRadius: 12,
-            overflow: "hidden",
-            borderWidth: 1,
-            borderColor: "#e2e8f0",
-            backgroundColor: "#ffffff",
-            zIndex: 99,
-            elevation: 99
-          }}
-        >
-          {[
-            { icon: "assignment", label: "Know Your Approvals" },
-            { icon: "add-circle-outline", label: "Add Clearence" },
-            { icon: "person-outline", label: "Update Applicant" },
-            { icon: "receipt-long", label: "Update GST" },
-            { icon: "groups", label: "Update Partners" },
-            { icon: "badge", label: "Update Company Pan Details" },
-            { icon: "edit-note", label: "CAF Amandment" },
-            { icon: "history", label: "Application Log" }
-          ].map((a, i, arr) => (
-            <Pressable
-              key={a.label}
-              onPress={onCloseMenu}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-                paddingHorizontal: 12,
-                paddingVertical: 10,
-                borderBottomWidth: i === arr.length - 1 ? 0 : 1,
-                borderColor: "#e2e8f0"
-              }}
-            >
-              <MaterialIcons name={a.icon as any} size={20} color="#1d4ed8" />
-              <Text style={{ fontSize: 12, fontWeight: "700", color: "#0f172a" }}>{a.label}</Text>
-            </Pressable>
-          ))}
-        </View>
-      ) : null}
     </View>
   );
 }

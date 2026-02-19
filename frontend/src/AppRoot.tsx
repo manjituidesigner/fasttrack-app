@@ -18,6 +18,7 @@ import { ListOfApprovalsScreen } from "./screens/ListOfApprovalsScreen";
 import { MyProfileScreen } from "./screens/MyProfileScreen";
 import { NotificationsScreen } from "./screens/NotificationsScreen";
 import { ApplicationDetailsScreen } from "./screens/ApplicationDetailsScreen";
+import { ContactsScreen } from "./screens/ContactsScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
@@ -36,7 +37,8 @@ type RouteName =
   | "regulatoryClearances"
   | "listOfApprovals"
   | "myProfile"
-  | "notifications";
+  | "notifications"
+  | "contacts";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -150,6 +152,8 @@ function AppShell() {
         application={selectedApplication ?? undefined}
         onBack={() => setRoute(prevRoute ?? "myApplications")}
       />
+    ) : route === "contacts" ? (
+      <ContactsScreen onBack={() => setRoute(prevRoute ?? "dashboard")} onMenuPress={() => setShowDrawer(true)} />
     ) : route === "notifications" ? (
       <NotificationsScreen onBack={() => setRoute(prevRoute ?? "dashboard")} />
     ) : route === "myProfile" ? (
@@ -191,6 +195,10 @@ function AppShell() {
     ) : (
       <DashboardScreen
         userRole={userRole}
+        onSetUserRole={(role) => {
+          setUserRole(role);
+          setRoute("dashboard");
+        }}
         onMenuPress={() => setShowDrawer(true)}
         onInvestmentProject={() => setRoute("investmentProject")}
         onManageApplications={() => setRoute("regulatoryClearances")}
@@ -428,6 +436,7 @@ function AppShell() {
           showDrawer &&
           (route === "dashboard" ||
             route === "notifications" ||
+            route === "contacts" ||
             route === "myProjects" ||
             route === "myApplications" ||
             route === "regulatoryClearances" ||
@@ -747,6 +756,17 @@ function AppShell() {
                     setShowDrawer(false);
                     setPrevRoute(route);
                     setRoute("notifications");
+                  }}
+                />
+
+                <MenuItem
+                  icon="contacts"
+                  label="Contacts"
+                  active={route === "contacts"}
+                  onPress={() => {
+                    setShowDrawer(false);
+                    setPrevRoute(route);
+                    setRoute("contacts");
                   }}
                 />
                 <MenuItem icon="monetization-on" label={t("drawer.fiscalIncentives")} onPress={() => setShowDrawer(false)} />

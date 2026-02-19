@@ -166,15 +166,37 @@ export function ApplicationDetailsScreen({ onBack, application }: Props) {
                       <Text style={{ marginTop: 4, fontSize: 18, fontWeight: "700", color: "#111827" }}>{app.businessEntity}</Text>
                     </View>
 
-                    <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: 12, columnGap: 16 }}>
+                    <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: 12, columnGap: 12 }}>
                       <InfoPair label="Project Name" value={app.projectName} widthPercent={50} />
                       <InfoPair label="Applicant Name" value={app.applicantName} widthPercent={50} />
 
-                      <View style={{ width: "100%" }}>
-                        <Text style={{ fontSize: 10, fontWeight: "700", color: "#9ca3af", textTransform: "uppercase" }}>Site Details</Text>
-                        <View style={{ marginTop: 6, flexDirection: "row", alignItems: "flex-start", gap: 6 }}>
-                          <MaterialIcons name="location-on" size={16} color="#6b7280" style={{ marginTop: 1 }} />
-                          <Text style={{ fontSize: 12, fontWeight: "600", color: "#6b7280", flex: 1, lineHeight: 18 }}>{app.siteDetails}</Text>
+                      <View
+                        style={{
+                          width: "100%",
+                          backgroundColor: "rgba(241,245,249,0.9)",
+                          borderRadius: 14,
+                          padding: 12,
+                          borderWidth: 1,
+                          borderColor: "rgba(226,232,240,1)"
+                        }}
+                      >
+                        <Text style={{ fontSize: 10, fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: 1 }}>
+                          Site Details
+                        </Text>
+                        <View style={{ marginTop: 8, flexDirection: "row", alignItems: "flex-start", gap: 8 }}>
+                          <View
+                            style={{
+                              width: 28,
+                              height: 28,
+                              borderRadius: 10,
+                              backgroundColor: "rgba(19,91,236,0.12)",
+                              alignItems: "center",
+                              justifyContent: "center"
+                            }}
+                          >
+                            <MaterialIcons name="location-on" size={16} color="#135bec" />
+                          </View>
+                          <Text style={{ fontSize: 13, fontWeight: "700", color: "#334155", flex: 1, lineHeight: 18 }}>{app.siteDetails}</Text>
                         </View>
                       </View>
 
@@ -263,11 +285,41 @@ function TabPill({ label, active, onPress }: { label: string; active?: boolean; 
   );
 }
 
-function InfoPair({ label, value, widthPercent, mutedValue }: { label: string; value: string; widthPercent: 50 | 100; mutedValue?: boolean }) {
+function InfoPair({
+  label,
+  value,
+  widthPercent,
+  mutedValue
+}: {
+  label: string;
+  value: string;
+  widthPercent: 50 | 100;
+  mutedValue?: boolean;
+}) {
   return (
-    <View style={{ width: widthPercent === 50 ? "48%" : "100%" }}>
-      <Text style={{ fontSize: 10, fontWeight: "700", color: "#9ca3af", textTransform: "uppercase" }}>{label}</Text>
-      <Text style={{ marginTop: 4, fontSize: 12, fontWeight: "600", color: mutedValue ? "#d1d5db" : "#1f2937" }} numberOfLines={2}>
+    <View
+      style={{
+        width: widthPercent === 50 ? "48%" : "100%",
+        backgroundColor: "rgba(241,245,249,0.9)",
+        borderRadius: 14,
+        padding: 12,
+        borderWidth: 1,
+        borderColor: "rgba(226,232,240,1)"
+      }}
+    >
+      <Text style={{ fontSize: 10, fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: 1 }}>
+        {label}
+      </Text>
+      <Text
+        style={{
+          marginTop: 8,
+          fontSize: 13,
+          fontWeight: "800",
+          color: mutedValue ? "#cbd5e1" : "#0f172a",
+          lineHeight: 18
+        }}
+        numberOfLines={2}
+      >
         {value}
       </Text>
     </View>
@@ -411,7 +463,8 @@ function PrimaryButton({ label, icon, full }: { label: string; icon?: string; fu
         gap: 8,
         backgroundColor: "#135bec",
         borderRadius: 999,
-        paddingVertical: 10,
+        minHeight: 44,
+        paddingVertical: 12,
         paddingHorizontal: 16,
         shadowColor: "#000",
         shadowOpacity: 0.12,
@@ -421,7 +474,7 @@ function PrimaryButton({ label, icon, full }: { label: string; icon?: string; fu
       }}
     >
       {icon ? <MaterialIcons name={icon as any} size={16} color="#fff" /> : null}
-      <Text style={{ fontSize: 12, fontWeight: "700", color: "#fff" }}>{label}</Text>
+      <Text style={{ fontSize: 13, fontWeight: "600", color: "#fff" }}>{label}</Text>
     </Pressable>
   );
 }
