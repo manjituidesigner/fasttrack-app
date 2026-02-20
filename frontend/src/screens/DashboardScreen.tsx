@@ -582,10 +582,10 @@ function OfficerDashboard({
           }}
         >
           <View style={{ paddingHorizontal: 24, paddingVertical: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-            <Image
-              source={require("../assets/images/fasttrack_dark_logo.png")}
-              style={{ width: 150, height: 44, resizeMode: "contain" }}
-            />
+            <View style={{ flex: 1, paddingRight: 14 }}>
+              <Text style={{ fontSize: 20, fontWeight: "700", color: "#111827" }}>Officer Portal</Text>
+              <Text style={{ marginTop: 2, fontSize: 12, fontWeight: "600", color: "#6b7280" }}>Designation • Department of Industries</Text>
+            </View>
 
             <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
               <Pressable hitSlop={10} style={{ width: 44, height: 44, borderRadius: 22, alignItems: "center", justifyContent: "center" }}>
