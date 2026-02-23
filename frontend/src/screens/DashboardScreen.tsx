@@ -19,10 +19,12 @@ type Props = {
   onManageApplications?: () => void;
   onMyApplications?: () => void;
   onKnowYourApprovals?: () => void;
+  onEntityVault?: () => void;
+  onProjectDashboard?: () => void;
 };
 
 export function DashboardScreen({
-  userRole,
+  userRole: userRoleProp,
   onSetUserRole,
   onMenuPress,
   onInvestmentProject,
@@ -30,7 +32,9 @@ export function DashboardScreen({
   onLogout,
   onManageApplications,
   onMyApplications,
-  onKnowYourApprovals
+  onKnowYourApprovals,
+  onEntityVault,
+  onProjectDashboard
 }: Props) {
   const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
@@ -38,15 +42,29 @@ export function DashboardScreen({
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
+  const activeRole: "investor" | "officer" = userRoleProp ?? "investor";
+
   const closeMenu = () => {
     setShowLanguageMenu(false);
     setShowMenu(false);
   };
 
-  if (userRole === "officer") {
+  if (activeRole === "officer") {
     return (
       <OfficerDashboard
         statusBarHeight={STATUS_BAR_HEIGHT}
+        userRole={activeRole}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        showLanguageMenu={showLanguageMenu}
+        setShowLanguageMenu={setShowLanguageMenu}
+        closeMenu={closeMenu}
+        language={language}
+        setLanguage={setLanguage}
+        t={t}
+        onSetUserRole={onSetUserRole}
+        onChangePassword={onChangePassword}
+        onLogout={onLogout}
         onMenuPress={onMenuPress}
         onManageApplications={onManageApplications}
         onKnowYourApprovals={onKnowYourApprovals}
@@ -330,6 +348,12 @@ export function DashboardScreen({
                     if (item.titleKey === "dashboard.card.knowYourApprovals.title") {
                       onKnowYourApprovals?.();
                     }
+                    if (item.titleKey === "dashboard.card.entityVault.title") {
+                      onEntityVault?.();
+                    }
+                    if (item.titleKey === "dashboard.card.projectDashboard.title") {
+                      onProjectDashboard?.();
+                    }
                   }}
                   style={{
                     width: "47%",
@@ -557,11 +581,35 @@ export function DashboardScreen({
 
 function OfficerDashboard({
   statusBarHeight,
+  userRole,
+  showMenu,
+  setShowMenu,
+  showLanguageMenu,
+  setShowLanguageMenu,
+  closeMenu,
+  language,
+  setLanguage,
+  t,
+  onSetUserRole,
+  onChangePassword,
+  onLogout,
   onMenuPress,
   onManageApplications,
   onKnowYourApprovals
 }: {
   statusBarHeight: number;
+  userRole: "investor" | "officer";
+  showMenu: boolean;
+  setShowMenu: (next: boolean | ((v: boolean) => boolean)) => void;
+  showLanguageMenu: boolean;
+  setShowLanguageMenu: (next: boolean | ((v: boolean) => boolean)) => void;
+  closeMenu: () => void;
+  language: string;
+  setLanguage: (code: any) => void;
+  t: (key: any) => string;
+  onSetUserRole?: (role: "investor" | "officer") => void;
+  onChangePassword?: () => void;
+  onLogout?: () => void;
   onMenuPress?: () => void;
   onManageApplications?: () => void;
   onKnowYourApprovals?: () => void;
@@ -577,6 +625,7 @@ function OfficerDashboard({
             backgroundColor: "rgba(255,255,255,0.90)",
             borderBottomWidth: 1,
             borderBottomColor: "#e5e7eb",
+            position: "relative",
             zIndex: 50,
             elevation: 50
           }}
@@ -595,7 +644,10 @@ function OfficerDashboard({
 
               <Pressable
                 hitSlop={10}
-                onPress={onMenuPress}
+                onPress={() => {
+                  setShowMenu((v) => !v);
+                  setShowLanguageMenu(false);
+                }}
                 style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: "rgba(19,91,236,0.10)", borderWidth: 2, borderColor: "#ffffff", overflow: "hidden" }}
               >
                 <Image
@@ -607,6 +659,139 @@ function OfficerDashboard({
               </Pressable>
             </View>
           </View>
+
+          {showMenu ? (
+            <>
+              <Pressable
+                onPress={closeMenu}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: -9999,
+                  right: -9999,
+                  bottom: -9999,
+                  backgroundColor: "transparent",
+                  zIndex: 998
+                }}
+              />
+
+              <View
+                style={{
+                  position: "absolute",
+                  right: 20,
+                  top: 56 + statusBarHeight,
+                  width: 220,
+                  borderRadius: 16,
+                  overflow: "hidden",
+                  backgroundColor: "rgba(255,255,255,0.92)",
+                  borderWidth: 1,
+                  borderColor: "rgba(203,213,225,0.9)",
+                  zIndex: 9999,
+                  elevation: 9999
+                }}
+              >
+                <Pressable
+                  onPress={() => {
+                    onSetUserRole?.("investor");
+                    closeMenu();
+                  }}
+                  style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                    <MaterialIcons name="person" size={18} color="#0f172a" />
+                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Invester</ThemedText>
+                  </View>
+                  {userRole === "investor" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                </Pressable>
+
+                <Pressable
+                  onPress={() => {
+                    onSetUserRole?.("officer");
+                    closeMenu();
+                  }}
+                  style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}
+                >
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                    <MaterialIcons name="badge" size={18} color="#0f172a" />
+                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Officer</ThemedText>
+                  </View>
+                  {userRole === "officer" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                </Pressable>
+
+                <Pressable
+                  onPress={() => setShowLanguageMenu((v) => !v)}
+                  style={{
+                    paddingHorizontal: 14,
+                    paddingVertical: 12,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    borderTopWidth: 1,
+                    borderColor: "rgba(203,213,225,0.7)"
+                  }}
+                >
+                  <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("menu.language")}</ThemedText>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+                    <ThemedText style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>
+                      {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+                    </ThemedText>
+                    <MaterialIcons name={showLanguageMenu ? "expand-less" : "expand-more"} size={18} color="#64748b" />
+                  </View>
+                </Pressable>
+
+                {showLanguageMenu ? (
+                  <View style={{ borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}>
+                    {["en", "pa", "hi"].map((code) => (
+                      <Pressable
+                        key={code}
+                        onPress={() => {
+                          setLanguage(code as any);
+                          closeMenu();
+                        }}
+                        style={{
+                          paddingHorizontal: 14,
+                          paddingVertical: 12,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                        }}
+                      >
+                        <ThemedText style={{ fontSize: 14, fontWeight: "600", color: "#0f172a" }}>
+                          {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
+                        </ThemedText>
+                        {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                      </Pressable>
+                    ))}
+                  </View>
+                ) : null}
+
+                <View style={{ height: 1, backgroundColor: "rgba(203,213,225,0.7)" }} />
+
+                <Pressable
+                  onPress={() => {
+                    closeMenu();
+                    onChangePassword?.();
+                  }}
+                  style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+                >
+                  <MaterialIcons name="lock" size={18} color="#0f172a" />
+                  <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>{t("menu.changePassword")}</ThemedText>
+                </Pressable>
+
+                <Pressable
+                  onPress={() => {
+                    closeMenu();
+                    onLogout?.();
+                  }}
+                  style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", gap: 10 }}
+                >
+                  <MaterialIcons name="logout" size={18} color="#e11d48" />
+                  <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#e11d48" }}>{t("menu.logout")}</ThemedText>
+                </Pressable>
+              </View>
+            </>
+          ) : null}
         </View>
 
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 24, paddingBottom: 120 }}>

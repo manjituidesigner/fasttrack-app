@@ -19,6 +19,8 @@ import { MyProfileScreen } from "./screens/MyProfileScreen";
 import { NotificationsScreen } from "./screens/NotificationsScreen";
 import { ApplicationDetailsScreen } from "./screens/ApplicationDetailsScreen";
 import { ContactsScreen } from "./screens/ContactsScreen";
+import { EntityVaultScreen } from "./screens/EntityVaultScreen";
+import { ProjectDashboardScreen } from "./screens/ProjectDashboardScreen";
 import { ThemedText } from "./components/ThemedText";
 import ChatbotIcon from "./assets/images/chatbot.svg";
 
@@ -38,7 +40,9 @@ type RouteName =
   | "listOfApprovals"
   | "myProfile"
   | "notifications"
-  | "contacts";
+  | "contacts"
+  | "entityVault"
+  | "projectDashboard";
 
 /* ===== Menu Item ===== */
 function MenuItem({ icon, label, active, badge, muted, danger, onPress }: any) {
@@ -152,6 +156,10 @@ function AppShell() {
         application={selectedApplication ?? undefined}
         onBack={() => setRoute(prevRoute ?? "myApplications")}
       />
+    ) : route === "entityVault" ? (
+      <EntityVaultScreen onBack={() => setRoute(prevRoute ?? "dashboard")} />
+    ) : route === "projectDashboard" ? (
+      <ProjectDashboardScreen onBack={() => setRoute(prevRoute ?? "dashboard")} />
     ) : route === "contacts" ? (
       <ContactsScreen onBack={() => setRoute(prevRoute ?? "dashboard")} onMenuPress={() => setShowDrawer(true)} />
     ) : route === "notifications" ? (
@@ -204,6 +212,14 @@ function AppShell() {
         onManageApplications={() => setRoute("regulatoryClearances")}
         onMyApplications={() => setRoute("myApplications")}
         onKnowYourApprovals={() => setRoute("listOfApprovals")}
+        onEntityVault={() => {
+          setPrevRoute("dashboard");
+          setRoute("entityVault");
+        }}
+        onProjectDashboard={() => {
+          setPrevRoute("dashboard");
+          setRoute("projectDashboard");
+        }}
         onChangePassword={() => setRoute("changePassword")}
         onLogout={() => setRoute("home")}
       />
@@ -437,6 +453,8 @@ function AppShell() {
           (route === "dashboard" ||
             route === "notifications" ||
             route === "contacts" ||
+            route === "entityVault" ||
+            route === "projectDashboard" ||
             route === "myProjects" ||
             route === "myApplications" ||
             route === "regulatoryClearances" ||
@@ -771,7 +789,16 @@ function AppShell() {
                 />
                 <MenuItem icon="monetization-on" label={t("drawer.fiscalIncentives")} onPress={() => setShowDrawer(false)} />
                 <MenuItem icon="assignment" label={t("drawer.fiscalRegistrations")} onPress={() => setShowDrawer(false)} />
-                <MenuItem icon="lock" label={t("drawer.eVault")} onPress={() => setShowDrawer(false)} />
+                <MenuItem
+                  icon="lock"
+                  label={t("drawer.eVault")}
+                  active={route === "entityVault"}
+                  onPress={() => {
+                    setShowDrawer(false);
+                    setPrevRoute(route);
+                    setRoute("entityVault");
+                  }}
+                />
                 <MenuItem icon="help" label={t("drawer.knowYourApprovals")} onPress={() => setShowDrawer(false)} />
               </ScrollView>
 
