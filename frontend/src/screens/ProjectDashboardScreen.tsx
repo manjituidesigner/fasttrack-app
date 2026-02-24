@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import Svg, { Circle, Defs, LinearGradient, Path, Stop } from "react-native-svg";
+import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
   onBack?: () => void;
@@ -147,7 +148,7 @@ function LegendRow({ label, color, value }: any) {
   );
 }
 
-function SegmentedControl({ value, onChange }: any) {
+function SegmentedControl({ value, onChange, t }: any) {
   return (
     <View style={{ flexDirection: "row", backgroundColor: "#f1f5f9", borderRadius: 10, padding: 3 }}>
       <Pressable
@@ -160,7 +161,7 @@ function SegmentedControl({ value, onChange }: any) {
         }}
       >
         <Text style={{ fontSize: 10, fontWeight: "800", color: value === "projects" ? "#0f172a" : "#64748b" }}>
-          Projects
+          {t("projectDashboard.segment.projects")}
         </Text>
       </Pressable>
       <Pressable
@@ -173,7 +174,7 @@ function SegmentedControl({ value, onChange }: any) {
         }}
       >
         <Text style={{ fontSize: 10, fontWeight: "800", color: value === "month" ? "#0f172a" : "#64748b" }}>
-          Month
+          {t("projectDashboard.segment.month")}
         </Text>
       </Pressable>
     </View>
@@ -199,7 +200,7 @@ function Bar({ label, pct, active }: any) {
   );
 }
 
-function LineChart() {
+function LineChart({ t }: any) {
   return (
     <View style={{ height: 160, width: "100%", marginTop: 6 }}>
       <View style={{ position: "absolute", left: 0, right: 0, top: 12, bottom: 40, justifyContent: "space-between" }}>
@@ -229,14 +230,16 @@ function LineChart() {
         <Circle cx={80} cy={15} r={2.5} fill="#8B5CF6" stroke="#ffffff" strokeWidth={1} />
       </Svg>
       <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 6, marginTop: 6 }}>
-        {[
-          "Jan",
-          "Feb",
-          "Mar",
-          "Apr",
-          "May",
-          "Jun"
-        ].map((m) => (
+        {(
+          [
+            t("projectDashboard.month.jan"),
+            t("projectDashboard.month.feb"),
+            t("projectDashboard.month.mar"),
+            t("projectDashboard.month.apr"),
+            t("projectDashboard.month.may"),
+            t("projectDashboard.month.jun")
+          ] as string[]
+        ).map((m) => (
           <Text key={m} style={{ fontSize: 10, color: "#94a3b8", fontWeight: "700" }}>
             {m}
           </Text>
@@ -247,6 +250,7 @@ function LineChart() {
 }
 
 export function ProjectDashboardScreen({ onBack }: Props) {
+  const { t } = useI18n();
   const [investmentMode, setInvestmentMode] = useState<"projects" | "month">("projects");
 
   return (
@@ -275,7 +279,7 @@ export function ProjectDashboardScreen({ onBack }: Props) {
           >
             <MaterialIcons name="arrow-back-ios-new" size={20} color="#0f172a" />
           </Pressable>
-          <Text style={{ fontSize: 22, fontWeight: "900", color: "#0f172a" }}>Insights & Analytics</Text>
+          <Text style={{ fontSize: 22, fontWeight: "900", color: "#0f172a" }}>{t("projectDashboard.title")}</Text>
         </View>
 
         <View style={{ width: 42, height: 42 }}>
@@ -315,7 +319,7 @@ export function ProjectDashboardScreen({ onBack }: Props) {
       >
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 12, paddingHorizontal: 2 }}>
           <SummaryChip
-            label="Total Inv."
+            label={t("projectDashboard.summary.totalInv")}
             value="₹50 Cr"
             variant="card"
             footerLeft={"+12%"}
@@ -323,17 +327,17 @@ export function ProjectDashboardScreen({ onBack }: Props) {
             icon="trending-up"
           />
           <SummaryChip
-            label="Applications"
+            label={t("projectDashboard.summary.applications")}
             value="124"
             variant="primary"
-            footerLeft="Active Now"
+            footerLeft={t("projectDashboard.summary.activeNow")}
             footerColor="rgba(219,234,254,0.9)"
           />
           <SummaryChip
-            label="Pending"
+            label={t("projectDashboard.summary.pending")}
             value="18"
             variant="card"
-            footerLeft="In review"
+            footerLeft={t("projectDashboard.summary.inReview")}
             footerColor="#f59e0b"
             icon="schedule"
           />
@@ -353,9 +357,9 @@ export function ProjectDashboardScreen({ onBack }: Props) {
         >
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
             <View style={{ flex: 1, paddingRight: 12 }}>
-              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>Application Status</Text>
+              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>{t("projectDashboard.card.applicationStatus.title")}</Text>
               <Text style={{ fontSize: 12, color: "#64748b", fontWeight: "600", marginTop: 4 }}>
-                Current fiscal year breakdown
+                {t("projectDashboard.card.applicationStatus.sub")}
               </Text>
             </View>
             <Pressable
@@ -374,9 +378,9 @@ export function ProjectDashboardScreen({ onBack }: Props) {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <DonutChart />
             <View style={{ flex: 1, marginLeft: 18, gap: 12 as any }}>
-              <LegendRow label="Pending" color="#1152d4" value="45%" />
-              <LegendRow label="Approved" color="#10B981" value="30%" />
-              <LegendRow label="Rejected" color="#EF4444" value="25%" />
+              <LegendRow label={t("projectDashboard.legend.pending")} color="#1152d4" value="45%" />
+              <LegendRow label={t("projectDashboard.legend.approved")} color="#10B981" value="30%" />
+              <LegendRow label={t("projectDashboard.legend.rejected")} color="#EF4444" value="25%" />
             </View>
           </View>
         </View>
@@ -395,33 +399,33 @@ export function ProjectDashboardScreen({ onBack }: Props) {
         >
           <View style={{ flexDirection: "row", alignItems: "flex-start", justifyContent: "space-between", marginBottom: 16 }}>
             <View style={{ flex: 1, paddingRight: 12 }}>
-              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>Total Investment</Text>
+              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>{t("projectDashboard.card.totalInvestment.title")}</Text>
               <Text style={{ fontSize: 12, color: "#64748b", fontWeight: "600", marginTop: 4 }}>
-                Broken down by project type
+                {t("projectDashboard.card.totalInvestment.sub")}
               </Text>
             </View>
-            <SegmentedControl value={investmentMode} onChange={setInvestmentMode} />
+            <SegmentedControl value={investmentMode} onChange={setInvestmentMode} t={t} />
           </View>
 
           <View style={{ height: 190, borderBottomWidth: 1, borderColor: "rgba(15,23,42,0.10)", paddingBottom: 6 }}>
             <View style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 26, justifyContent: "space-between" }}>
-              {[
-                "₹100Cr",
-                "₹50Cr",
-                "₹0"
-              ].map((t, idx) => (
-                <View key={t} style={{ borderTopWidth: 1, borderColor: "rgba(15,23,42,0.06)", paddingTop: 6 }}>
-                  <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "700" }}>{t}</Text>
+              {([
+                t("projectDashboard.axis.100cr"),
+                t("projectDashboard.axis.50cr"),
+                t("projectDashboard.axis.0")
+              ] as string[]).map((axisLabel) => (
+                <View key={axisLabel} style={{ borderTopWidth: 1, borderColor: "rgba(15,23,42,0.06)", paddingTop: 6 }}>
+                  <Text style={{ fontSize: 10, color: "#94a3b8", fontWeight: "700" }}>{axisLabel}</Text>
                 </View>
               ))}
             </View>
 
             <View style={{ flex: 1, flexDirection: "row", alignItems: "flex-end", justifyContent: "space-between", gap: 10, paddingTop: 18 }}>
-              <Bar label="Textile" pct={0.65} active />
-              <Bar label="Solar" pct={0.4} />
-              <Bar label="Agro" pct={0.85} />
-              <Bar label="IT" pct={0.3} />
-              <Bar label="Auto" pct={0.55} />
+              <Bar label={t("projectDashboard.bar.textile")} pct={0.65} active />
+              <Bar label={t("projectDashboard.bar.solar")} pct={0.4} />
+              <Bar label={t("projectDashboard.bar.agro")} pct={0.85} />
+              <Bar label={t("projectDashboard.bar.it")} pct={0.3} />
+              <Bar label={t("projectDashboard.bar.auto")} pct={0.55} />
             </View>
           </View>
         </View>
@@ -440,11 +444,11 @@ export function ProjectDashboardScreen({ onBack }: Props) {
         >
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <View style={{ flex: 1, paddingRight: 12 }}>
-              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>Avg. Approval Time</Text>
+              <Text style={{ fontSize: 18, color: "#0f172a", fontWeight: "800" }}>{t("projectDashboard.card.avgApprovalTime.title")}</Text>
               <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginTop: 10 }}>
                 <Text style={{ fontSize: 26, color: "#0f172a", fontWeight: "900" }}>14d</Text>
                 <View style={{ backgroundColor: "#dcfce7", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4 }}>
-                  <Text style={{ fontSize: 10, fontWeight: "900", color: "#15803d" }}>-2.5 days</Text>
+                  <Text style={{ fontSize: 10, fontWeight: "900", color: "#15803d" }}>{t("projectDashboard.card.avgApprovalTime.delta")}</Text>
                 </View>
               </View>
             </View>
@@ -462,7 +466,7 @@ export function ProjectDashboardScreen({ onBack }: Props) {
             </Pressable>
           </View>
 
-          <LineChart />
+          <LineChart t={t} />
         </View>
 
         <View style={{ height: 10 }} />

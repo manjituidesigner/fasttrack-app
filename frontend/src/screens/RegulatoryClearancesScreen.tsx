@@ -5,6 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import Constants from "expo-constants";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useTheme } from "../theme/useTheme";
+import { useI18n } from "../i18n/I18nProvider";
 
 type TabKey = "applyNew" | "applied" | "pending" | "issued" | "rejected";
 
@@ -24,6 +25,7 @@ type Props = {
 
 export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: Props) {
   const theme = useTheme();
+  const { t } = useI18n();
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const [activeTab, setActiveTab] = useState<TabKey>("applyNew");
@@ -37,13 +39,13 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
 
   const tabs: TabItem[] = useMemo(
     () => [
-      { key: "applyNew", label: "Apply New", icon: "add-circle", activeBg: "#1d4ed8" },
-      { key: "applied", label: "Applied", icon: "description", count: appliedCount },
-      { key: "pending", label: "Pending", icon: "pending-actions", count: pendingCount },
-      { key: "issued", label: "Issued", icon: "verified-user", count: issuedCount },
-      { key: "rejected", label: "Rejected", icon: "cancel", count: rejectedCount }
+      { key: "applyNew", label: t("regulatoryClearances.tab.applyNew"), icon: "add-circle", activeBg: "#1d4ed8" },
+      { key: "applied", label: t("regulatoryClearances.tab.applied"), icon: "description", count: appliedCount },
+      { key: "pending", label: t("regulatoryClearances.tab.pending"), icon: "pending-actions", count: pendingCount },
+      { key: "issued", label: t("regulatoryClearances.tab.issued"), icon: "verified-user", count: issuedCount },
+      { key: "rejected", label: t("regulatoryClearances.tab.rejected"), icon: "cancel", count: rejectedCount }
     ],
-    [appliedCount, pendingCount, issuedCount, rejectedCount]
+    [appliedCount, pendingCount, issuedCount, rejectedCount, t]
   );
 
   return (
@@ -74,7 +76,7 @@ export function RegulatoryClearancesScreen({ onBack, onMenuPress, onAddPress }: 
             <MaterialIcons name="arrow-back-ios" size={20} color="#1d4ed8" />
           </Pressable>
 
-          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1f2937" }}>Investment Project Applications</Text>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1f2937" }}>{t("regulatoryClearances.title")}</Text>
 
           <Pressable
             onPress={() => onMenuPress?.()}

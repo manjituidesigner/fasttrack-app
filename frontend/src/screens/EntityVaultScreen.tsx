@@ -3,6 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
   onBack?: () => void;
@@ -34,6 +35,7 @@ function VaultRow({ label, value }: { label: string; value: string }) {
 
 export function EntityVaultScreen({ onBack }: Props) {
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
+  const { t } = useI18n();
   const [query, setQuery] = useState("");
   const [openIpin, setOpenIpin] = useState<string>("250535096");
 
@@ -89,7 +91,7 @@ export function EntityVaultScreen({ onBack }: Props) {
               >
                 <MaterialIcons name="arrow-back" size={24} color="#0f172a" />
               </Pressable>
-              <Text style={{ fontSize: 18, fontWeight: "700", color: "#0f172a" }}>Entity E-Vault</Text>
+              <Text style={{ fontSize: 18, fontWeight: "700", color: "#0f172a" }}>{t("entityVault.title")}</Text>
             </View>
 
             <Pressable hitSlop={10} style={{ width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center" }}>
@@ -120,7 +122,7 @@ export function EntityVaultScreen({ onBack }: Props) {
             <TextInput
               value={query}
               onChangeText={setQuery}
-              placeholder="Search by IPIN or Application ID"
+              placeholder={t("entityVault.searchPlaceholder")}
               placeholderTextColor="#94a3b8"
               style={{ flex: 1, marginLeft: 10, fontSize: 14, fontWeight: "600", color: "#0f172a" }}
             />
@@ -151,7 +153,7 @@ export function EntityVaultScreen({ onBack }: Props) {
                   >
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                       <MaterialIcons name="fingerprint" size={22} color={open ? "#1152d4" : "#94a3b8"} />
-                      <Text style={{ fontSize: 16, fontWeight: "700", color: "#0f172a" }}>{`IPIN: ${x.ipin}`}</Text>
+                      <Text style={{ fontSize: 16, fontWeight: "700", color: "#0f172a" }}>{`${t("entityVault.label.ipin")}: ${x.ipin}`}</Text>
                     </View>
                     <MaterialIcons name={open ? "expand-less" : "expand-more"} size={24} color="#94a3b8" />
                   </Pressable>
@@ -160,18 +162,18 @@ export function EntityVaultScreen({ onBack }: Props) {
                     <View style={{ paddingHorizontal: 18, paddingBottom: 18, borderTopWidth: 1, borderTopColor: "rgba(248,250,252,1)" }}>
                       {x.empty ? (
                         <Text style={{ paddingTop: 16, fontSize: 12, fontWeight: "600", color: "#64748b", fontStyle: "italic" }}>
-                          No recent activities for this IPIN.
+                          {t("entityVault.empty")}
                         </Text>
                       ) : (
                         <View style={{ paddingTop: 12 }}>
-                          <VaultRow label="Application ID" value={x.applicationId ?? ""} />
-                          <VaultRow label="Form Name" value={x.formName ?? ""} />
-                          <VaultRow label="Clearance Issued" value={x.clearanceIssued ?? ""} />
-                          <VaultRow label="Sender Name" value={x.senderName ?? ""} />
+                          <VaultRow label={t("entityVault.row.applicationId")} value={x.applicationId ?? ""} />
+                          <VaultRow label={t("entityVault.row.formName")} value={x.formName ?? ""} />
+                          <VaultRow label={t("entityVault.row.clearanceIssued")} value={x.clearanceIssued ?? ""} />
+                          <VaultRow label={t("entityVault.row.senderName")} value={x.senderName ?? ""} />
 
                           <View style={{ marginTop: 14 }}>
                             <Text style={{ fontSize: 11, fontWeight: "700", color: "#64748b", textTransform: "uppercase", letterSpacing: 1 }}>
-                              Clearance Documents
+                              {t("entityVault.section.clearanceDocuments")}
                             </Text>
 
                             {(x.documents ?? []).map((d) => (
@@ -203,7 +205,7 @@ export function EntityVaultScreen({ onBack }: Props) {
 
                                 <Pressable style={{ flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 6, paddingHorizontal: 8 }}>
                                   <MaterialIcons name="download" size={18} color="#1152d4" />
-                                  <Text style={{ fontSize: 12, fontWeight: "700", color: "#1152d4" }}>Download</Text>
+                                  <Text style={{ fontSize: 12, fontWeight: "700", color: "#1152d4" }}>{t("entityVault.action.download")}</Text>
                                 </Pressable>
                               </View>
                             ))}

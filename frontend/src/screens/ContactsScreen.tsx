@@ -5,6 +5,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useTheme } from "../theme/useTheme";
+import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
   onBack?: () => void;
@@ -43,6 +44,7 @@ function Pill({ label, active, onPress }: { label: string; active?: boolean; onP
 }
 
 function DepartmentCard({ item }: { item: Department }) {
+  const { t } = useI18n();
   return (
     <View
       style={{
@@ -86,7 +88,7 @@ function DepartmentCard({ item }: { item: Department }) {
       <View style={{ marginTop: 14, gap: 10 }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
           <MaterialIcons name="badge" size={18} color="#1152d4" />
-          <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>Nodal Officer:</Text>
+          <Text style={{ fontSize: 12, fontWeight: "700", color: "#64748b" }}>{t("contacts.nodalOfficer")}</Text>
           <Text style={{ fontSize: 12, fontWeight: "700", color: "#0f172a", flexShrink: 1 }}>{item.officer}</Text>
         </View>
 
@@ -110,7 +112,7 @@ function DepartmentCard({ item }: { item: Department }) {
           }}
         >
           <MaterialIcons name="call" size={20} color="#1152d4" />
-          <Text style={{ fontSize: 14, fontWeight: "800", color: "#1152d4" }}>Call</Text>
+          <Text style={{ fontSize: 14, fontWeight: "800", color: "#1152d4" }}>{t("contacts.action.call")}</Text>
         </Pressable>
 
         <Pressable
@@ -131,7 +133,7 @@ function DepartmentCard({ item }: { item: Department }) {
           }}
         >
           <MaterialIcons name="email" size={20} color="#ffffff" />
-          <Text style={{ fontSize: 14, fontWeight: "800", color: "#ffffff" }}>Email</Text>
+          <Text style={{ fontSize: 14, fontWeight: "800", color: "#ffffff" }}>{t("contacts.action.email")}</Text>
         </Pressable>
       </View>
     </View>
@@ -140,6 +142,7 @@ function DepartmentCard({ item }: { item: Department }) {
 
 export function ContactsScreen({ onBack, onMenuPress }: Props) {
   const theme = useTheme();
+  const { t } = useI18n();
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<CategoryId>("all");
@@ -244,7 +247,7 @@ export function ContactsScreen({ onBack, onMenuPress }: Props) {
             <MaterialIcons name="arrow-back" size={24} color="#1e293b" />
           </Pressable>
 
-          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1d4ed8" }}>Contacts</Text>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: "#1d4ed8" }}>{t("contacts.title")}</Text>
 
           <Pressable
             onPress={onMenuPress}
@@ -291,7 +294,7 @@ export function ContactsScreen({ onBack, onMenuPress }: Props) {
               <TextInput
                 value={search}
                 onChangeText={setSearch}
-                placeholder="Search department, officer..."
+                placeholder={t("contacts.searchPlaceholder")}
                 placeholderTextColor="#94a3b8"
                 style={{
                   flex: 1,
@@ -306,10 +309,10 @@ export function ContactsScreen({ onBack, onMenuPress }: Props) {
 
           <View style={{ paddingHorizontal: 20, paddingTop: 14, gap: 14 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 10, paddingBottom: 2 }}>
-              <Pill label="All" active={category === "all"} onPress={() => setCategory("all")} />
-              <Pill label="Approvals" active={category === "approvals"} onPress={() => setCategory("approvals")} />
-              <Pill label="Utilities" active={category === "utilities"} onPress={() => setCategory("utilities")} />
-              <Pill label="Emergency" active={category === "emergency"} onPress={() => setCategory("emergency")} />
+              <Pill label={t("contacts.pill.all")} active={category === "all"} onPress={() => setCategory("all")} />
+              <Pill label={t("contacts.pill.approvals")} active={category === "approvals"} onPress={() => setCategory("approvals")} />
+              <Pill label={t("contacts.pill.utilities")} active={category === "utilities"} onPress={() => setCategory("utilities")} />
+              <Pill label={t("contacts.pill.emergency")} active={category === "emergency"} onPress={() => setCategory("emergency")} />
             </ScrollView>
 
             {filtered.map((d) => (
@@ -318,7 +321,7 @@ export function ContactsScreen({ onBack, onMenuPress }: Props) {
 
             <View style={{ paddingVertical: 8, alignItems: "center" }}>
               <Text style={{ fontSize: 10, fontWeight: "800", color: "#94a3b8", letterSpacing: 2, textTransform: "uppercase" }}>
-                End of Directory
+                {t("contacts.endOfDirectory")}
               </Text>
             </View>
           </View>

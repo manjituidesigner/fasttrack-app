@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Pressable, SafeAreaView } from "react-native";
 import { BlurView } from "expo-blur";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AppHeader } from "../components/AppHeader";
+import { useI18n } from "../i18n/I18nProvider";
 
 type Props = {
   onBack?: () => void;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
+  const { t } = useI18n();
   const [showRTBA, setShowRTBA] = useState(true);
   const [msme, setMsme] = useState<"yes" | "no" | null>(null);
 
@@ -34,7 +36,7 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
               <MaterialIcons name="chevron-left" size={28} color="#2563eb" />
             </Pressable>
           }
-          center={<Text style={{ fontSize: 18, fontWeight: "700", color: "#0f172a" }}>Investment Project</Text>}
+          center={<Text style={{ fontSize: 18, fontWeight: "700", color: "#0f172a" }}>{t("investmentProject.title")}</Text>}
           right={
             <Pressable
               onPress={onOpenDrawer}
@@ -54,38 +56,42 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
       >
         <View className="bg-white rounded-2xl border border-slate-100 overflow-hidden mb-6 shadow-sm">
           <View className="bg-primary p-4">
-            <Text className="text-white text-xl font-bold text-center">Welcome</Text>
+            <Text className="text-white text-xl font-bold text-center">{t("investmentProject.welcome")}</Text>
           </View>
 
           <View className="p-5 space-y-4">
-            <Text className="text-primary font-bold text-lg">Greetings from FastTrack Punjab!</Text>
+            <Text className="text-primary font-bold text-lg">{t("investmentProject.greetings")}</Text>
 
             <Text className="text-sm leading-relaxed text-slate-600">
-              Thank you for choosing <Text className="font-bold text-slate-900">Punjab</Text> for your
-              investment journey. Based on your enterprise category —<Text className="font-bold"> MSME </Text>
-              or<Text className="font-bold"> Large Enterprise </Text>— the system will guide you to:
+              {t("investmentProject.thankYouPrefix")}
+              <Text className="font-bold text-slate-900">{t("investmentProject.punjab")}</Text>
+              {t("investmentProject.thankYouSuffix")} {t("investmentProject.enterprisePrefix")}
+              <Text className="font-bold"> {t("investmentProject.msme")} </Text>
+              {t("investmentProject.enterpriseOr")}
+              <Text className="font-bold"> {t("investmentProject.largeEnterprise")} </Text>
+              {t("investmentProject.enterpriseSuffix")}
             </Text>
 
             {[
               {
                 icon: "description" as const,
-                title: "Right to Business Act",
-                desc: "For eligible MSMEs (as per Punjab Right to Business Act 2020)"
+                title: t("investmentProject.card.rtba.title"),
+                desc: t("investmentProject.card.rtba.desc")
               },
               {
                 icon: "verified" as const,
-                title: "Green Stamp Paper Service",
-                desc: "If you have identified land and intend to purchase"
+                title: t("investmentProject.card.greenStamp.title"),
+                desc: t("investmentProject.card.greenStamp.desc")
               },
               {
                 icon: "assignment" as const,
-                title: "Common Application Form (CAF)",
-                desc: "For all other Regulatory Clearances"
+                title: t("investmentProject.card.singleWindow.title"),
+                desc: t("investmentProject.card.singleWindow.desc")
               },
               {
                 icon: "settings-applications" as const,
-                title: "Service-CAF",
-                desc: "To obtain services for new or existing projects"
+                title: t("investmentProject.card.serviceCaf.title"),
+                desc: t("investmentProject.card.serviceCaf.desc")
               }
             ].map((item, index) => (
               <Pressable key={index} className="flex-row items-start gap-3">
@@ -101,13 +107,11 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
 
         <View className="bg-blue-50 border border-blue-100 p-5 rounded-2xl mb-6 shadow-sm">
           <Text className="text-sm text-slate-700 font-medium leading-relaxed">
-            MSMEs having land are eligible to obtain <Text className="font-bold">Certificate of In-principle Approval</Text>
-            based on self-certification which will be valid for 3 years and 6 months.
+            {t("investmentProject.msmeLandNote")}
           </Text>
 
           <Text className="text-xs text-slate-500 mt-2">
-            The enterprise is required to apply for applicable regular approvals not later than 3 years from the date of
-            issue.
+            {t("investmentProject.msmeLandNoteSub")}
           </Text>
         </View>
 
@@ -116,7 +120,7 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
             onPress={() => setShowRTBA(!showRTBA)}
             className="px-5 py-4 flex-row items-center justify-between bg-slate-50"
           >
-            <Text className="text-sm font-semibold">Clearances under RTBA *</Text>
+            <Text className="text-sm font-semibold">{t("investmentProject.section.rtbaClearances")}</Text>
             <MaterialIcons name={showRTBA ? "expand-less" : "expand-more"} size={22} color="#94a3b8" />
           </Pressable>
 
@@ -125,22 +129,22 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
               <View className="p-4 rounded-xl bg-slate-50/50 border border-slate-100">
                 <View className="flex-row items-center justify-between mb-2">
                   <View className="px-2 py-0.5 rounded bg-slate-200">
-                    <Text className="text-[10px] font-bold uppercase">Item 1</Text>
+                    <Text className="text-[10px] font-bold uppercase">{t("investmentProject.item")} 1</Text>
                   </View>
                 </View>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Department</Text>
-                <Text className="text-sm font-semibold mb-3">Local Government (LG)</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.department")}</Text>
+                <Text className="text-sm font-semibold mb-3">{t("investmentProject.item1.departmentValue")}</Text>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Act</Text>
-                <Text className="text-sm mb-3">The Punjab Municipal Act, 1911 and Municipal Corporation Act, 1976</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.act")}</Text>
+                <Text className="text-sm mb-3">{t("investmentProject.item1.actValue")}</Text>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Services</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.services")}</Text>
                 <View className="space-y-1">
                   {[
-                    "Sanction of Building Plans",
-                    "Issuance of Completion Certificate",
-                    "Trade License Registration"
+                    t("investmentProject.item1.service1"),
+                    t("investmentProject.item1.service2"),
+                    t("investmentProject.item1.service3")
                   ].map((s) => (
                     <View key={s} className="flex-row items-start gap-2">
                       <Text className="text-slate-500">•</Text>
@@ -153,19 +157,19 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
               <View className="p-4 rounded-xl bg-slate-50/50 border border-slate-100">
                 <View className="flex-row items-center justify-between mb-2">
                   <View className="px-2 py-0.5 rounded bg-slate-200">
-                    <Text className="text-[10px] font-bold uppercase">Item 2</Text>
+                    <Text className="text-[10px] font-bold uppercase">{t("investmentProject.item")} 2</Text>
                   </View>
                 </View>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Department</Text>
-                <Text className="text-sm font-semibold mb-3">Housing and Urban Development (HUD)</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.department")}</Text>
+                <Text className="text-sm font-semibold mb-3">{t("investmentProject.item2.departmentValue")}</Text>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Act</Text>
-                <Text className="text-sm mb-3">The Punjab Regional and Town Planning and Development Act, 1995</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.act")}</Text>
+                <Text className="text-sm mb-3">{t("investmentProject.item2.actValue")}</Text>
 
-                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">Services</Text>
+                <Text className="text-[10px] font-bold uppercase text-slate-400 mb-1">{t("investmentProject.field.services")}</Text>
                 <View className="space-y-1">
-                  {["Sanction of Building Plans", "Change of land use"].map((s) => (
+                  {[t("investmentProject.item2.service1"), t("investmentProject.item2.service2")].map((s) => (
                     <View key={s} className="flex-row items-start gap-2">
                       <Text className="text-slate-500">•</Text>
                       <Text className="text-sm text-slate-600 flex-1">{s}</Text>
@@ -176,7 +180,7 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
 
               <View className="items-end">
                 <Pressable className="flex-row items-center gap-1">
-                  <Text className="text-primary text-xs font-medium">Read full RTBA 2020 detail</Text>
+                  <Text className="text-primary text-xs font-medium">{t("investmentProject.readFullRtba")}</Text>
                   <MaterialIcons name="open-in-new" size={14} color="#2563eb" />
                 </Pressable>
               </View>
@@ -186,7 +190,7 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
 
         <View className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm">
           <View className="px-5 py-4 border-b border-slate-100 flex-row items-center gap-2">
-            <Text className="text-sm font-semibold flex-1">Does your project fall under MSME Category?</Text>
+            <Text className="text-sm font-semibold flex-1">{t("investmentProject.msmeQuestion")}</Text>
             <MaterialIcons name="info-outline" size={18} color="#94a3b8" />
           </View>
 
@@ -195,14 +199,14 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
               <View
                 className={`w-5 h-5 rounded-full border ${msme === "yes" ? "border-primary bg-primary" : "border-slate-300"}`}
               />
-              <Text className="text-sm font-medium">Yes</Text>
+              <Text className="text-sm font-medium">{t("investmentProject.yes")}</Text>
             </Pressable>
 
             <Pressable onPress={() => setMsme("no")} className="flex-row items-center gap-3">
               <View
                 className={`w-5 h-5 rounded-full border ${msme === "no" ? "border-primary bg-primary" : "border-slate-300"}`}
               />
-              <Text className="text-sm font-medium">No</Text>
+              <Text className="text-sm font-medium">{t("investmentProject.no")}</Text>
             </Pressable>
           </View>
         </View>
@@ -210,7 +214,7 @@ export function InvestmentProjectScreen({ onBack, onOpenDrawer }: Props) {
 
       <View className="absolute bottom-0 left-0 right-0 p-4 bg-white/80 border-t border-slate-200">
         <Pressable className="w-full bg-primary py-3.5 rounded-xl items-center active:scale-[0.98] shadow-lg shadow-blue-500/20">
-          <Text className="text-white font-bold text-base">Proceed to Application</Text>
+          <Text className="text-white font-bold text-base">{t("investmentProject.proceed")}</Text>
         </Pressable>
       </View>
     </SafeAreaView>

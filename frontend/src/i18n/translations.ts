@@ -50,6 +50,63 @@ export type TranslationKey =
   | "dashboard.card.entityVault.desc"
   | "dashboard.card.projectDashboard.title"
   | "dashboard.card.projectDashboard.desc"
+  | "projectDashboard.title"
+  | "projectDashboard.summary.totalInv"
+  | "projectDashboard.summary.applications"
+  | "projectDashboard.summary.activeNow"
+  | "projectDashboard.summary.pending"
+  | "projectDashboard.summary.inReview"
+  | "projectDashboard.card.applicationStatus.title"
+  | "projectDashboard.card.applicationStatus.sub"
+  | "projectDashboard.legend.pending"
+  | "projectDashboard.legend.approved"
+  | "projectDashboard.legend.rejected"
+  | "projectDashboard.card.totalInvestment.title"
+  | "projectDashboard.card.totalInvestment.sub"
+  | "projectDashboard.card.avgApprovalTime.title"
+  | "projectDashboard.card.avgApprovalTime.delta"
+  | "projectDashboard.segment.projects"
+  | "projectDashboard.segment.month"
+  | "projectDashboard.month.jan"
+  | "projectDashboard.month.feb"
+  | "projectDashboard.month.mar"
+  | "projectDashboard.month.apr"
+  | "projectDashboard.month.may"
+  | "projectDashboard.month.jun"
+  | "projectDashboard.axis.100cr"
+  | "projectDashboard.axis.50cr"
+  | "projectDashboard.axis.0"
+  | "projectDashboard.bar.textile"
+  | "projectDashboard.bar.solar"
+  | "projectDashboard.bar.agro"
+  | "projectDashboard.bar.it"
+  | "projectDashboard.bar.auto"
+  | "contacts.title"
+  | "contacts.searchPlaceholder"
+  | "contacts.pill.all"
+  | "contacts.pill.approvals"
+  | "contacts.pill.utilities"
+  | "contacts.pill.emergency"
+  | "contacts.nodalOfficer"
+  | "contacts.action.call"
+  | "contacts.action.email"
+  | "contacts.endOfDirectory"
+  | "entityVault.title"
+  | "entityVault.searchPlaceholder"
+  | "entityVault.empty"
+  | "entityVault.row.applicationId"
+  | "entityVault.row.formName"
+  | "entityVault.row.clearanceIssued"
+  | "entityVault.row.senderName"
+  | "entityVault.section.clearanceDocuments"
+  | "entityVault.action.download"
+  | "entityVault.label.ipin"
+  | "regulatoryClearances.title"
+  | "regulatoryClearances.tab.applyNew"
+  | "regulatoryClearances.tab.applied"
+  | "regulatoryClearances.tab.pending"
+  | "regulatoryClearances.tab.issued"
+  | "regulatoryClearances.tab.rejected"
   | "dashboard.investorsWalkthrough"
   | "dashboard.recentActivity"
   | "dashboard.viewLogs"
@@ -64,6 +121,47 @@ export type TranslationKey =
   | "dashboard.bottomNav.services"
   | "dashboard.bottomNav.docs"
   | "dashboard.bottomNav.profile"
+  | "investmentProject.title"
+  | "investmentProject.welcome"
+  | "investmentProject.greetings"
+  | "investmentProject.thankYouPrefix"
+  | "investmentProject.punjab"
+  | "investmentProject.thankYouSuffix"
+  | "investmentProject.enterprisePrefix"
+  | "investmentProject.msme"
+  | "investmentProject.enterpriseOr"
+  | "investmentProject.largeEnterprise"
+  | "investmentProject.enterpriseSuffix"
+  | "investmentProject.guideTo"
+  | "investmentProject.card.rtba.title"
+  | "investmentProject.card.rtba.desc"
+  | "investmentProject.card.greenStamp.title"
+  | "investmentProject.card.greenStamp.desc"
+  | "investmentProject.card.singleWindow.title"
+  | "investmentProject.card.singleWindow.desc"
+  | "investmentProject.card.serviceCaf.title"
+  | "investmentProject.card.serviceCaf.desc"
+  | "investmentProject.msmeLandNote"
+  | "investmentProject.msmeLandNoteSub"
+  | "investmentProject.section.rtbaClearances"
+  | "investmentProject.item"
+  | "investmentProject.field.department"
+  | "investmentProject.field.act"
+  | "investmentProject.field.services"
+  | "investmentProject.item1.departmentValue"
+  | "investmentProject.item1.actValue"
+  | "investmentProject.item1.service1"
+  | "investmentProject.item1.service2"
+  | "investmentProject.item1.service3"
+  | "investmentProject.item2.departmentValue"
+  | "investmentProject.item2.actValue"
+  | "investmentProject.item2.service1"
+  | "investmentProject.item2.service2"
+  | "investmentProject.readFullRtba"
+  | "investmentProject.msmeQuestion"
+  | "investmentProject.yes"
+  | "investmentProject.no"
+  | "investmentProject.proceed"
   | "drawer.home"
   | "drawer.myProjects"
   | "drawer.myApplications"
@@ -365,6 +463,67 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.card.entityVault.desc": "Secure Document Storage",
     "dashboard.card.projectDashboard.title": "Project Dashboard",
     "dashboard.card.projectDashboard.desc": "Insights & Reports",
+
+    "projectDashboard.title": "Insights & Analytics",
+    "projectDashboard.summary.totalInv": "Total Inv.",
+    "projectDashboard.summary.applications": "Applications",
+    "projectDashboard.summary.activeNow": "Active Now",
+    "projectDashboard.summary.pending": "Pending",
+    "projectDashboard.summary.inReview": "In review",
+    "projectDashboard.card.applicationStatus.title": "Application Status",
+    "projectDashboard.card.applicationStatus.sub": "Current fiscal year breakdown",
+    "projectDashboard.legend.pending": "Pending",
+    "projectDashboard.legend.approved": "Approved",
+    "projectDashboard.legend.rejected": "Rejected",
+    "projectDashboard.card.totalInvestment.title": "Total Investment",
+    "projectDashboard.card.totalInvestment.sub": "Broken down by project type",
+    "projectDashboard.card.avgApprovalTime.title": "Avg. Approval Time",
+    "projectDashboard.card.avgApprovalTime.delta": "-2.5 days",
+    "projectDashboard.segment.projects": "Projects",
+    "projectDashboard.segment.month": "Month",
+    "projectDashboard.month.jan": "Jan",
+    "projectDashboard.month.feb": "Feb",
+    "projectDashboard.month.mar": "Mar",
+    "projectDashboard.month.apr": "Apr",
+    "projectDashboard.month.may": "May",
+    "projectDashboard.month.jun": "Jun",
+    "projectDashboard.axis.100cr": "₹100Cr",
+    "projectDashboard.axis.50cr": "₹50Cr",
+    "projectDashboard.axis.0": "₹0",
+    "projectDashboard.bar.textile": "Textile",
+    "projectDashboard.bar.solar": "Solar",
+    "projectDashboard.bar.agro": "Agro",
+    "projectDashboard.bar.it": "IT",
+    "projectDashboard.bar.auto": "Auto",
+
+    "contacts.title": "Contacts",
+    "contacts.searchPlaceholder": "Search department, officer...",
+    "contacts.pill.all": "All",
+    "contacts.pill.approvals": "Approvals",
+    "contacts.pill.utilities": "Utilities",
+    "contacts.pill.emergency": "Emergency",
+    "contacts.nodalOfficer": "Nodal Officer:",
+    "contacts.action.call": "Call",
+    "contacts.action.email": "Email",
+    "contacts.endOfDirectory": "End of Directory",
+
+    "entityVault.title": "Entity E-Vault",
+    "entityVault.searchPlaceholder": "Search by IPIN or Application ID",
+    "entityVault.empty": "No recent activities for this IPIN.",
+    "entityVault.row.applicationId": "Application ID",
+    "entityVault.row.formName": "Form Name",
+    "entityVault.row.clearanceIssued": "Clearance Issued",
+    "entityVault.row.senderName": "Sender Name",
+    "entityVault.section.clearanceDocuments": "Clearance Documents",
+    "entityVault.action.download": "Download",
+    "entityVault.label.ipin": "IPIN",
+
+    "regulatoryClearances.title": "Investment Project Applications",
+    "regulatoryClearances.tab.applyNew": "Apply New",
+    "regulatoryClearances.tab.applied": "Applied",
+    "regulatoryClearances.tab.pending": "Pending",
+    "regulatoryClearances.tab.issued": "Issued",
+    "regulatoryClearances.tab.rejected": "Rejected",
     "dashboard.investorsWalkthrough": "Investors Walkthrough",
     "dashboard.recentActivity": "Recent Activity",
     "dashboard.viewLogs": "View Logs",
@@ -379,6 +538,48 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.services": "Services",
     "dashboard.bottomNav.docs": "Docs",
     "dashboard.bottomNav.profile": "Profile",
+
+    "investmentProject.title": "Investment Project",
+    "investmentProject.welcome": "Welcome",
+    "investmentProject.greetings": "Greetings from FastTrack Punjab!",
+    "investmentProject.thankYouPrefix": "Thank you for choosing ",
+    "investmentProject.punjab": "Punjab",
+    "investmentProject.thankYouSuffix": " for your investment journey.",
+    "investmentProject.enterprisePrefix": "Based on your enterprise category — ",
+    "investmentProject.msme": "MSME",
+    "investmentProject.enterpriseOr": " or ",
+    "investmentProject.largeEnterprise": "Large Enterprise",
+    "investmentProject.enterpriseSuffix": " — the system will guide you to:",
+    "investmentProject.guideTo": "the system will guide you to:",
+    "investmentProject.card.rtba.title": "Right to Business Act",
+    "investmentProject.card.rtba.desc": "For eligible MSMEs (as per Punjab Right to Business Act 2020)",
+    "investmentProject.card.greenStamp.title": "Green Stamp Paper Service",
+    "investmentProject.card.greenStamp.desc": "If you have identified land and intend to purchase",
+    "investmentProject.card.singleWindow.title": "Single Window Portal",
+    "investmentProject.card.singleWindow.desc": "For other approvals and services through FastTrack Punjab",
+    "investmentProject.card.serviceCaf.title": "Service-CAF",
+    "investmentProject.card.serviceCaf.desc": "To obtain services for new or existing projects",
+    "investmentProject.msmeLandNote": "MSMEs having land are eligible to obtain Certificate of In-principle Approval based on self-certification which will be valid for 3 years and 6 months.",
+    "investmentProject.msmeLandNoteSub": "The enterprise is required to apply for applicable regular approvals not later than 3 years from the date of issue.",
+    "investmentProject.section.rtbaClearances": "Clearances under RTBA *",
+    "investmentProject.item": "Item",
+    "investmentProject.field.department": "Department",
+    "investmentProject.field.act": "Act",
+    "investmentProject.field.services": "Services",
+    "investmentProject.item1.departmentValue": "Local Government (LG)",
+    "investmentProject.item1.actValue": "The Punjab Municipal Act, 1911 and Municipal Corporation Act, 1976",
+    "investmentProject.item1.service1": "Sanction of Building Plans",
+    "investmentProject.item1.service2": "Completion / Occupancy Certificate",
+    "investmentProject.item1.service3": "Trade License Registration",
+    "investmentProject.item2.departmentValue": "Housing and Urban Development (HUD)",
+    "investmentProject.item2.actValue": "The Punjab Regional and Town Planning and Development Act, 1995",
+    "investmentProject.item2.service1": "Sanction of Building Plans",
+    "investmentProject.item2.service2": "Change of land use",
+    "investmentProject.readFullRtba": "Read full RTBA 2020 detail",
+    "investmentProject.msmeQuestion": "Does your project fall under MSME Category?",
+    "investmentProject.yes": "Yes",
+    "investmentProject.no": "No",
+    "investmentProject.proceed": "Proceed to Application",
     "drawer.home": "Home",
     "drawer.myProfile": "My Profile",
     "drawer.myProjects": "My Projects",
@@ -680,6 +881,67 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.card.entityVault.desc": "सुरक्षित दस्तावेज़ भंडारण",
     "dashboard.card.projectDashboard.title": "परियोजना डैशबोर्ड",
     "dashboard.card.projectDashboard.desc": "इनसाइट्स और रिपोर्ट",
+
+    "projectDashboard.title": "इनसाइट्स और एनालिटिक्स",
+    "projectDashboard.summary.totalInv": "कुल निवेश",
+    "projectDashboard.summary.applications": "आवेदन",
+    "projectDashboard.summary.activeNow": "अभी सक्रिय",
+    "projectDashboard.summary.pending": "लंबित",
+    "projectDashboard.summary.inReview": "समीक्षा में",
+    "projectDashboard.card.applicationStatus.title": "आवेदन स्थिति",
+    "projectDashboard.card.applicationStatus.sub": "वर्तमान वित्तीय वर्ष का विवरण",
+    "projectDashboard.legend.pending": "लंबित",
+    "projectDashboard.legend.approved": "स्वीकृत",
+    "projectDashboard.legend.rejected": "अस्वीकृत",
+    "projectDashboard.card.totalInvestment.title": "कुल निवेश",
+    "projectDashboard.card.totalInvestment.sub": "परियोजना प्रकार के अनुसार",
+    "projectDashboard.card.avgApprovalTime.title": "औसत अनुमोदन समय",
+    "projectDashboard.card.avgApprovalTime.delta": "-2.5 दिन",
+    "projectDashboard.segment.projects": "परियोजनाएँ",
+    "projectDashboard.segment.month": "महीना",
+    "projectDashboard.month.jan": "जन",
+    "projectDashboard.month.feb": "फर",
+    "projectDashboard.month.mar": "मार्च",
+    "projectDashboard.month.apr": "अप्रैल",
+    "projectDashboard.month.may": "मई",
+    "projectDashboard.month.jun": "जून",
+    "projectDashboard.axis.100cr": "₹100Cr",
+    "projectDashboard.axis.50cr": "₹50Cr",
+    "projectDashboard.axis.0": "₹0",
+    "projectDashboard.bar.textile": "टेक्सटाइल",
+    "projectDashboard.bar.solar": "सोलर",
+    "projectDashboard.bar.agro": "एग्रो",
+    "projectDashboard.bar.it": "आईटी",
+    "projectDashboard.bar.auto": "ऑटो",
+
+    "contacts.title": "संपर्क",
+    "contacts.searchPlaceholder": "विभाग, अधिकारी खोजें...",
+    "contacts.pill.all": "सभी",
+    "contacts.pill.approvals": "अनुमोदन",
+    "contacts.pill.utilities": "यूटिलिटीज",
+    "contacts.pill.emergency": "आपातकाल",
+    "contacts.nodalOfficer": "नोडल अधिकारी:",
+    "contacts.action.call": "कॉल",
+    "contacts.action.email": "ईमेल",
+    "contacts.endOfDirectory": "डायरेक्टरी समाप्त",
+
+    "entityVault.title": "एंटिटी ई-वॉल्ट",
+    "entityVault.searchPlaceholder": "IPIN या एप्लिकेशन आईडी से खोजें",
+    "entityVault.empty": "इस IPIN के लिए हाल की कोई गतिविधि नहीं है।",
+    "entityVault.row.applicationId": "एप्लिकेशन आईडी",
+    "entityVault.row.formName": "फॉर्म नाम",
+    "entityVault.row.clearanceIssued": "क्लीयरेंस जारी",
+    "entityVault.row.senderName": "प्रेषक नाम",
+    "entityVault.section.clearanceDocuments": "क्लीयरेंस दस्तावेज़",
+    "entityVault.action.download": "डाउनलोड",
+    "entityVault.label.ipin": "IPIN",
+
+    "regulatoryClearances.title": "निवेश परियोजना आवेदन",
+    "regulatoryClearances.tab.applyNew": "नया आवेदन",
+    "regulatoryClearances.tab.applied": "आवेदित",
+    "regulatoryClearances.tab.pending": "लंबित",
+    "regulatoryClearances.tab.issued": "जारी",
+    "regulatoryClearances.tab.rejected": "अस्वीकृत",
     "dashboard.investorsWalkthrough": "निवेशक वॉकथ्रू",
     "dashboard.recentActivity": "हाल की गतिविधि",
     "dashboard.viewLogs": "लॉग देखें",
@@ -694,6 +956,48 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.services": "सेवाएं",
     "dashboard.bottomNav.docs": "दस्तावेज़",
     "dashboard.bottomNav.profile": "प्रोफ़ाइल",
+
+    "investmentProject.title": "निवेश परियोजना",
+    "investmentProject.welcome": "स्वागत",
+    "investmentProject.greetings": "फास्टट्रैक पंजाब से शुभकामनाएँ!",
+    "investmentProject.thankYouPrefix": "अपने निवेश सफर के लिए ",
+    "investmentProject.punjab": "पंजाब",
+    "investmentProject.thankYouSuffix": " चुनने के लिए धन्यवाद।",
+    "investmentProject.enterprisePrefix": "आपकी उद्यम श्रेणी — ",
+    "investmentProject.msme": "MSME",
+    "investmentProject.enterpriseOr": " या ",
+    "investmentProject.largeEnterprise": "बड़ा उद्यम",
+    "investmentProject.enterpriseSuffix": " — के आधार पर सिस्टम आपको मार्गदर्शन करेगा:",
+    "investmentProject.guideTo": "सिस्टम आपको मार्गदर्शन करेगा:",
+    "investmentProject.card.rtba.title": "राइट टू बिज़नेस एक्ट",
+    "investmentProject.card.rtba.desc": "योग्य MSME के लिए (पंजाब राइट टू बिज़नेस एक्ट 2020 के अनुसार)",
+    "investmentProject.card.greenStamp.title": "ग्रीन स्टाम्प पेपर सेवा",
+    "investmentProject.card.greenStamp.desc": "यदि आपने भूमि चिन्हित की है और खरीदना चाहते हैं",
+    "investmentProject.card.singleWindow.title": "सिंगल विंडो पोर्टल",
+    "investmentProject.card.singleWindow.desc": "फास्टट्रैक पंजाब के माध्यम से अन्य अनुमोदन और सेवाओं के लिए",
+    "investmentProject.card.serviceCaf.title": "Service-CAF",
+    "investmentProject.card.serviceCaf.desc": "नई या मौजूदा परियोजनाओं के लिए सेवाएँ प्राप्त करने हेतु",
+    "investmentProject.msmeLandNote": "जिन MSME के पास भूमि है वे स्व-प्रमाणीकरण के आधार पर 'इन-प्रिंसिपल अप्रूवल' प्रमाणपत्र प्राप्त कर सकते हैं, जो 3 वर्ष 6 माह तक मान्य होगा।",
+    "investmentProject.msmeLandNoteSub": "उद्यम को जारी होने की तिथि से 3 वर्ष के भीतर लागू नियमित अनुमोदनों के लिए आवेदन करना आवश्यक है।",
+    "investmentProject.section.rtbaClearances": "RTBA के अंतर्गत क्लीयरेंस *",
+    "investmentProject.item": "आइटम",
+    "investmentProject.field.department": "विभाग",
+    "investmentProject.field.act": "अधिनियम",
+    "investmentProject.field.services": "सेवाएँ",
+    "investmentProject.item1.departmentValue": "स्थानीय सरकार (LG)",
+    "investmentProject.item1.actValue": "पंजाब म्युनिसिपल अधिनियम, 1911 एवं म्युनिसिपल कॉरपोरेशन अधिनियम, 1976",
+    "investmentProject.item1.service1": "बिल्डिंग प्लान की स्वीकृति",
+    "investmentProject.item1.service2": "पूर्णता/ऑक्युपेंसी प्रमाणपत्र",
+    "investmentProject.item1.service3": "ट्रेड लाइसेंस पंजीकरण",
+    "investmentProject.item2.departmentValue": "हाउसिंग एवं अर्बन डेवलपमेंट (HUD)",
+    "investmentProject.item2.actValue": "पंजाब रीजनल एवं टाउन प्लानिंग तथा डेवलपमेंट अधिनियम, 1995",
+    "investmentProject.item2.service1": "बिल्डिंग प्लान की स्वीकृति",
+    "investmentProject.item2.service2": "भूमि उपयोग में परिवर्तन",
+    "investmentProject.readFullRtba": "RTBA 2020 का पूरा विवरण पढ़ें",
+    "investmentProject.msmeQuestion": "क्या आपका प्रोजेक्ट MSME श्रेणी के अंतर्गत आता है?",
+    "investmentProject.yes": "हाँ",
+    "investmentProject.no": "नहीं",
+    "investmentProject.proceed": "आवेदन पर आगे बढ़ें",
     "drawer.home": "होम",
     "drawer.myProfile": "मेरी प्रोफ़ाइल",
     "drawer.myProjects": "मेरे प्रोजेक्ट",
@@ -995,6 +1299,67 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.card.entityVault.desc": "ਸੁਰੱਖਿਅਤ ਦਸਤਾਵੇਜ਼ ਸਟੋਰੇਜ",
     "dashboard.card.projectDashboard.title": "ਪ੍ਰੋਜੈਕਟ ਡੈਸ਼ਬੋਡ",
     "dashboard.card.projectDashboard.desc": "ਇਨਸਾਈਟਸ ਅਤੇ ਰਿਪੋਰਟਾਂ",
+
+    "projectDashboard.title": "ਇਨਸਾਈਟਸ ਅਤੇ ਐਨਾਲਿਟਿਕਸ",
+    "projectDashboard.summary.totalInv": "ਕੁੱਲ ਨਿਵੇਸ਼",
+    "projectDashboard.summary.applications": "ਅਰਜ਼ੀਆਂ",
+    "projectDashboard.summary.activeNow": "ਹੁਣ ਸਰਗਰਮ",
+    "projectDashboard.summary.pending": "ਬਾਕੀ",
+    "projectDashboard.summary.inReview": "ਸਮੀਖਿਆ ਵਿੱਚ",
+    "projectDashboard.card.applicationStatus.title": "ਅਰਜ਼ੀ ਸਥਿਤੀ",
+    "projectDashboard.card.applicationStatus.sub": "ਮੌਜੂਦਾ ਵਿੱਤੀ ਸਾਲ ਦਾ ਵੇਰਵਾ",
+    "projectDashboard.legend.pending": "ਬਾਕੀ",
+    "projectDashboard.legend.approved": "ਮਨਜ਼ੂਰ",
+    "projectDashboard.legend.rejected": "ਰੱਦ",
+    "projectDashboard.card.totalInvestment.title": "ਕੁੱਲ ਨਿਵੇਸ਼",
+    "projectDashboard.card.totalInvestment.sub": "ਪਰੋਜੈਕਟ ਕਿਸਮ ਅਨੁਸਾਰ",
+    "projectDashboard.card.avgApprovalTime.title": "ਔਸਤ ਮਨਜ਼ੂਰੀ ਸਮਾਂ",
+    "projectDashboard.card.avgApprovalTime.delta": "-2.5 ਦਿਨ",
+    "projectDashboard.segment.projects": "ਪਰੋਜੈਕਟ",
+    "projectDashboard.segment.month": "ਮਹੀਨਾ",
+    "projectDashboard.month.jan": "ਜਨ",
+    "projectDashboard.month.feb": "ਫਰ",
+    "projectDashboard.month.mar": "ਮਾਰਚ",
+    "projectDashboard.month.apr": "ਅਪ੍ਰੈਲ",
+    "projectDashboard.month.may": "ਮਈ",
+    "projectDashboard.month.jun": "ਜੂਨ",
+    "projectDashboard.axis.100cr": "₹100Cr",
+    "projectDashboard.axis.50cr": "₹50Cr",
+    "projectDashboard.axis.0": "₹0",
+    "projectDashboard.bar.textile": "ਟੈਕਸਟਾਈਲ",
+    "projectDashboard.bar.solar": "ਸੋਲਰ",
+    "projectDashboard.bar.agro": "ਐਗਰੋ",
+    "projectDashboard.bar.it": "ਆਈਟੀ",
+    "projectDashboard.bar.auto": "ਆਟੋ",
+
+    "contacts.title": "ਸੰਪਰਕ",
+    "contacts.searchPlaceholder": "ਵਿਭਾਗ, ਅਧਿਕਾਰੀ ਖੋਜੋ...",
+    "contacts.pill.all": "ਸਾਰੇ",
+    "contacts.pill.approvals": "ਮਨਜ਼ੂਰੀਆਂ",
+    "contacts.pill.utilities": "ਯੂਟਿਲਿਟੀਜ਼",
+    "contacts.pill.emergency": "ਐਮਰਜੈਂਸੀ",
+    "contacts.nodalOfficer": "ਨੋਡਲ ਅਧਿਕਾਰੀ:",
+    "contacts.action.call": "ਕਾਲ",
+    "contacts.action.email": "ਈਮੇਲ",
+    "contacts.endOfDirectory": "ਡਾਇਰੈਕਟਰੀ ਸਮਾਪਤ",
+
+    "entityVault.title": "ਐਂਟਿਟੀ ਈ-ਵਾਲਟ",
+    "entityVault.searchPlaceholder": "IPIN ਜਾਂ ਐਪਲੀਕੇਸ਼ਨ ਆਈਡੀ ਨਾਲ ਖੋਜੋ",
+    "entityVault.empty": "ਇਸ IPIN ਲਈ ਕੋਈ ਹਾਲੀਆ ਗਤੀਵਿਧੀ ਨਹੀਂ ਹੈ।",
+    "entityVault.row.applicationId": "ਐਪਲੀਕੇਸ਼ਨ ਆਈਡੀ",
+    "entityVault.row.formName": "ਫਾਰਮ ਨਾਮ",
+    "entityVault.row.clearanceIssued": "ਕਲੀਅਰੈਂਸ ਜਾਰੀ",
+    "entityVault.row.senderName": "ਭੇਜਣ ਵਾਲਾ ਨਾਮ",
+    "entityVault.section.clearanceDocuments": "ਕਲੀਅਰੈਂਸ ਦਸਤਾਵੇਜ਼",
+    "entityVault.action.download": "ਡਾਊਨਲੋਡ",
+    "entityVault.label.ipin": "IPIN",
+
+    "regulatoryClearances.title": "ਨਿਵੇਸ਼ ਪਰੋਜੈਕਟ ਅਰਜ਼ੀਆਂ",
+    "regulatoryClearances.tab.applyNew": "ਨਵੀਂ ਅਰਜ਼ੀ",
+    "regulatoryClearances.tab.applied": "ਅਰਜ਼ੀ ਕੀਤੀ",
+    "regulatoryClearances.tab.pending": "ਬਾਕੀ",
+    "regulatoryClearances.tab.issued": "ਜਾਰੀ",
+    "regulatoryClearances.tab.rejected": "ਰੱਦ",
     "dashboard.investorsWalkthrough": "ਨਿਵੇਸ਼ਕ ਵਾਕਥਰੂ",
     "dashboard.recentActivity": "ਹਾਲੀਆ ਗਤੀਵਿਧੀ",
     "dashboard.viewLogs": "ਲੌਗ ਵੇਖੋ",
@@ -1009,6 +1374,48 @@ export const translations: Record<LanguageCode, Dictionary> = {
     "dashboard.bottomNav.services": "ਸੇਵਾਵਾਂ",
     "dashboard.bottomNav.docs": "ਦਸਤਾਵੇਜ਼",
     "dashboard.bottomNav.profile": "ਪ੍ਰੋਫਾਈਲ",
+
+    "investmentProject.title": "ਨਿਵੇਸ਼ ਪ੍ਰੋਜੈਕਟ",
+    "investmentProject.welcome": "ਸੁਆਗਤ ਹੈ",
+    "investmentProject.greetings": "ਫਾਸਟਟ੍ਰੈਕ ਪੰਜਾਬ ਵਲੋਂ ਸ਼ੁਭਕਾਮਨਾਵਾਂ!",
+    "investmentProject.thankYouPrefix": "ਤੁਹਾਡੇ ਨਿਵੇਸ਼ ਸਫ਼ਰ ਲਈ ",
+    "investmentProject.punjab": "ਪੰਜਾਬ",
+    "investmentProject.thankYouSuffix": " ਚੁਣਨ ਲਈ ਧੰਨਵਾਦ।",
+    "investmentProject.enterprisePrefix": "ਤੁਹਾਡੀ ਉਦਯੋਗ ਸ਼੍ਰੇਣੀ — ",
+    "investmentProject.msme": "MSME",
+    "investmentProject.enterpriseOr": " ਜਾਂ ",
+    "investmentProject.largeEnterprise": "ਵੱਡਾ ਉਦਯੋਗ",
+    "investmentProject.enterpriseSuffix": " — ਦੇ ਅਧਾਰ ‘ਤੇ ਸਿਸਟਮ ਤੁਹਾਨੂੰ ਰਾਹਦਾਰੀ ਦੇਵੇਗਾ:",
+    "investmentProject.guideTo": "ਸਿਸਟਮ ਤੁਹਾਨੂੰ ਰਾਹਦਾਰੀ ਦੇਵੇਗਾ:",
+    "investmentProject.card.rtba.title": "ਰਾਈਟ ਟੂ ਬਿਜ਼ਨਸ ਐਕਟ",
+    "investmentProject.card.rtba.desc": "ਯੋਗ MSME ਲਈ (ਪੰਜਾਬ ਰਾਈਟ ਟੂ ਬਿਜ਼ਨਸ ਐਕਟ 2020 ਅਨੁਸਾਰ)",
+    "investmentProject.card.greenStamp.title": "ਗ੍ਰੀਨ ਸਟੈਂਪ ਪੇਪਰ ਸੇਵਾ",
+    "investmentProject.card.greenStamp.desc": "ਜੇ ਤੁਸੀਂ ਜ਼ਮੀਨ ਪਛਾਣ ਲਈ ਹੈ ਅਤੇ ਖਰੀਦਣਾ ਚਾਹੁੰਦੇ ਹੋ",
+    "investmentProject.card.singleWindow.title": "ਸਿੰਗਲ ਵਿਂਡੋ ਪੋਰਟਲ",
+    "investmentProject.card.singleWindow.desc": "ਫਾਸਟਟ੍ਰੈਕ ਪੰਜਾਬ ਰਾਹੀਂ ਹੋਰ ਮਨਜ਼ੂਰੀਆਂ ਅਤੇ ਸੇਵਾਵਾਂ ਲਈ",
+    "investmentProject.card.serviceCaf.title": "Service-CAF",
+    "investmentProject.card.serviceCaf.desc": "ਨਵੀਆਂ ਜਾਂ ਮੌਜੂਦਾ ਪਰੋਜੈਕਟਾਂ ਲਈ ਸੇਵਾਵਾਂ ਲੈਣ ਲਈ",
+    "investmentProject.msmeLandNote": "ਜਿਨ੍ਹਾਂ MSME ਕੋਲ ਜ਼ਮੀਨ ਹੈ ਉਹ ਸਵੈ-ਪ੍ਰਮਾਣੀਕਰਨ ਦੇ ਆਧਾਰ ‘ਤੇ 'ਇਨ-ਪ੍ਰਿੰਸਿਪਲ ਅਪ੍ਰੂਵਲ' ਸਰਟੀਫਿਕੇਟ ਲੈ ਸਕਦੇ ਹਨ, ਜੋ 3 ਸਾਲ 6 ਮਹੀਨੇ ਲਈ ਵੈਧ ਹੋਵੇਗਾ।",
+    "investmentProject.msmeLandNoteSub": "ਉਦਯੋਗ ਨੂੰ ਜਾਰੀ ਤਾਰੀਖ ਤੋਂ 3 ਸਾਲਾਂ ਦੇ ਅੰਦਰ ਲਾਗੂ ਨਿਯਮਿਤ ਮਨਜ਼ੂਰੀਆਂ ਲਈ ਅਰਜ਼ੀ ਦੇਣੀ ਲਾਜ਼ਮੀ ਹੈ।",
+    "investmentProject.section.rtbaClearances": "RTBA ਅਧੀਨ ਕਲੀਅਰੈਂਸ *",
+    "investmentProject.item": "ਆਈਟਮ",
+    "investmentProject.field.department": "ਵਿਭਾਗ",
+    "investmentProject.field.act": "ਐਕਟ",
+    "investmentProject.field.services": "ਸੇਵਾਵਾਂ",
+    "investmentProject.item1.departmentValue": "ਲੋਕਲ ਗਵਰਨਮੈਂਟ (LG)",
+    "investmentProject.item1.actValue": "ਪੰਜਾਬ ਮਿਊਨਿਸਿਪਲ ਐਕਟ, 1911 ਅਤੇ ਮਿਊਨਿਸਿਪਲ ਕਾਰਪੋਰੇਸ਼ਨ ਐਕਟ, 1976",
+    "investmentProject.item1.service1": "ਬਿਲਡਿੰਗ ਪਲਾਨ ਦੀ ਮਨਜ਼ੂਰੀ",
+    "investmentProject.item1.service2": "ਕੰਪਲੀਸ਼ਨ/ਓਕਿਊਪੈਂਸੀ ਸਰਟੀਫਿਕੇਟ",
+    "investmentProject.item1.service3": "ਟ੍ਰੇਡ ਲਾਇਸੈਂਸ ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
+    "investmentProject.item2.departmentValue": "ਹਾਊਸਿੰਗ ਅਤੇ ਅਰਬਨ ਡਿਵੈਲਪਮੈਂਟ (HUD)",
+    "investmentProject.item2.actValue": "ਪੰਜਾਬ ਰੀਜਨਲ ਅਤੇ ਟਾਊਨ ਪਲਾਨਿੰਗ ਅਤੇ ਡਿਵੈਲਪਮੈਂਟ ਐਕਟ, 1995",
+    "investmentProject.item2.service1": "ਬਿਲਡਿੰਗ ਪਲਾਨ ਦੀ ਮਨਜ਼ੂਰੀ",
+    "investmentProject.item2.service2": "ਜ਼ਮੀਨ ਦੀ ਵਰਤੋਂ ਵਿੱਚ ਤਬਦੀਲੀ",
+    "investmentProject.readFullRtba": "RTBA 2020 ਦੀ ਪੂਰੀ ਜਾਣਕਾਰੀ ਪੜ੍ਹੋ",
+    "investmentProject.msmeQuestion": "ਕੀ ਤੁਹਾਡਾ ਪ੍ਰੋਜੈਕਟ MSME ਸ਼੍ਰੇਣੀ ਵਿੱਚ ਆਉਂਦਾ ਹੈ?",
+    "investmentProject.yes": "ਹਾਂ",
+    "investmentProject.no": "ਨਹੀਂ",
+    "investmentProject.proceed": "ਆਵেদন ਵੱਲ ਅੱਗੇ ਵਧੋ",
     "drawer.home": "ਹੋਮ",
     "drawer.myProfile": "ਮੇਰੀ ਪ੍ਰੋਫਾਈਲ",
     "drawer.myProjects": "ਮੇਰੇ ਪ੍ਰੋਜੈਕਟ",

@@ -125,7 +125,7 @@ export function HomeScreen({ onLoginPress }: Props) {
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
             <Image
               source={require("../assets/images/fasttrack_dark_logo.png")}
-              style={{ width: 118, height: 40, resizeMode: "contain" }}
+              style={{ width: 132, height: 46, resizeMode: "contain" }}
             />
             <GovtLogo width={40} height={40} />
             <Image source={require("../assets/images/ip-logo.png")} style={{ width: 110, height: 40, resizeMode: "contain" }} />
