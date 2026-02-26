@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { View, ScrollView, TextInput, Pressable } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useState } from "react";
 import { useTheme } from "../theme/useTheme";
@@ -18,6 +17,26 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
   const { t, language, setLanguage } = useI18n();
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
+  const BG = "#E9EEF5";
+  const TEXT_DARK = "#111827";
+  const TEXT_MUTED = "#6b7280";
+  const PLACEHOLDER = "#9ca3af";
+  const BORDER = "#E5E7EB";
+
+  const TITLE_SIZE = 34;
+  const LABEL_SIZE = 15;
+  const INPUT_SIZE = 15;
+  const PROJECT_LABEL_SIZE = 13;
+  const ROW_TEXT_SIZE = 15;
+  const BUTTON_TEXT_SIZE = 17;
+
+  const TITLE_WEIGHT: any = "700";
+  const LABEL_WEIGHT: any = "600";
+  const INPUT_WEIGHT: any = "500";
+  const PROJECT_LABEL_WEIGHT: any = "700";
+  const ROW_TEXT_WEIGHT: any = "700";
+  const BUTTON_TEXT_WEIGHT: any = "700";
+
   type ProjectTypeId = "industries" | "housing" | "startup";
   const [projectType, setProjectType] = useState<ProjectTypeId>("industries");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,345 +46,280 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
     <>
       <StatusBar style="dark" />
 
-      <LinearGradient
-        colors={theme.colors.background.gradient}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ flex: 1 }}
-      >
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 28 }}>
+      <View style={{ flex: 1, backgroundColor: BG }}>
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 28, paddingTop: STATUS_BAR_HEIGHT + 18 }}>
           <View style={{ paddingHorizontal: 24, flex: 1 }}>
-            <View
-              style={{
-                paddingTop: 18 + STATUS_BAR_HEIGHT,
-                paddingBottom: 14,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between"
-              }}
-            >
-              <Pressable
-                onPress={onBack}
-                hitSlop={10}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderRadius: 20,
-                  backgroundColor: "#ffffff",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  shadowColor: "#000",
-                  shadowOpacity: 0.06,
-                  shadowRadius: 10,
-                  shadowOffset: { width: 0, height: 6 },
-                  elevation: 3
-                }}
-              >
-                <MaterialIcons name="arrow-back" size={22} color="#374151" />
-              </Pressable>
-
-              <Pressable
-                onPress={() => setShowLangMenu((v) => !v)}
-                hitSlop={10}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 6,
-                  paddingHorizontal: 12,
-                  height: 34,
-                  borderRadius: 999,
-                  backgroundColor: "#ffffff",
-                  shadowColor: "#000",
-                  shadowOpacity: 0.06,
-                  shadowRadius: 10,
-                  shadowOffset: { width: 0, height: 6 },
-                  elevation: 3
-                }}
-              >
-                <ThemedText style={{ fontSize: 12, fontWeight: "700", color: "#4b5563" }}>
-                  {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+            <View style={{ alignSelf: "center", width: "100%", maxWidth: 520 }}>
+              <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                <ThemedText style={{ fontSize: TITLE_SIZE, fontWeight: TITLE_WEIGHT, color: TEXT_DARK, marginTop: 6, marginBottom: 18 }}>
+                  {t("login.title")}
                 </ThemedText>
-                <MaterialIcons name="expand-more" size={18} color="#6b7280" />
-              </Pressable>
-            </View>
 
-            {showLangMenu ? (
-              <View
-                style={{
-                  position: "absolute",
-                  right: 24,
-                  top: 66 + STATUS_BAR_HEIGHT,
-                  width: 170,
-                  borderRadius: 14,
-                  overflow: "hidden",
-                  backgroundColor: "rgba(255,255,255,0.96)",
-                  borderWidth: 1,
-                  borderColor: theme.colors.border.hairline,
-                  zIndex: 999,
-                  elevation: 999
-                }}
-              >
-                {["en", "pa", "hi"].map((code) => (
-                  <Pressable
-                    key={code}
-                    onPress={() => {
-                      setLanguage(code as any);
-                      setShowLangMenu(false);
-                    }}
-                    style={{
-                      paddingHorizontal: 14,
-                      paddingVertical: 12,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
-                    }}
-                  >
-                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>
-                      {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
-                    </ThemedText>
-                    {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
-                  </Pressable>
-                ))}
-              </View>
-            ) : null}
-
-            <ThemedText style={{ fontSize: 30, fontWeight: "700", color: "#312e81", marginTop: 6, marginBottom: 14 }}>
-              {t("login.title")}
-            </ThemedText>
-
-            <View style={{ gap: 14 }}>
-              <View style={{ position: "relative" }}>
-                <MaterialIcons name="person" size={20} color="#9ca3af" style={{ position: "absolute", top: 18, left: 16 }} />
-                <TextInput
-                  placeholder={t("login.usernameOrEmail")}
-                  placeholderTextColor="#9ca3af"
-                  style={{
-                    fontFamily: "Roboto",
-                    fontWeight: "500",
-                    paddingLeft: 48,
-                    paddingRight: 16,
-                    paddingVertical: 16,
-                    borderRadius: 24,
-                    backgroundColor: "#ffffff",
-                    fontSize: 15,
-                    shadowColor: "#000",
-                    shadowOpacity: 0.05,
-                    shadowRadius: 12,
-                    shadowOffset: { width: 0, height: 8 },
-                    elevation: 2
-                  }}
-                />
-              </View>
-
-              <View style={{ position: "relative" }}>
-                <MaterialIcons name="lock" size={20} color="#9ca3af" style={{ position: "absolute", top: 18, left: 16 }} />
-                <TextInput
-                  placeholder={t("login.password")}
-                  placeholderTextColor="#9ca3af"
-                  secureTextEntry={!showPassword}
-                  style={{
-                    fontFamily: "Roboto",
-                    fontWeight: "500",
-                    paddingLeft: 48,
-                    paddingRight: 48,
-                    paddingVertical: 16,
-                    borderRadius: 24,
-                    backgroundColor: "#ffffff",
-                    fontSize: 15,
-                    shadowColor: "#000",
-                    shadowOpacity: 0.05,
-                    shadowRadius: 12,
-                    shadowOffset: { width: 0, height: 8 },
-                    elevation: 2
-                  }}
-                />
-                <Pressable onPress={() => setShowPassword(!showPassword)} style={{ position: "absolute", top: 16, right: 14, padding: 6 }}>
-                  <MaterialIcons name={showPassword ? "visibility-off" : "visibility"} size={20} color="#9ca3af" />
+                <Pressable onPress={() => setShowLangMenu((v) => !v)} hitSlop={10} style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
+                  <ThemedText style={{ fontSize: 12, fontWeight: "700", color: TEXT_DARK }}>
+                    {language === "en" ? "EN" : language === "hi" ? "HI" : "PA"}
+                  </ThemedText>
+                  <MaterialIcons name="keyboard-arrow-down" size={18} color={TEXT_DARK} />
                 </Pressable>
               </View>
 
-              <View style={{ flexDirection: "row", gap: 12, alignItems: "center" }}>
-                <View style={{ flex: 1, position: "relative" }}>
-                  <MaterialIcons name="security" size={20} color="#9ca3af" style={{ position: "absolute", top: 18, left: 16 }} />
+              {showLangMenu ? (
+                <View
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    top: 58,
+                    width: 170,
+                    borderRadius: 14,
+                    overflow: "hidden",
+                    backgroundColor: "rgba(255,255,255,0.98)",
+                    borderWidth: 1,
+                    borderColor: theme.colors.border.hairline,
+                    zIndex: 999,
+                    elevation: 999
+                  }}
+                >
+                  {["en", "pa", "hi"].map((code) => (
+                    <Pressable
+                      key={code}
+                      onPress={() => {
+                        setLanguage(code as any);
+                        setShowLangMenu(false);
+                      }}
+                      style={{
+                        paddingHorizontal: 14,
+                        paddingVertical: 12,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
+                      }}
+                    >
+                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>
+                        {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
+                      </ThemedText>
+                      {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
+
+              <View style={{ marginTop: 6 }}>
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginBottom: 10 }}>
+                  {t("login.usernameOrEmail")} *
+                </ThemedText>
+                <View style={{ position: "relative" }}>
+                  <MaterialCommunityIcons name="account-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
+                  <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
                   <TextInput
-                    placeholder={t("login.code")}
-                    placeholderTextColor="#9ca3af"
+                    placeholder={t("login.usernameOrEmail") + " *"}
+                    placeholderTextColor={PLACEHOLDER}
                     style={{
                       fontFamily: "Roboto",
-                      fontWeight: "500",
-                      paddingLeft: 48,
-                      paddingRight: 16,
-                      paddingVertical: 16,
-                      borderRadius: 24,
+                      fontWeight: INPUT_WEIGHT,
+                      paddingLeft: 72,
+                      paddingRight: 20,
+                      height: 58,
+                      borderRadius: 999,
                       backgroundColor: "#ffffff",
-                      fontSize: 15,
-                      shadowColor: "#000",
-                      shadowOpacity: 0.05,
-                      shadowRadius: 12,
-                      shadowOffset: { width: 0, height: 8 },
-                      elevation: 2
+                      fontSize: INPUT_SIZE,
+                      color: TEXT_DARK
                     }}
                   />
                 </View>
 
-                <View
-                  style={{
-                    width: 124,
-                    height: 58,
-                    borderRadius: 24,
-                    backgroundColor: "#D1E1F5",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    shadowColor: "#000",
-                    shadowOpacity: 0.05,
-                    shadowRadius: 12,
-                    shadowOffset: { width: 0, height: 8 },
-                    elevation: 2
-                  }}
-                >
-                  <ThemedText style={{ fontSize: 20, fontWeight: "700", letterSpacing: 4, color: "#111827" }}>8X2aP</ThemedText>
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 22, marginBottom: 10 }}>
+                  {t("login.password")} *
+                </ThemedText>
+                <View style={{ position: "relative" }}>
+                  <MaterialCommunityIcons name="lock-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
+                  <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
+                  <TextInput
+                    placeholder={t("login.password") === "Password" ? "Enter Your Password" : t("login.password")}
+                    placeholderTextColor={PLACEHOLDER}
+                    secureTextEntry={!showPassword}
+                    style={{
+                      fontFamily: "Roboto",
+                      fontWeight: INPUT_WEIGHT,
+                      paddingLeft: 72,
+                      paddingRight: 54,
+                      height: 58,
+                      borderRadius: 999,
+                      backgroundColor: "#ffffff",
+                      fontSize: INPUT_SIZE,
+                      color: TEXT_DARK
+                    }}
+                  />
+                  <Pressable onPress={() => setShowPassword(!showPassword)} style={{ position: "absolute", top: 12, right: 14, padding: 6 }}>
+                    <MaterialCommunityIcons name={showPassword ? "eye-off-outline" : "eye-outline"} size={22} color={TEXT_DARK} />
+                  </Pressable>
                 </View>
-              </View>
-            </View>
 
-            <ThemedText style={{ fontSize: 11, fontWeight: "700", color: "#6b7280", marginTop: 18, marginBottom: 12, textTransform: "uppercase" }}>
-              {t("login.projectType")}
-            </ThemedText>
-
-            {([
-              {
-                id: "industries" as const,
-                label: t("login.projectType.industries"),
-                icon: "business-center" as const,
-                iconBg: "rgba(22,163,74,0.14)",
-                iconColor: "#16a34a"
-              },
-              {
-                id: "housing" as const,
-                label: t("login.projectType.housing"),
-                icon: "home" as const,
-                iconBg: "rgba(37,99,235,0.12)",
-                iconColor: "#2563eb"
-              },
-              {
-                id: "startup" as const,
-                label: t("login.projectType.startup"),
-                icon: "emoji-objects" as const,
-                iconBg: "rgba(245,158,11,0.16)",
-                iconColor: "#f59e0b"
-              }
-            ] satisfies { id: ProjectTypeId; label: string; icon: any; iconBg: string; iconColor: string }[]).map((item) => {
-              const selected = projectType === item.id;
-              return (
-                <Pressable
-                  key={item.id}
-                  onPress={() => setProjectType(item.id)}
-                  style={{
-                    paddingVertical: 16,
-                    paddingHorizontal: 16,
-                    borderRadius: 24,
-                    backgroundColor: selected ? "#16a34a" : "#ffffff",
-                    marginBottom: 12,
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    shadowColor: "#000",
-                    shadowOpacity: selected ? 0.10 : 0.05,
-                    shadowRadius: 12,
-                    shadowOffset: { width: 0, height: 8 },
-                    elevation: selected ? 3 : 2
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-                    <View
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 22, marginBottom: 10 }}>
+                  {t("login.code")} *
+                </ThemedText>
+                <View style={{ flexDirection: "row", gap: 16, alignItems: "center" }}>
+                  <View style={{ flex: 1, position: "relative" }}>
+                    <MaterialCommunityIcons name="shield-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
+                    <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
+                    <TextInput
+                      placeholder={t("login.code") === "Captcha" ? "Enter Code" : t("login.code")}
+                      placeholderTextColor={PLACEHOLDER}
                       style={{
-                        width: 30,
-                        height: 30,
-                        borderRadius: 10,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: selected ? "rgba(255,255,255,0.18)" : item.iconBg
+                        fontFamily: "Roboto",
+                        fontWeight: INPUT_WEIGHT,
+                        paddingLeft: 72,
+                        paddingRight: 20,
+                        height: 58,
+                        borderRadius: 999,
+                        backgroundColor: "#ffffff",
+                        fontSize: INPUT_SIZE,
+                        color: TEXT_DARK
                       }}
-                    >
-                      <MaterialIcons name={item.icon} size={18} color={selected ? "#ffffff" : item.iconColor} />
-                    </View>
-                    <ThemedText style={{ fontSize: 14.5, fontWeight: "700", color: selected ? "#ffffff" : "#111827" }}>{item.label}</ThemedText>
+                    />
                   </View>
 
-                  {selected ? <MaterialIcons name="check-circle" size={22} color="#ffffff" /> : null}
-                </Pressable>
-              );
-            })}
-
-            <View style={{ paddingTop: 14, paddingBottom: 10 }}>
-              <Pressable
-                onPress={onLoginSuccess}
-                style={{
-                  width: "100%",
-                  paddingVertical: 16,
-                  backgroundColor: "#1D4ED8",
-                  borderRadius: 24,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  shadowColor: "#1D4ED8",
-                  shadowOpacity: 0.28,
-                  shadowRadius: 18,
-                  shadowOffset: { width: 0, height: 10 },
-                  elevation: 4
-                }}
-              >
-                <ThemedText style={{ color: "#ffffff", fontSize: 18, fontWeight: "700" }}>{t("login.login")}</ThemedText>
-              </Pressable>
-
-              <Pressable
-                style={{
-                  marginTop: 12,
-                  width: "100%",
-                  paddingVertical: 16,
-                  backgroundColor: "#ffffff",
-                  borderRadius: 24,
-                  borderWidth: 1,
-                  borderColor: "rgba(226,232,240,0.95)",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  shadowColor: "#000",
-                  shadowOpacity: 0.04,
-                  shadowRadius: 12,
-                  shadowOffset: { width: 0, height: 8 },
-                  elevation: 2
-                }}
-              >
-                <ThemedText style={{ color: "#1E293B", fontSize: 18, fontWeight: "700" }}>{t("login.loginWithStartupIndia")}</ThemedText>
-              </Pressable>
-
-              <View style={{ paddingTop: 14, gap: 10, alignItems: "center" }}>
-                <Pressable>
-                  <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#4f46e5" }}>{t("login.forgotPassword")}</ThemedText>
-                </Pressable>
-
-                <ThemedText style={{ color: "#6b7280", fontWeight: "600" }}>
-                  {t("login.noAccount")} <ThemedText style={{ color: "#4f46e5", fontWeight: "700" }}>{t("login.signup")}</ThemedText>
-                </ThemedText>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
+                    <View
+                      style={{
+                        height: 58,
+                        minWidth: 150,
+                        borderRadius: 999,
+                        backgroundColor: "#C6CDD8",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <ThemedText style={{ fontSize: 17, fontWeight: "700", letterSpacing: 2, color: TEXT_DARK }}>8X2aP</ThemedText>
+                    </View>
+                    <Pressable onPress={() => null} hitSlop={10} style={{ width: 44, height: 44, borderRadius: 999, alignItems: "center", justifyContent: "center" }}>
+                      <MaterialCommunityIcons name="refresh" size={28} color={TEXT_DARK} />
+                    </Pressable>
+                  </View>
+                </View>
               </View>
 
-              <ThemedText
-                style={{
-                  marginTop: 14,
-                  fontSize: 10,
-                  fontWeight: "600",
-                  color: "#9ca3af",
-                  lineHeight: 15,
-                  textAlign: "center",
-                  paddingHorizontal: 16
-                }}
-              >
-                {t("login.footerDisclaimer")}
+              <ThemedText style={{ fontSize: PROJECT_LABEL_SIZE, fontWeight: PROJECT_LABEL_WEIGHT, color: TEXT_DARK, marginTop: 28, marginBottom: 12, textTransform: "uppercase" }}>
+                {t("login.projectType")}
               </ThemedText>
+
+              {([
+                {
+                  id: "industries" as const,
+                  label: t("login.projectType.industries"),
+                  icon: "business-center" as const,
+                  iconBg: "rgba(22,163,74,0.14)",
+                  iconColor: "#16a34a"
+                },
+                {
+                  id: "housing" as const,
+                  label: t("login.projectType.housing"),
+                  icon: "home" as const,
+                  iconBg: "rgba(37,99,235,0.12)",
+                  iconColor: "#2563eb"
+                },
+                {
+                  id: "startup" as const,
+                  label: t("login.projectType.startup"),
+                  icon: "emoji-objects" as const,
+                  iconBg: "rgba(245,158,11,0.16)",
+                  iconColor: "#f59e0b"
+                }
+              ] satisfies { id: ProjectTypeId; label: string; icon: any; iconBg: string; iconColor: string }[]).map((item) => {
+                const selected = projectType === item.id;
+                return (
+                  <Pressable
+                    key={item.id}
+                    onPress={() => setProjectType(item.id)}
+                    style={{
+                      height: 58,
+                      paddingHorizontal: 18,
+                      borderRadius: 999,
+                      backgroundColor: selected ? "#2F8F2F" : "#ffffff",
+                      marginBottom: 14,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      borderWidth: selected ? 2 : 0,
+                      borderColor: selected ? "#1D4ED8" : "transparent"
+                    }}
+                  >
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+                      <MaterialCommunityIcons
+                        name={item.id === "industries" ? "factory" : item.id === "housing" ? "office-building-outline" : "rocket-launch-outline"}
+                        size={22}
+                        color={selected ? "#ffffff" : TEXT_DARK}
+                      />
+                      <ThemedText style={{ fontSize: ROW_TEXT_SIZE, fontWeight: ROW_TEXT_WEIGHT, color: selected ? "#ffffff" : TEXT_DARK }}>{item.label}</ThemedText>
+                    </View>
+
+                    <MaterialCommunityIcons
+                      name={selected ? "check-circle" : "checkbox-blank-circle-outline"}
+                      size={22}
+                      color={selected ? "#ffffff" : "#AAB4C3"}
+                    />
+                  </Pressable>
+                );
+              })}
+
+              <View style={{ paddingTop: 18, paddingBottom: 0 }}>
+                <Pressable
+                  onPress={onLoginSuccess}
+                  style={{
+                    width: "100%",
+                    height: 64,
+                    backgroundColor: "#1D4ED8",
+                    borderRadius: 999,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <ThemedText style={{ color: "#ffffff", fontSize: BUTTON_TEXT_SIZE, fontWeight: BUTTON_TEXT_WEIGHT }}>{t("login.login")}</ThemedText>
+                </Pressable>
+
+                <Pressable
+                  style={{
+                    marginTop: 10,
+                    width: "100%",
+                    height: 64,
+                    backgroundColor: "#ffffff",
+                    borderRadius: 999,
+                    borderWidth: 0,
+                    alignItems: "center",
+                    justifyContent: "center"
+                  }}
+                >
+                  <ThemedText style={{ color: TEXT_DARK, fontSize: BUTTON_TEXT_SIZE, fontWeight: BUTTON_TEXT_WEIGHT }}>{t("login.loginWithStartupIndia")}</ThemedText>
+                </Pressable>
+
+                <View style={{ paddingTop: 12, gap: 8, alignItems: "center" }}>
+                  <Pressable>
+                    <ThemedText style={{ fontSize: 13, fontWeight: "700", color: "#1D4ED8" }}>{t("login.forgotPassword")}</ThemedText>
+                  </Pressable>
+
+                  <ThemedText style={{ color: TEXT_MUTED, fontWeight: "600", fontSize: 12 }}>
+                    {t("login.noAccount")} <ThemedText style={{ color: "#1D4ED8", fontWeight: "700" }}>{t("login.signup")}</ThemedText>
+                  </ThemedText>
+                </View>
+
+                <ThemedText
+                  style={{
+                    marginTop: 16,
+                    fontSize: 10,
+                    fontWeight: "600",
+                    color: "#9ca3af",
+                    lineHeight: 14,
+                    textAlign: "center",
+                    paddingHorizontal: 6
+                  }}
+                >
+                  {t("login.footerDisclaimer")}
+                </ThemedText>
+              </View>
             </View>
           </View>
         </ScrollView>
-      </LinearGradient>
+      </View>
     </>
   );
 }

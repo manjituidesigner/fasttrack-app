@@ -39,12 +39,14 @@ export function DashboardScreen({
   const theme = useTheme();
   const { language, setLanguage, t } = useI18n();
   const [showMenu, setShowMenu] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const STATUS_BAR_HEIGHT = Constants.statusBarHeight ?? 0;
 
   const activeRole: "investor" | "officer" = userRoleProp ?? "investor";
 
   const closeMenu = () => {
+    setShowProfileMenu(false);
     setShowLanguageMenu(false);
     setShowMenu(false);
   };
@@ -56,6 +58,8 @@ export function DashboardScreen({
         userRole={activeRole}
         showMenu={showMenu}
         setShowMenu={setShowMenu}
+        showProfileMenu={showProfileMenu}
+        setShowProfileMenu={setShowProfileMenu}
         showLanguageMenu={showLanguageMenu}
         setShowLanguageMenu={setShowLanguageMenu}
         closeMenu={closeMenu}
@@ -130,6 +134,7 @@ export function DashboardScreen({
             <Pressable
               onPress={() => {
                 setShowMenu((v) => !v);
+                setShowProfileMenu(false);
                 setShowLanguageMenu(false);
               }}
               hitSlop={10}
@@ -183,31 +188,57 @@ export function DashboardScreen({
                 >
                   <Pressable
                     onPress={() => {
-                      onSetUserRole?.("investor");
-                      closeMenu();
+                      setShowProfileMenu((v) => !v);
+                      setShowLanguageMenu(false);
                     }}
                     style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
                   >
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                       <MaterialIcons name="person" size={18} color="#0f172a" />
-                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Invester</ThemedText>
+                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Profile</ThemedText>
                     </View>
-                    <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" />
+                    <MaterialIcons name={showProfileMenu ? "chevron-right" : "chevron-right"} size={18} color="#64748b" />
                   </Pressable>
 
-                  <Pressable
-                    onPress={() => {
-                      onSetUserRole?.("officer");
-                      closeMenu();
-                    }}
-                    style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}
-                  >
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                      <MaterialIcons name="badge" size={18} color="#0f172a" />
-                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Officer</ThemedText>
+                  {showProfileMenu ? (
+                    <View style={{ borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}>
+                      <Pressable
+                        onPress={() => {
+                          onSetUserRole?.("investor");
+                          closeMenu();
+                        }}
+                        style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                          <MaterialIcons name="person" size={18} color="#0f172a" />
+                          <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Investor</ThemedText>
+                        </View>
+                        {activeRole === "investor" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                      </Pressable>
+
+                      <Pressable
+                        onPress={() => {
+                          onSetUserRole?.("officer");
+                          closeMenu();
+                        }}
+                        style={{
+                          paddingHorizontal: 14,
+                          paddingVertical: 12,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          borderTopWidth: 1,
+                          borderColor: "rgba(203,213,225,0.7)"
+                        }}
+                      >
+                        <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                          <MaterialIcons name="badge" size={18} color="#0f172a" />
+                          <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Dealing Head</ThemedText>
+                        </View>
+                        {null}
+                      </Pressable>
                     </View>
-                    {null}
-                  </Pressable>
+                  ) : null}
 
                   <Pressable
                     onPress={() => setShowLanguageMenu((v) => !v)}
@@ -584,6 +615,8 @@ function OfficerDashboard({
   userRole,
   showMenu,
   setShowMenu,
+  showProfileMenu,
+  setShowProfileMenu,
   showLanguageMenu,
   setShowLanguageMenu,
   closeMenu,
@@ -601,11 +634,13 @@ function OfficerDashboard({
   userRole: "investor" | "officer";
   showMenu: boolean;
   setShowMenu: (next: boolean | ((v: boolean) => boolean)) => void;
+  showProfileMenu: boolean;
+  setShowProfileMenu: (next: boolean | ((v: boolean) => boolean)) => void;
   showLanguageMenu: boolean;
   setShowLanguageMenu: (next: boolean | ((v: boolean) => boolean)) => void;
   closeMenu: () => void;
-  language: string;
-  setLanguage: (code: any) => void;
+  language: any;
+  setLanguage: (l: any) => void;
   t: (key: any) => string;
   onSetUserRole?: (role: "investor" | "officer") => void;
   onChangePassword?: () => void;
@@ -633,7 +668,7 @@ function OfficerDashboard({
           <View style={{ paddingHorizontal: 24, paddingVertical: 16, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
             <View style={{ flex: 1, paddingRight: 14 }}>
               <Text style={{ fontSize: 20, fontWeight: "700", color: "#111827" }}>Officer Portal</Text>
-              <Text style={{ marginTop: 2, fontSize: 12, fontWeight: "600", color: "#6b7280" }}>Designation • Department of Industries</Text>
+              <Text style={{ marginTop: 2, fontSize: 12, fontWeight: "600", color: "#6b7280" }}>Dealing Hand • Department of Industries</Text>
             </View>
 
             <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
@@ -646,6 +681,7 @@ function OfficerDashboard({
                 hitSlop={10}
                 onPress={() => {
                   setShowMenu((v) => !v);
+                  setShowProfileMenu(false);
                   setShowLanguageMenu(false);
                 }}
                 style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: "rgba(19,91,236,0.10)", borderWidth: 2, borderColor: "#ffffff", overflow: "hidden" }}
@@ -680,10 +716,10 @@ function OfficerDashboard({
                   position: "absolute",
                   right: 20,
                   top: 56 + statusBarHeight,
-                  width: 220,
+                  width: 240,
                   borderRadius: 16,
                   overflow: "hidden",
-                  backgroundColor: "rgba(255,255,255,0.92)",
+                  backgroundColor: "rgba(255,255,255,0.96)",
                   borderWidth: 1,
                   borderColor: "rgba(203,213,225,0.9)",
                   zIndex: 9999,
@@ -692,31 +728,57 @@ function OfficerDashboard({
               >
                 <Pressable
                   onPress={() => {
-                    onSetUserRole?.("investor");
-                    closeMenu();
+                    setShowProfileMenu((v) => !v);
+                    setShowLanguageMenu(false);
                   }}
                   style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
                 >
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <MaterialIcons name="person" size={18} color="#0f172a" />
-                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Invester</ThemedText>
+                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Profile</ThemedText>
                   </View>
-                  {userRole === "investor" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                  <MaterialIcons name="chevron-right" size={18} color="#64748b" />
                 </Pressable>
 
-                <Pressable
-                  onPress={() => {
-                    onSetUserRole?.("officer");
-                    closeMenu();
-                  }}
-                  style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between", borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                    <MaterialIcons name="badge" size={18} color="#0f172a" />
-                    <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Officer</ThemedText>
+                {showProfileMenu ? (
+                  <View style={{ borderTopWidth: 1, borderColor: "rgba(203,213,225,0.7)" }}>
+                    <Pressable
+                      onPress={() => {
+                        onSetUserRole?.("investor");
+                        closeMenu();
+                      }}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <MaterialIcons name="person" size={18} color="#0f172a" />
+                        <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Investor</ThemedText>
+                      </View>
+                      {userRole === "investor" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                    </Pressable>
+
+                    <Pressable
+                      onPress={() => {
+                        onSetUserRole?.("officer");
+                        closeMenu();
+                      }}
+                      style={{
+                        paddingHorizontal: 14,
+                        paddingVertical: 12,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        borderTopWidth: 1,
+                        borderColor: "rgba(203,213,225,0.7)"
+                      }}
+                    >
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <MaterialIcons name="badge" size={18} color="#0f172a" />
+                        <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>Dealing Head</ThemedText>
+                      </View>
+                      {userRole === "officer" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
+                    </Pressable>
                   </View>
-                  {userRole === "officer" ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
-                </Pressable>
+                ) : null}
 
                 <Pressable
                   onPress={() => setShowLanguageMenu((v) => !v)}

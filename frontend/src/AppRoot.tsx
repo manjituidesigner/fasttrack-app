@@ -116,7 +116,7 @@ export function AppRoot() {
 
 function AppShell() {
   const { t, language, setLanguage } = useI18n();
-  const [route, setRoute] = useState<RouteName>("home");
+  const [route, setRoute] = useState<RouteName>("login");
   const [prevRoute, setPrevRoute] = useState<RouteName>("dashboard");
   const [selectedApplication, setSelectedApplication] = useState<any>(null);
   const [userRole, setUserRole] = useState<UserRole>("investor");
