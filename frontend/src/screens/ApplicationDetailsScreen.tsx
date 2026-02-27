@@ -163,7 +163,7 @@ export function ApplicationDetailsScreen({ onBack, application }: Props) {
                   <View style={{ marginTop: 16, gap: 12 }}>
                     <View>
                       <Text style={{ fontSize: 10, fontWeight: "700", color: "#135bec", letterSpacing: 2, textTransform: "uppercase" }}>Business Entity</Text>
-                      <Text style={{ marginTop: 4, fontSize: 18, fontWeight: "700", color: "#111827" }}>{app.businessEntity}</Text>
+                      <Text style={{ marginTop: 4, fontSize: 16, fontWeight: "600", color: "#111827" }}>{app.businessEntity}</Text>
                     </View>
 
                     <View style={{ flexDirection: "row", flexWrap: "wrap", rowGap: 12, columnGap: 12 }}>
@@ -196,7 +196,9 @@ export function ApplicationDetailsScreen({ onBack, application }: Props) {
                           >
                             <MaterialIcons name="location-on" size={16} color="#135bec" />
                           </View>
-                          <Text style={{ fontSize: 13, fontWeight: "700", color: "#334155", flex: 1, lineHeight: 18 }}>{app.siteDetails}</Text>
+                          <Text style={{ fontSize: 12, fontWeight: "600", color: "#334155", flex: 1, lineHeight: 16 }}>
+                            {app.siteDetails}
+                          </Text>
                         </View>
                       </View>
 
@@ -299,7 +301,7 @@ function InfoPair({
   return (
     <View
       style={{
-        width: widthPercent === 50 ? "48%" : "100%",
+        width: widthPercent === 50 ? "49%" : "100%",
         backgroundColor: "rgba(241,245,249,0.9)",
         borderRadius: 14,
         padding: 12,
@@ -313,10 +315,10 @@ function InfoPair({
       <Text
         style={{
           marginTop: 8,
-          fontSize: 13,
-          fontWeight: "800",
+          fontSize: 12,
+          fontWeight: "600",
           color: mutedValue ? "#cbd5e1" : "#0f172a",
-          lineHeight: 18
+          lineHeight: 16
         }}
         numberOfLines={2}
       >

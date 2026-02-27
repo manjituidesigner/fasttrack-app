@@ -23,19 +23,20 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
   const PLACEHOLDER = "#9ca3af";
   const BORDER = "#E5E7EB";
 
-  const TITLE_SIZE = 34;
-  const LABEL_SIZE = 15;
-  const INPUT_SIZE = 15;
-  const PROJECT_LABEL_SIZE = 13;
-  const ROW_TEXT_SIZE = 15;
-  const BUTTON_TEXT_SIZE = 17;
+  const TITLE_SIZE = 21;
+  const LABEL_SIZE = 14;
+  const INPUT_SIZE = 13;
+  const PROJECT_LABEL_SIZE = 14;
+  const ROW_TEXT_SIZE = 14;
+  const BUTTON_TEXT_SIZE = 14;
+  const FOOTER_SIZE = 12;
 
-  const TITLE_WEIGHT: any = "700";
-  const LABEL_WEIGHT: any = "600";
+  const TITLE_WEIGHT: any = "500";
+  const LABEL_WEIGHT: any = "500";
   const INPUT_WEIGHT: any = "500";
-  const PROJECT_LABEL_WEIGHT: any = "700";
-  const ROW_TEXT_WEIGHT: any = "700";
-  const BUTTON_TEXT_WEIGHT: any = "700";
+  const PROJECT_LABEL_WEIGHT: any = "500";
+  const ROW_TEXT_WEIGHT: any = "500";
+  const BUTTON_TEXT_WEIGHT: any = "500";
 
   type ProjectTypeId = "industries" | "housing" | "startup";
   const [projectType, setProjectType] = useState<ProjectTypeId>("industries");
@@ -95,7 +96,7 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                         backgroundColor: language === code ? "rgba(55, 155, 47, 0.12)" : "transparent"
                       }}
                     >
-                      <ThemedText style={{ fontSize: 14, fontWeight: "700", color: "#0f172a" }}>
+                      <ThemedText style={{ fontSize: 14, fontWeight: "500", color: "#0f172a" }}>
                         {code === "en" ? t("language.english") : code === "pa" ? t("language.punjabi") : t("language.hindi")}
                       </ThemedText>
                       {language === code ? <MaterialIcons name="check" size={18} color="rgb(55, 155, 47)" /> : null}
@@ -105,21 +106,21 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
               ) : null}
 
               <View style={{ marginTop: 6 }}>
-                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginBottom: 10 }}>
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginBottom: 8 }}>
                   {t("login.usernameOrEmail")} *
                 </ThemedText>
                 <View style={{ position: "relative" }}>
-                  <MaterialCommunityIcons name="account-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
-                  <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
+                  <MaterialCommunityIcons name="account-outline" size={20} color={TEXT_DARK} style={{ position: "absolute", top: 12, left: 16 }} />
+                  <View style={{ position: "absolute", left: 48, top: 10, width: 1, height: 22, backgroundColor: BORDER }} />
                   <TextInput
                     placeholder={t("login.usernameOrEmail") + " *"}
                     placeholderTextColor={PLACEHOLDER}
                     style={{
                       fontFamily: "Roboto",
                       fontWeight: INPUT_WEIGHT,
-                      paddingLeft: 72,
-                      paddingRight: 20,
-                      height: 58,
+                      paddingLeft: 62,
+                      paddingRight: 16,
+                      height: 43,
                       borderRadius: 999,
                       backgroundColor: "#ffffff",
                       fontSize: INPUT_SIZE,
@@ -128,12 +129,12 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                   />
                 </View>
 
-                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 22, marginBottom: 10 }}>
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 16, marginBottom: 8 }}>
                   {t("login.password")} *
                 </ThemedText>
                 <View style={{ position: "relative" }}>
-                  <MaterialCommunityIcons name="lock-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
-                  <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
+                  <MaterialCommunityIcons name="lock-outline" size={20} color={TEXT_DARK} style={{ position: "absolute", top: 12, left: 16 }} />
+                  <View style={{ position: "absolute", left: 48, top: 10, width: 1, height: 22, backgroundColor: BORDER }} />
                   <TextInput
                     placeholder={t("login.password") === "Password" ? "Enter Your Password" : t("login.password")}
                     placeholderTextColor={PLACEHOLDER}
@@ -141,36 +142,36 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                     style={{
                       fontFamily: "Roboto",
                       fontWeight: INPUT_WEIGHT,
-                      paddingLeft: 72,
-                      paddingRight: 54,
-                      height: 58,
+                      paddingLeft: 62,
+                      paddingRight: 46,
+                      height: 43,
                       borderRadius: 999,
                       backgroundColor: "#ffffff",
                       fontSize: INPUT_SIZE,
                       color: TEXT_DARK
                     }}
                   />
-                  <Pressable onPress={() => setShowPassword(!showPassword)} style={{ position: "absolute", top: 12, right: 14, padding: 6 }}>
-                    <MaterialCommunityIcons name={showPassword ? "eye-off-outline" : "eye-outline"} size={22} color={TEXT_DARK} />
+                  <Pressable onPress={() => setShowPassword(!showPassword)} style={{ position: "absolute", top: 6, right: 10, padding: 6 }}>
+                    <MaterialCommunityIcons name={showPassword ? "eye-off-outline" : "eye-outline"} size={20} color={TEXT_DARK} />
                   </Pressable>
                 </View>
 
-                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 22, marginBottom: 10 }}>
+                <ThemedText style={{ fontSize: LABEL_SIZE, fontWeight: LABEL_WEIGHT, color: "#4b5563", marginTop: 16, marginBottom: 8 }}>
                   {t("login.code")} *
                 </ThemedText>
-                <View style={{ flexDirection: "row", gap: 16, alignItems: "center" }}>
+                <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
                   <View style={{ flex: 1, position: "relative" }}>
-                    <MaterialCommunityIcons name="shield-outline" size={22} color={TEXT_DARK} style={{ position: "absolute", top: 17, left: 20 }} />
-                    <View style={{ position: "absolute", left: 56, top: 16, width: 1, height: 26, backgroundColor: BORDER }} />
+                    <MaterialCommunityIcons name="shield-outline" size={20} color={TEXT_DARK} style={{ position: "absolute", top: 12, left: 16 }} />
+                    <View style={{ position: "absolute", left: 48, top: 10, width: 1, height: 22, backgroundColor: BORDER }} />
                     <TextInput
                       placeholder={t("login.code") === "Captcha" ? "Enter Code" : t("login.code")}
                       placeholderTextColor={PLACEHOLDER}
                       style={{
                         fontFamily: "Roboto",
                         fontWeight: INPUT_WEIGHT,
-                        paddingLeft: 72,
-                        paddingRight: 20,
-                        height: 58,
+                        paddingLeft: 62,
+                        paddingRight: 16,
+                        height: 43,
                         borderRadius: 999,
                         backgroundColor: "#ffffff",
                         fontSize: INPUT_SIZE,
@@ -179,27 +180,28 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                     />
                   </View>
 
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 14 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <View
                       style={{
-                        height: 58,
-                        minWidth: 150,
+                        height: 43,
+                        minWidth: 92,
+                        paddingHorizontal: 10,
                         borderRadius: 999,
                         backgroundColor: "#C6CDD8",
                         alignItems: "center",
                         justifyContent: "center"
                       }}
                     >
-                      <ThemedText style={{ fontSize: 17, fontWeight: "700", letterSpacing: 2, color: TEXT_DARK }}>8X2aP</ThemedText>
+                      <ThemedText style={{ fontSize: 14, fontWeight: "500", letterSpacing: 2, color: TEXT_DARK }}>8X2aP</ThemedText>
                     </View>
-                    <Pressable onPress={() => null} hitSlop={10} style={{ width: 44, height: 44, borderRadius: 999, alignItems: "center", justifyContent: "center" }}>
-                      <MaterialCommunityIcons name="refresh" size={28} color={TEXT_DARK} />
+                    <Pressable onPress={() => null} hitSlop={10} style={{ width: 38, height: 38, borderRadius: 999, alignItems: "center", justifyContent: "center" }}>
+                      <MaterialCommunityIcons name="refresh" size={24} color={TEXT_DARK} />
                     </Pressable>
                   </View>
                 </View>
               </View>
 
-              <ThemedText style={{ fontSize: PROJECT_LABEL_SIZE, fontWeight: PROJECT_LABEL_WEIGHT, color: TEXT_DARK, marginTop: 28, marginBottom: 12, textTransform: "uppercase" }}>
+              <ThemedText style={{ fontSize: PROJECT_LABEL_SIZE, fontWeight: PROJECT_LABEL_WEIGHT, color: TEXT_DARK, marginTop: 20, marginBottom: 10, textTransform: "uppercase" }}>
                 {t("login.projectType")}
               </ThemedText>
 
@@ -232,22 +234,22 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                     key={item.id}
                     onPress={() => setProjectType(item.id)}
                     style={{
-                      height: 58,
+                      height: 43,
                       paddingHorizontal: 18,
                       borderRadius: 999,
                       backgroundColor: selected ? "#2F8F2F" : "#ffffff",
-                      marginBottom: 14,
+                      marginBottom: 12,
                       flexDirection: "row",
                       justifyContent: "space-between",
                       alignItems: "center",
-                      borderWidth: selected ? 2 : 0,
-                      borderColor: selected ? "#1D4ED8" : "transparent"
+                      borderWidth: 0,
+                      borderColor: "transparent"
                     }}
                   >
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
                       <MaterialCommunityIcons
                         name={item.id === "industries" ? "factory" : item.id === "housing" ? "office-building-outline" : "rocket-launch-outline"}
-                        size={22}
+                        size={18}
                         color={selected ? "#ffffff" : TEXT_DARK}
                       />
                       <ThemedText style={{ fontSize: ROW_TEXT_SIZE, fontWeight: ROW_TEXT_WEIGHT, color: selected ? "#ffffff" : TEXT_DARK }}>{item.label}</ThemedText>
@@ -255,21 +257,22 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
 
                     <MaterialCommunityIcons
                       name={selected ? "check-circle" : "checkbox-blank-circle-outline"}
-                      size={22}
+                      size={18}
                       color={selected ? "#ffffff" : "#AAB4C3"}
                     />
                   </Pressable>
                 );
               })}
 
-              <View style={{ paddingTop: 18, paddingBottom: 0 }}>
+              <View style={{ paddingTop: 14, paddingBottom: 0 }}>
                 <Pressable
                   onPress={onLoginSuccess}
                   style={{
                     width: "100%",
-                    height: 64,
+                    height: 43,
                     backgroundColor: "#1D4ED8",
                     borderRadius: 999,
+                    marginBottom: 6,
                     alignItems: "center",
                     justifyContent: "center"
                   }}
@@ -281,7 +284,7 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
                   style={{
                     marginTop: 10,
                     width: "100%",
-                    height: 64,
+                    height: 43,
                     backgroundColor: "#ffffff",
                     borderRadius: 999,
                     borderWidth: 0,
@@ -294,21 +297,21 @@ export function LoginScreen({ onBack, onLoginSuccess }: Props) {
 
                 <View style={{ paddingTop: 12, gap: 8, alignItems: "center" }}>
                   <Pressable>
-                    <ThemedText style={{ fontSize: 13, fontWeight: "700", color: "#1D4ED8" }}>{t("login.forgotPassword")}</ThemedText>
+                    <ThemedText style={{ fontSize: 14, fontWeight: "500", color: "#1D4ED8" }}>{t("login.forgotPassword")}</ThemedText>
                   </Pressable>
 
-                  <ThemedText style={{ color: TEXT_MUTED, fontWeight: "600", fontSize: 12 }}>
-                    {t("login.noAccount")} <ThemedText style={{ color: "#1D4ED8", fontWeight: "700" }}>{t("login.signup")}</ThemedText>
+                  <ThemedText style={{ color: TEXT_MUTED, fontWeight: "500", fontSize: 12 }}>
+                    {t("login.noAccount")} <ThemedText style={{ color: "#1D4ED8", fontWeight: "500" }}>{t("login.signup")}</ThemedText>
                   </ThemedText>
                 </View>
 
                 <ThemedText
                   style={{
                     marginTop: 16,
-                    fontSize: 10,
-                    fontWeight: "600",
+                    fontSize: FOOTER_SIZE,
+                    fontWeight: "500",
                     color: "#9ca3af",
-                    lineHeight: 14,
+                    lineHeight: 16,
                     textAlign: "center",
                     paddingHorizontal: 6
                   }}

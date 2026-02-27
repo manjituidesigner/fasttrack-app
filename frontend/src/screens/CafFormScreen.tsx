@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Switch, Text, TextInput, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { MaterialIcons } from "@expo/vector-icons";
 import type { ReactNode } from "react";
@@ -593,9 +593,25 @@ export function CafFormScreen({ onBack, onOpenDrawer }: Props) {
               </Pressable>
             )}
 
-            <Pressable style={styles.nextBtn} onPress={() => setStep((s) => (s < 9 ? ((s + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9) : 9))}>
-              <Text style={styles.nextText}>{step === 9 ? "Next" : t("cafForm.action.nextStep")}</Text>
-              <MaterialIcons name="arrow-forward" size={18} color="white" />
+            <Pressable
+              style={styles.nextBtn}
+              onPress={() => {
+                if (step === 9) {
+                  Alert.alert("", "Thanks Form Submitted Successfuly", [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        onBack?.();
+                      }
+                    }
+                  ]);
+                  return;
+                }
+                setStep((s) => (s < 9 ? ((s + 1) as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9) : 9));
+              }}
+            >
+              <Text style={styles.nextText}>{step === 9 ? "Submit" : t("cafForm.action.nextStep")}</Text>
+              <MaterialIcons name={step === 9 ? "check" : "arrow-forward"} size={18} color="white" />
             </Pressable>
           </View>
         </View>
@@ -844,20 +860,20 @@ const styles = {
     justifyContent: "center"
   },
   uploadText: { marginTop: 8, fontWeight: "700", color: "#2563eb" },
-  label: { fontSize: 14, fontWeight: "700", marginBottom: 6 },
+  label: { fontSize: 13, fontWeight: "700", marginBottom: 6 },
   inputWrap: { position: "relative" },
   moneyInputWrap: { position: "relative" },
   prefix: {
     position: "absolute",
     left: 12,
-    top: 15,
+    top: 11,
     fontWeight: "700",
     color: "#6b7280"
   },
   moneyPrefix: {
     position: "absolute",
     left: 12,
-    top: 15,
+    top: 11,
     fontWeight: "700",
     color: "#6b7280",
     zIndex: 1
@@ -867,10 +883,10 @@ const styles = {
     borderWidth: 1,
     borderColor: "#cbd5e1",
     borderRadius: 50,
-    height: 50,
-    paddingVertical: 12,
+    height: 40,
+    paddingVertical: 10,
     paddingHorizontal: 14,
-    fontSize: 16
+    fontSize: 14
   },
   moneyInput: { paddingLeft: 28 },
   readOnlyInput: { backgroundColor: "#f3f4f6", color: "#374151" },
