@@ -27,6 +27,7 @@ import ChatbotIcon from "./assets/images/chatbot.svg";
 type UserRole = "investor" | "officer";
 
 type RouteName =
+  | "splash"
   | "home"
   | "login"
   | "dashboard"
@@ -114,9 +115,15 @@ export function AppRoot() {
   );
 }
 
+function SplashScreen({ onDone }: { onDone?: () => void }) {
+  const handleDone = onDone ?? (() => {});
+
+  return <HomeScreen onLoginPress={handleDone} />;
+}
+
 function AppShell() {
   const { t, language, setLanguage } = useI18n();
-  const [route, setRoute] = useState<RouteName>("login");
+  const [route, setRoute] = useState<RouteName>("splash");
   const [prevRoute, setPrevRoute] = useState<RouteName>("dashboard");
   const [selectedApplication, setSelectedApplication] = useState<any>(null);
   const [userRole, setUserRole] = useState<UserRole>("investor");
@@ -147,7 +154,9 @@ function AppShell() {
   }, [language]);
 
   const screen =
-    route === "home" ? (
+    route === "splash" ? (
+      <SplashScreen onDone={() => setRoute("login")} />
+    ) : route === "home" ? (
       <HomeScreen onLoginPress={() => setRoute("login")} />
     ) : route === "login" ? (
       <LoginScreen onBack={() => setRoute("home")} onLoginSuccess={() => setRoute("dashboard")} />
@@ -225,9 +234,9 @@ function AppShell() {
       />
     );
 
-  const shouldRenderChatModal = route !== "home" && route !== "login";
-  const shouldRenderChatFab = route !== "home" && route !== "login";
-  const shouldRenderGlobalAddFab = route !== "home" && route !== "login";
+  const shouldRenderChatModal = route !== "home" && route !== "login" && route !== "splash";
+  const shouldRenderChatFab = route !== "home" && route !== "login" && route !== "splash";
+  const shouldRenderGlobalAddFab = route !== "home" && route !== "login" && route !== "splash";
 
   const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
   const DRAWER_WIDTH = Math.min(windowWidth * 0.85, 360);
